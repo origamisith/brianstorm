@@ -15,7 +15,7 @@ class Player {
         // update x and y position 
         this.x = 100;
         this.y = 400;
-        this.velocity = { x: 6, y: 0 };
+        this.velocity = { x: 0, y: 0 };
         this.gravity = 28; 
         this.onGround = true;
         this.jumping = false;
@@ -89,7 +89,6 @@ class Player {
     /** Updates state frame by frame */
     update() {
 
-       
         // Prevents the animation from falling through the window.
         if (this.y >= 1000) {
             this.onGround = true;
@@ -121,8 +120,10 @@ class Player {
         if (this.jumping) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
+                this.velocity.x = 6;
                 this.x -= this.velocity.x;
             } else if (this.jumpingRight) {
+                this.velocity.x = 6;
                 this.x += this.velocity.x;
             }
             // Edit this.gravity to change gravitational force.
@@ -143,12 +144,15 @@ class Player {
         }
         
         // Left and right movement
+        this.velocity.x = 0;
         if (this.game.left && !this.jumping && !this.falling) {
             this.facing = 1;
+            this.velocity.x = 6;
             this.x -= this.velocity.x;
         }
         else if (this.game.right && !this.jumping && !this.falling) {
             this.facing = 0;
+            this.velocity.x = 6;
             this.x += this.velocity.x;
         }
 
@@ -166,7 +170,6 @@ class Player {
     /** Helper method to update the player type */
     updatePlayerType(player_type) {
         if (this.player_type != player_type) {
-            console.log('updatePlayerType');
             this.player_type = player_type;
             this.loadAnimations();
         }
