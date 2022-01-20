@@ -1,9 +1,9 @@
 //main player object
 
-//PARAMS: 
+//PARAMS:
 //game is the game engine that the player will be placed into
 //player is a string representing the player type
-//x and y are positional coordinates in pixels, can be used for various purposes. 
+//x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
     constructor(game, player_type, x, y) {
@@ -12,7 +12,7 @@ class Player {
         //assign the game engine to this object
         this.game = game;
 
-        // update x and y position 
+        // update x and y position
         this.x = 100;
         this.y = 400;
         this.velocity = { x: 0, y: 0 };
@@ -24,10 +24,10 @@ class Player {
         this.falling = false;
         this.player_type = player_type;
 
-        // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump. 
+        // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
         // Player facing: 0=right. 1=left.
-        this.facing = 0; 
+        this.facing = 0;
         // a 2D array to store all the player's states.
         this.animations = [
             [0,0],
@@ -38,7 +38,7 @@ class Player {
             [2,1],
             [3,0],
             [3,1]
-        ]; 
+        ];
 
         this.loadAnimations();
 
@@ -108,14 +108,14 @@ class Player {
                 this.facing = 0;
                 this.jumpingRight = true;
             }
-        
+
             this.jumping = true;
             this.onGround = false;
 
             // decrease velocity to increase initial jump power.
             this.velocity.y = -1000;
         }
-        
+
         // The jump & fall action
         if (this.jumping) {
             this.updatePlayerType("jumping");
@@ -134,7 +134,7 @@ class Player {
                 this.jumping = false;
             }
         }
-        
+
         // Stops the jump once player hits the ground.
         if (this.onGround) {
             this.updatePlayerType("default");
@@ -142,7 +142,7 @@ class Player {
             this.jumpingLeft = false;
             this.jumpingRight = false;
         }
-        
+
         // Left and right movement
         this.velocity.x = 0;
         if (this.game.left && !this.jumping && !this.falling) {
@@ -164,7 +164,7 @@ class Player {
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x-100, this.y, 1);
     };
 
     /** Helper method to update the player type */
@@ -174,6 +174,6 @@ class Player {
             this.loadAnimations();
         }
     }
-    
+
 
 };
