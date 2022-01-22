@@ -9,11 +9,12 @@ const ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./sprites/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./sprites/washing_machine/opening/washing_machine_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./sprites/washing_machine/walking/washing_machine_walking_sprite_sheet.png");
-ASSET_MANAGER.queueDownload("./sprites/jump/jump_sprite_sheet_200.png");
+ASSET_MANAGER.queueDownload("./sprites/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./sprites/duckandslide/duckandslide.png");
 ASSET_MANAGER.queueDownload("./Characters/squid/squid_sheet.png");
 ASSET_MANAGER.queueDownload("./Characters/squid_ink/sqink.png");
 ASSET_MANAGER.queueDownload("./sprites/cloud.png");
+ASSET_MANAGER.queueDownload("./sprites/img_assets/floor_tile.png"); 
 
 
 //trigger downloads and add an entity to the canvas
