@@ -17,6 +17,11 @@ class SceneManager {
         levelOne.clouds.forEach(c => {
             this.game.addEntity(new Cloud(this.game, c.x, c.y))
         });
+
+        blocks.blocks.forEach(c => {
+            this.game.addEntity(new Block(this.game, c.x, c.y, 5))
+        });
+
     }
     update() {
         this.x =  this.player.x - this.game.ctx.canvas.width/2; // Keep camera centered on storm at all times
