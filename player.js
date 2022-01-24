@@ -88,6 +88,9 @@ class Player {
     /** Updates state frame by frame */
     update() {
 
+        // a constant TICK to sync with the game's timer
+        const TICK = this.game.clockTick;
+
         this.updateBB();
         // Prevents the animation from falling through the window.
         if (this.y >= 1000) {
@@ -95,6 +98,7 @@ class Player {
         }
 
         // Collision with the ground
+
         var that = this;
         this.game.entities.forEach(function (entity) {
             if (entity.BB && that.BB.collide(entity.BB)) {
@@ -104,7 +108,7 @@ class Player {
             }
         });
 
-        const TICK = this.game.clockTick;
+
 
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
