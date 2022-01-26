@@ -4,7 +4,7 @@ class Terrain {
         this.x = x*1; //Arbitrary scaling factor
         this.y = y*1;
 
-        this.BB = new BoundingBox(this.x - this.game.camera.x, this.y + 20, 200, 180);
+        this.BB = new BoundingBox(this.x - this.game.camera.x, this.y + 20, 100, 180);
         
     }
     update(ctx) {
