@@ -27,7 +27,7 @@ class SceneManager {
             x[i] = terrain;
             i++;
         });
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music.png'), 0, 0, 2560, 1024, 1200-this.game.camera.x, 0-this.game.camera.y, 2560, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x, 0-this.game.camera.y, 2560, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/level_background/water.png'), 0, 0, 1200, 1200, -2400-this.game.camera.x, -1400-this.game.camera.y, 2400, 2400), update: () => null})
         this.game.add
     }
