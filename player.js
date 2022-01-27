@@ -46,7 +46,7 @@ class Player {
         this.loadAnimations();
 
         // Assign spritesheets to values for use.
-        this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 8, 0.1, false, true);
+        this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         //Washing machine currently doesn't work because the gaps between frames are not handled by our animator correctly
         //this.washing_machineAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/washing_machine/walking/washing_machine_walking_sprite_sheet.png"), 0, 0, 800, 800, 10, 0.05, false, true);
         this.animation = this.defaultAnimation;
@@ -85,7 +85,8 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
-
+        if(this.x < 0) this.gravity = 10;
+        else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
 
