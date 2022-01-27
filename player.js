@@ -206,8 +206,4 @@ class Player {
             this.loadAnimations();
         }
     }
-    toString() {
-        return "I'm a player"
-    }
-
 };
