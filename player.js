@@ -91,6 +91,10 @@ class Player {
             this.isSubmarine = true;
             
         }
+        else if (this.x > 0) {
+            this.isSubmarine = false;
+        }
+
         else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -106,7 +110,7 @@ class Player {
         // Collisions
 
         //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
-        var that = this;
+        const that = this;
         this.game.entities.forEach(function (entity) {
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // console.log("Collide" + entity)

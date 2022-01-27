@@ -60,13 +60,23 @@ class SceneManager {
         //submarine condition
         else if (this.player.isSubmarine === true && this.playerCount < 1) {
             this.playerCount++;
-            this.submarine = new Submarine(this.game, "default", this.player.x, this.player.y);
+            this.submarine = new Submarine(this.game, "submarine", this.player.x, this.player.y);
             this.clearEntities();
             this.player = this.submarine;
             this.game.addEntity(this.player);
+            this.player.isSubmarine = true;
             this.loadLevelOne();
+            console.log(this.player.player_type);
+        }
 
-            
+        if (this.player.isSubmarine && this.player.x > 0) {
+            console.log("inside loop");
+            this.player.isSubmarine = false;
+            this.clearEntities();
+            this.player = new Player(this.game, "default", this.player.x, this.player.y);
+            this.game.addEntity(this.player);
+            this.playerCount = 0;
+            this.loadLevelOne();
         }
     }
 };
