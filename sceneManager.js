@@ -6,6 +6,7 @@ class SceneManager {
         this.game.addEntity(this.player);
         this.x = 0
         this.y = 0;
+        this.playerCount = 0;
         this.loadLevelOne();
 
 
@@ -43,8 +44,14 @@ class SceneManager {
             this.y = this.player.y - h/2
         }
         //If storm gets very high, pan the camera up just enough to keep him in frame
-        if(this.player.y - this.y < 100) {
+        else if(this.player.y - this.y < 100) {
             this.y = this.player.y - 100;
+        }
+        else if (this.player.isSubmarine === true && this.playerCount < 1) {
+            this.player.removeFromWorld = true;
+            this.game.addEntity(new Submarine(this.game, "washing_machine", this.player.x, this.player.y));
+            this.playerCount++;
+            
         }
     }
 };
