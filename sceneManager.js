@@ -16,6 +16,16 @@ class SceneManager {
         //this.game.addEntity(this.test_sprite);
 
     };
+
+
+    clearEntities() {
+        this.game.entities.forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+    };
+
+
+
     loadLevelOne() {
         var x = [];
         var i = 0;
@@ -47,12 +57,15 @@ class SceneManager {
         else if(this.player.y - this.y < 100) {
             this.y = this.player.y - 100;
         }
+        //submarine condition
         else if (this.player.isSubmarine === true && this.playerCount < 1) {
+            this.playerCount++;
             this.submarine = new Submarine(this.game, "default", this.player.x, this.player.y);
-            this.player.removeFromWorld = true;
+            this.clearEntities();
             this.player = this.submarine;
             this.game.addEntity(this.player);
-            this.playerCount++;
+            this.loadLevelOne();
+
             
         }
     }

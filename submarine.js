@@ -64,7 +64,7 @@ class Submarine {
 
     /** Updates state frame by frame */
     update() {
-        if(this.x < 0) this.gravity = 2;
+        if(this.x < 0) this.gravity = 8;
         else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
