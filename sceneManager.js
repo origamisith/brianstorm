@@ -2,7 +2,7 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this;
-        this.player = new Player(this.game, "washing_machine", 100, 400)
+        this.player = new Player(this.game, "default", 100, 400)
         this.game.addEntity(this.player);
         this.x = 0
         this.y = 0;
@@ -48,8 +48,10 @@ class SceneManager {
             this.y = this.player.y - 100;
         }
         else if (this.player.isSubmarine === true && this.playerCount < 1) {
+            this.submarine = new Submarine(this.game, "default", this.player.x, this.player.y);
             this.player.removeFromWorld = true;
-            this.game.addEntity(new Submarine(this.game, "washing_machine", this.player.x, this.player.y));
+            this.player = this.submarine;
+            this.game.addEntity(this.player);
             this.playerCount++;
             
         }

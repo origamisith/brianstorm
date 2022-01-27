@@ -13,7 +13,7 @@ class Submarine {
         this.game = game;
 
         // updates / initializes the bounding box
-        this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
+        this.BB = new BoundingBox(this.x, this.y+20, 800, 400);
 
         // update x and y position
         this.velocity = { x: 0, y: 0 };
@@ -59,7 +59,7 @@ class Submarine {
 
     updateBB() {
         //Bounding box for collision
-        this.BB = new BoundingBox(this.x, this.y, 200, 200)
+        this.BB = new BoundingBox(this.x - 400, this.y, 800, 400)
     }
 
     /** Updates state frame by frame */
@@ -132,10 +132,10 @@ class Submarine {
         else if (this.jumping || !this.onGround) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
-                this.velocity.x = 1;
+                this.velocity.x = 6;
                 this.x -= this.velocity.x;
             } else if (this.jumpingRight) {
-                this.velocity.x = 1;
+                this.velocity.x = 6;
                 this.x += this.velocity.x;
             }
             if (this.onGround) {
@@ -169,11 +169,11 @@ class Submarine {
         this.x += this.velocity.x * TICK;
         this.y += this.velocity.y * TICK;
 
-    };
+        };
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, 1);
         ctx.strokeStyle = 'red';
         ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
