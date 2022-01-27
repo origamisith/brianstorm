@@ -14,7 +14,11 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/duckandslide/duckandslide
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
+<<<<<<< HEAD
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png");
+=======
+ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
+>>>>>>> fd92f1d4f33c49de5e94a2ea55330c010f0151c4
 
 
 //trigger downloads and add an entity to the canvas

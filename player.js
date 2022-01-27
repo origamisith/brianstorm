@@ -12,10 +12,13 @@ class Player {
         //assign the game engine to this object
         this.game = game;
 
+
+
+        // updates / initializes the bounding box
+        this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
+
         // update x and y position
-        this.x = 100;
-        this.y = 400;
-        this.velocity = { x: 6, y: 0 };
+        this.velocity = { x: 0, y: 0 };
         this.gravity = 28;
         this.onGround = true;
         this.jumping = false;
@@ -43,9 +46,15 @@ class Player {
         this.loadAnimations();
 
         // Assign spritesheets to values for use.
+<<<<<<< HEAD
         this.jumpAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/jump/jump_sprite_sheet_200.png"), 0, 0, 200, 200, 12, 0.08, false, true);
         this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 8, 0.1, false, true);
         this.washing_machineAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/washing_machine/washing_machine/walking/washing_machine_walking_sprite_sheet.png"), 0, 0, 800, 800, 10, 0.05, false, true);
+=======
+        this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 8, 0.1, false, true);
+        //Washing machine currently doesn't work because the gaps between frames are not handled by our animator correctly
+        //this.washing_machineAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/washing_machine/walking/washing_machine_walking_sprite_sheet.png"), 0, 0, 800, 800, 10, 0.05, false, true);
+>>>>>>> fd92f1d4f33c49de5e94a2ea55330c010f0151c4
         this.animation = this.defaultAnimation;
     };
 
@@ -53,53 +62,72 @@ class Player {
     loadAnimations() {
         if (this.player_type === "default") {
             this.animation = this.defaultAnimation;
-            this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+
+        // else if (this.player_type === "washing_machine") {
+            // this.animation = this.washing_machineAnimation;
+            // this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+            // this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
         }
-        else if (this.player_type === "jumping") {
-            this.animation = this.jumpAnimation;
-            this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-            this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 12, 0.1, false, true);
-        }
-        if (this.player_type === "washing_machine") {
-            this.animation = washing_machineAnimation;
-            this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-        }
+    };
+
+    updateBB() {
+        //Bounding box for collision
+        this.BB = new BoundingBox(this.x, this.y, 200, 200)
     }
 
     /** Updates state frame by frame */
     update() {
 
+        // a constant TICK to sync with the game's timer
+        const TICK = this.game.clockTick;
 
+        this.side = false;
+        this.onGround = false;
+        this.updateBB();
         // Prevents the animation from falling through the window.
-        if (this.y >= 812) {
+        if (this.y >= params.floor) {
             this.onGround = true;
         }
 
-        const TICK = this.game.clockTick;
+        // Collisions
+
+        //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
+        var that = this;
+        this.game.entities.forEach(function (entity) {
+            if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+                // console.log("Collide" + entity)
+                if (entity instanceof Terrain) {
+                    if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
+                        that.side = true;
+                    }
+                    else {
+                        that.onGround = true;
+                    }
+                }
+            }
+        });
+
+
 
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
-        if (this.game.space && !this.jumping && !this.falling) {
+
+        //If not on ground but haven't pressed space, falling off ledge
+        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling) {
             this.updatePlayerType("jumping");
             if (this.game.left) {
                 this.facing = 1;
@@ -113,22 +141,29 @@ class Player {
             this.jumping = true;
             this.onGround = false;
 
-            // decrease velocity to increase initial jump power.
-            this.velocity.y = -1000;
+            // decrease velocity to increase initial jump power if not just falling off ledge.
+            if(this.game.space) this.velocity.y = -1000;
         }
+        // Edit this.gravity to change gravitational force.
+        // ** NOTE: potentially make gravity a constant rather than a field,
+        // ** also consider moving gravity to scene manager once implemented
+        if(!this.onGround) {
+            this.velocity.y += this.gravity;
+        }
+        if(this.velocity.y > 0) this.falling = true;
+
 
         // The jump & fall action
-        if (this.jumping) {
+        if(this.side) this.velocity.x= 0;
+        else if (this.jumping || !this.onGround) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
+                this.velocity.x = 6;
                 this.x -= this.velocity.x;
             } else if (this.jumpingRight) {
+                this.velocity.x = 6;
                 this.x += this.velocity.x;
             }
-            // Edit this.gravity to change gravitational force.
-            // ** NOTE: potentially make gravity a constant rather than a field,
-            // ** also consider moving gravity to scene manager once implemented
-            this.velocity.y += this.gravity;
             if (this.onGround) {
                 this.jumping = false;
             }
@@ -137,18 +172,22 @@ class Player {
         // Stops the jump once player hits the ground.
         if (this.onGround) {
             this.updatePlayerType("default");
+            this.falling = false;
             this.velocity.y = 0;
             this.jumpingLeft = false;
             this.jumpingRight = false;
         }
 
         // Left and right movement
-        if (this.game.left && !this.jumping && !this.falling) {
+        this.velocity.x = 0;
+        if (this.game.left && !this.jumping && !this.falling && !this.side) {
             this.facing = 1;
+            this.velocity.x = 6;
             this.x -= this.velocity.x;
         }
-        else if (this.game.right && !this.jumping && !this.falling) {
+        else if (this.game.right && !this.jumping && !this.falling && !this.side) {
             this.facing = 0;
+            this.velocity.x = 6;
             this.x += this.velocity.x;
         }
 
@@ -160,17 +199,20 @@ class Player {
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x-100, this.y, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
     /** Helper method to update the player type */
     updatePlayerType(player_type) {
-        if (this.player_type != player_type) {
-            console.log('updatePlayerType');
+        if (this.player_type !== player_type) {
             this.player_type = player_type;
             this.loadAnimations();
         }
     }
-
+    toString() {
+        return "I'm a player"
+    }
 
 };

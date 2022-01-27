@@ -42,7 +42,6 @@ class GameEngine {
         const gameLoop = () => {
             this.loop();
             if (this.running) {
-
                 requestAnimFrame(gameLoop, this.ctx.canvas);
             }
         };
@@ -65,7 +64,6 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("click", e => {
-
             if (this.options.debugging) {
                 console.log("CLICK", getXandY(e));
             }
@@ -73,7 +71,6 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("wheel", e => {
-
             if (this.options.debugging) {
                 console.log("WHEEL", getXandY(e), e.wheelDelta);
             }
@@ -84,7 +81,6 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("contextmenu", e => {
-
             if (this.options.debugging) {
                 console.log("RIGHT_CLICK", getXandY(e));
             }
@@ -210,6 +206,6 @@ class GameEngine {
         this.draw();
     };
 
-};
+}
 
 // KV Le was here :)
