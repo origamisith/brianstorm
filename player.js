@@ -85,7 +85,8 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
-
+        if(this.x < 0) this.gravity = 10;
+        else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
 
