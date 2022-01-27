@@ -41,9 +41,18 @@ class GameEngine {
         this.running = true;
         const gameLoop = () => {
             this.loop();
+<<<<<<< HEAD
+=======
+
+>>>>>>> c969fd74db6a5a17159a1a8e22ea5e2e4c7ebb64
             if (this.running) {
                 requestAnimFrame(gameLoop, this.ctx.canvas);
+<<<<<<< HEAD
             }
+=======
+           
+
+>>>>>>> c969fd74db6a5a17159a1a8e22ea5e2e4c7ebb64
         };
         gameLoop();
     };
@@ -90,6 +99,10 @@ class GameEngine {
             this.rightclick = getXandY(e);
         });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c969fd74db6a5a17159a1a8e22ea5e2e4c7ebb64
         this.ctx.canvas.addEventListener("keydown", function (e) {
 
             switch (e.code) {
@@ -164,6 +177,13 @@ class GameEngine {
 
         window.addEventListener("keydown", event => this.keys[event.key] = true);
         window.addEventListener("keyup", event => this.keys[event.key] = false);
+<<<<<<< HEAD
+=======
+
+        this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
+        this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
+
+>>>>>>> c969fd74db6a5a17159a1a8e22ea5e2e4c7ebb64
     };
 
     addEntity(entity) {
