@@ -15,7 +15,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
-ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.png")
+ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
 ASSET_MANAGER.queueDownload("./assets/level_background/water.png");
 
 
