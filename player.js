@@ -26,6 +26,7 @@ class Player {
         this.jumpingRight = false;
         this.falling = false;
         this.player_type = player_type;
+        this.removeFromWorld = false;
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -85,7 +86,15 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
-        if(this.x < 0) this.gravity = 10;
+        if(this.x < 0) { 
+            this.gravity = 10;
+            this.isSubmarine = true;
+            
+        }
+        else if (this.x > 0) {
+            this.isSubmarine = false;
+        }
+
         else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -101,7 +110,7 @@ class Player {
         // Collisions
 
         //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
-        var that = this;
+        const that = this;
         this.game.entities.forEach(function (entity) {
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // console.log("Collide" + entity)
