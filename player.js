@@ -86,10 +86,10 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
-        if(this.x < 0) { 
+        if(this.x < 0) {
             this.gravity = 10;
             this.isSubmarine = true;
-            
+
         }
         else if (this.x > 0) {
             this.isSubmarine = false;
@@ -98,6 +98,15 @@ class Player {
         else this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
+        /* Currently, order of operations for collision is:
+            Initialize flags to represent state
+            Iterate through each entity and check if there's a collision
+                If so, set any appropriate flags to determine what kind of collision is occurring
+                This involves checking current velocity and poking more at the bounding boxes
+                In the future, we may want to also store the previous bounding box like in SMB and change the logic
+            Based on all flags that have been set, apply changes to Storm's velocity, position, and controls
+            For the future: Instead of setting velocity to 0 on intersection, manually align Storm's position where he should be like in SMB
+         */
 
         this.side = false;
         this.onGround = false;
@@ -112,12 +121,16 @@ class Player {
         //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
         const that = this;
         this.game.entities.forEach(function (entity) {
+            //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
-                // console.log("Collide" + entity)
+                // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
+                    // Case 1: Jumping up while hitting the side
+                    // Case 2: Walking into the side while on the ground
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
+                    // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
                     }
@@ -129,8 +142,7 @@ class Player {
 
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
-
-        //If not on ground but haven't pressed space, falling off ledge
+        //Update jumping  / onGround status, handle space
         if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling) {
             this.updatePlayerType("jumping");
             if (this.game.left) {
@@ -148,16 +160,20 @@ class Player {
             // decrease velocity to increase initial jump power if not just falling off ledge.
             if(this.game.space) this.velocity.y = -1000;
         }
+        //If not on ground but haven't pressed space, falling off ledge
         // Edit this.gravity to change gravitational force.
         // ** NOTE: potentially make gravity a constant rather than a field,
         // ** also consider moving gravity to scene manager once implemented
         if(!this.onGround) {
             this.velocity.y += this.gravity;
         }
+
+        //Update falling status
         if(this.velocity.y > 0) this.falling = true;
 
 
         // The jump & fall action
+        // Note: will Storm be able to have variable speed? As it is, he will always have same horizontal speed after jumping
         if(this.side) this.velocity.x= 0;
         else if (this.jumping || !this.onGround) {
             this.updatePlayerType("jumping");
