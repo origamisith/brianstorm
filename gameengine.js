@@ -16,6 +16,7 @@ class GameEngine {
         this.left = false;
         this.right = false;
         this.space = false;
+        this.lctrl = false;
         this.keys = {};
 
         // THE KILL SWITCH
@@ -124,6 +125,9 @@ class GameEngine {
                 case "Space":
                     that.space = true;
                     break;
+                case "ShiftLeft":
+                    that.sticking = true;
+                    break;
             }
         }, false);
 
@@ -157,6 +161,9 @@ class GameEngine {
                     break;
                 case "Space":
                     that.space = false;
+                    break;
+                case "ShiftLeft":
+                    that.sticking = false;
                     break;
             }
         }, false);

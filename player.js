@@ -27,6 +27,7 @@ class Player {
         this.falling = false;
         this.player_type = player_type;
         this.removeFromWorld = false;
+        this.sticking = false;
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -86,25 +87,20 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
-        if(this.x < 0) { 
-            this.gravity = 10;
-            this.isSubmarine = true;
-            
-        }
-        else if (this.x > 0) {
-            this.isSubmarine = false;
-        }
+        console.log('this.side='+this.side);
 
-        else this.gravity = 28;
+        //console.log('this.falling='+this.falling + 'this.vel.y='+ this.velocity.y);
+        this.gravity = 28;
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
 
-        this.side = false;
+        
         this.onGround = false;
         this.updateBB();
         // Prevents the animation from falling through the window.
         if (this.y >= params.floor) {
             this.onGround = true;
+            this.sticking = false;
         }
 
         // Collisions
@@ -128,10 +124,9 @@ class Player {
 
 
        /** JUMP MECHANIC **/
-       // Prevent changing trajectory in the air
 
-        //If not on ground but haven't pressed space, falling off ledge
-        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling) {
+        // Initialize jump/fall if not already jumping or falling
+        if ((this.game.space  || !this.onGround) && !this.jumping && !this.falling) {
             this.updatePlayerType("jumping");
             if (this.game.left) {
                 this.facing = 1;
@@ -141,25 +136,36 @@ class Player {
                 this.facing = 0;
                 this.jumpingRight = true;
             }
-
             this.jumping = true;
             this.onGround = false;
-
             // decrease velocity to increase initial jump power if not just falling off ledge.
-            if(this.game.space) this.velocity.y = -1000;
+            if (this.game.space) this.velocity.y = -1000;
         }
+
         // Edit this.gravity to change gravitational force.
         // ** NOTE: potentially make gravity a constant rather than a field,
         // ** also consider moving gravity to scene manager once implemented
-        if(!this.onGround) {
+        if(!this.onGround || this.falling) {
             this.velocity.y += this.gravity;
         }
         if(this.velocity.y > 0) this.falling = true;
+        if (this.falling && !this.jumping) {
+            this.onGround = false;
+        }
 
+        // Collision with side: falling=false if shift, falling=true if not shift
+        if (this.side) {
+            this.velocity.x= 0;
+            if (this.sticking) {
+                this.falling = false;
+            } else {
+                // rebound here?
+                this.falling = true; // Q: Why does falling here not cause storm to fall off the wall??
+            }
+        } 
 
-        // The jump & fall action
-        if(this.side) this.velocity.x= 0;
-        else if (this.jumping || !this.onGround) {
+        // If not colliding with the side but jumping?
+        else if (this.jumping || !this.onGround || this.falling) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
                 this.velocity.x = 6;
@@ -168,8 +174,11 @@ class Player {
                 this.velocity.x = 6;
                 this.x += this.velocity.x;
             }
+            // Stop jumping and falling once we hit the ground
             if (this.onGround) {
                 this.jumping = false;
+                this.falling = false;
+                this.sticking = false;
             }
         }
 
@@ -184,16 +193,18 @@ class Player {
 
         // Left and right movement
         this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+        if (this.game.left && !this.jumping && !this.falling && !this.sticking && !this.side) {
             this.facing = 1;
             this.velocity.x = 6;
             this.x -= this.velocity.x;
         }
-        else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+        else if (this.game.right && !this.jumping && !this.falling && !this.sticking && !this.side) {
             this.facing = 0;
             this.velocity.x = 6;
             this.x += this.velocity.x;
         }
+
+        
 
         /** UNIVERSAL POSITION UPDATE **/
         this.x += this.velocity.x * TICK;
