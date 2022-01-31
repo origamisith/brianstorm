@@ -13,10 +13,10 @@ class Terrain {
     update(ctx) {
 
     }
-    
+
     draw(ctx) {
       // this.animation.drawFrame(ctx.clockTick, ctx, this.x-this.game.camera.x, this.y, 1);
-      ctx.drawImage(ASSET_MANAGER.getAsset("./assets/blocks/spritesheet.png"), this.choice, 0, 800, 800, this.x - this.game.camera.x, this.y-this.game.camera.y, 200*this.scale, 200*this.scale);
+      ctx.drawImage(ASSET_MANAGER.getAsset("./assets/blocks/spritesheet.png"), this.choice, 0, 800, 800, this.x - this.game.camera.x, this.y-this.game.camera.y, params.blockSize, params.blockSize);
       ctx.strokeStyle = 'red';
       ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width*this.scale, this.BB.height*this.scale);
     }
