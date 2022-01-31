@@ -1,5 +1,6 @@
 /** Global Parameters Object */
-const params = { floor: 780};
+const params = { floor: 780, blockSize: 200};
+
 
 /**
  * @param {Number} n
