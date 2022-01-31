@@ -1,6 +1,7 @@
 /** Global Parameters Object */
 const params = { floor: 780, blockSize: 200};
 
+
 /**
  * @param {Number} n
  * @returns Random Integer Between 0 and n-1

@@ -27,6 +27,8 @@ class Player {
         this.falling = false;
         this.player_type = player_type;
         this.removeFromWorld = false;
+        this.leftCol = false;
+        this.rightCol = false;
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
