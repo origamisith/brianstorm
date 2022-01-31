@@ -13,7 +13,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
-ASSET_MANAGER.queueDownload("./assets/level_background/water.png");
+ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
 
 
 //trigger downloads and add an entity to the canvas

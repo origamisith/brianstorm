@@ -104,7 +104,7 @@ class Player {
         this.onGround = false;
         this.updateBB();
         // Prevents the animation from falling through the window.
-        if (this.y >= params.floor) {
+        if (this.y >= params.floor - this.BB.height/2) {
             this.onGround = true;
         }
 
