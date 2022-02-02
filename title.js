@@ -12,6 +12,6 @@ class Title {
 
     draw(ctx) {
         // this.animation.drawFrame(ctx.clockTick, ctx, this.x-this.game.camera.x, this.y, 1);
-        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/title.jpg"), 100, 400,2096 / 2, 625 /2);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/title.png"), 100, 400,2096 / 2, 625 /2);
     }
 }

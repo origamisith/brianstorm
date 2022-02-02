@@ -6,7 +6,7 @@ const ASSET_MANAGER = new AssetManager();
 
 //although these assets are technically loaded in the entity classes,
 // they must also be downloaded by the asset mangager here as well. (afik)
-ASSET_MANAGER.queueDownload("./assets/title.jpg");
+ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 // ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
