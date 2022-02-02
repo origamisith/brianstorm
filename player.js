@@ -48,29 +48,20 @@ class Player {
 
         this.loadAnimations();
 
-        // Assign spritesheets to values for use.
-        this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
-
-        this.animation = this.defaultAnimation;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
     loadAnimations() {
-        if (this.player_type === "default") {
-            this.animation = this.defaultAnimation;
-            // this.animations[0][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[0][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[1][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[1][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[2][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[2][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[3][0] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
-            // this.animations[3][1] = new Animator(this.animation, 0, 0, 200, 200, 8, 0.1, false, true);
+        if (this.player_type === "default" && this.facing === 0) {
+            this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
+        }
 
-        }
-        else if(this.player_type === "jumping") {
-            this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
-        }
+        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
+        this.leftFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 4200, 200, 200, 200, 21, 0.1, false, true);
+        this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
+        this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
+        this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
+
 
     };
 
@@ -81,6 +72,16 @@ class Player {
 
     /** Updates state frame by frame */
     update() {
+
+
+        //GENERAL PLAYER STATE ANIMATIONS
+        if(this.player_type === "default" && this.facing === 1) {this.animation = this.leftFacingAnimation;}
+        else if(this.player_type === "default" && this.facing === 0) {this.animation = this.rightFacingAnimation;}
+        else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
+        else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
+
+
+
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
         /* Currently, order of operations for collision is:
