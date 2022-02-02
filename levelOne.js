@@ -30,5 +30,6 @@ class levelOneGenerator {
 
 const levelOne = {
   clouds: [{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
-  terrain: levelOneGenerator.generateFloorTerrain(100)
+  terrain: levelOneGenerator.generateFloorTerrain(100),
+  music: "./assets/music/FreedomM.mp3"
 };

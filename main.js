@@ -8,13 +8,14 @@ const ASSET_MANAGER = new AssetManager();
 // they must also be downloaded by the asset mangager here as well. (afik)
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
-ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
-ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
+// ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
+// ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
 ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
-
+ASSET_MANAGER.queueDownload("./assets/title.jpg");
+ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 //trigger downloads and add an entity to the canvas
 ASSET_MANAGER.downloadAll(() => {

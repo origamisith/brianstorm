@@ -5,8 +5,14 @@ class SceneManager {
         this.x = 0
         this.y = 0;
         this.playerCount = 0;
-        this.loadLevelOne(50, 500);
         this.level = 1;
+        this.title = true;
+        this.player = new Player(this.game, "default", 0,0);
+
+        this.game.addEntity(new Title(this.game, 250, 250));
+
+        this.checkStart();
+
 
         // this.player = new this.player(this.game, 0, 0);
         // this.game.addEntity(this.player);
@@ -15,6 +21,14 @@ class SceneManager {
 
     };
 
+    checkStart() {
+        if (this.game.click && this.title) {
+
+            this.loadLevelOne(50, 500);
+            ASSET_MANAGER.pauseBackgroundMusic();
+            ASSET_MANAGER.playAsset(levelOne.music);
+        }
+    };
 
     clearEntities() {
         this.game.entities.forEach(function (entity) {
@@ -32,6 +46,7 @@ class SceneManager {
         this.game.addEntity(this.player);
         var terrainX = [];
         var i = 0;
+
         levelOne.clouds.forEach(c => {
             this.game.addEntity(new Cloud(this.game, c.x, c.y))
         });
@@ -52,6 +67,11 @@ class SceneManager {
     }
 
     update() {
+        this.checkStart();
+        if(this.game.click) {this.title = false;}
+
+        this.updateAudio();
+
         let {width: w, height: h} = this.game.ctx.canvas
         this.x =  this.player.x - w/2; // Keep camera centered on storm at all times
         // If storm nears the bottom of the frame, pan the camera to keep him in frame
@@ -77,4 +97,14 @@ class SceneManager {
             this.loadLevelOne(this.player.x, this.player.y);
         }
     }
+
+    updateAudio() {
+        var mute = document.getElementById("mute").checked;
+        var volume = document.getElementById("volume").value;
+
+        ASSET_MANAGER.muteAudio(mute);
+        ASSET_MANAGER.adjustVolume(volume);
+
+    };
+
 };
