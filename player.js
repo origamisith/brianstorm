@@ -61,7 +61,8 @@ class Player {
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
-
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
 
     };
 
@@ -79,8 +80,8 @@ class Player {
         else if(this.player_type === "default" && this.facing === 0) {this.animation = this.rightFacingAnimation;}
         else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
         else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
-
-
+        else if(this.player_type === "submarine" && this.facing === 1){this.animation = this.submarineLeftFacing;}
+        else if(this.player_type === "submarine" && this.facing === 0){this.animation = this.submarineRightFacing;}
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -129,13 +130,13 @@ class Player {
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
-        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling) {
+        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type != "submarine") {
             this.updatePlayerType("jumping");
             if (this.game.left) {
                 this.facing = 1;
                 this.jumpingLeft = true;
             }
-            else if (this.game.right) {
+            else if (this.game.right && this.player_type != "submarine") {
                 this.facing = 0;
                 this.jumpingRight = true;
             }
@@ -161,7 +162,7 @@ class Player {
         // The jump & fall action
         // Note: will Storm be able to have variable speed? As it is, he will always have same horizontal speed after jumping
         if(this.side) this.velocity.x= 0;
-        else if (this.jumping || !this.onGround) {
+        else if (this.jumping || !this.onGround && this.player_type != "submarine" ) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
                 this.velocity.x = 6;
@@ -176,7 +177,7 @@ class Player {
         }
 
         // Stops the jump once player hits the ground.
-        if (this.onGround) {
+        if (this.onGround && this.player_type != "submarine") {
             this.updatePlayerType("default");
             this.falling = false;
             this.velocity.y = 0;

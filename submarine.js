@@ -36,17 +36,9 @@ class Submarine extends Player {
 
         this.loadAnimations();
 
-        // Assign spritesheets to values for use.
-        this.defaultAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
-        this.animation = this.defaultAnimation;
     };
 
-    /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
-    loadAnimations() {
-        if (this.player_type === "submarine") {
-            this.animation = this.defaultAnimation;
-        }
-    };
+
 
     updateBB() {
         //Bounding box for collision
