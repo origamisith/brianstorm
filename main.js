@@ -9,14 +9,14 @@ const ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
-// ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheet.png");
-// ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/sqink.png");
+// ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
+// ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
 //ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
-ASSET_MANAGER.queueDownload("./assets/water_background/water_background2.png");
+//ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 //trigger downloads and add an entity to the canvas
