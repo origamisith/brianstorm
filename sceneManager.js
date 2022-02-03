@@ -63,7 +63,10 @@ class SceneManager {
         this.player = new Submarine(this.game, "submarine", x, y);
         this.player.gravity = 10
         this.game.addEntity(this.player);
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water.png'), 0, 0, 1200, 1200, -1400-this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
+        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water.png'), 0, 0, 1200, 1200, -1400-this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_background.png'), 0, 0, 1200, 1200, -1400-this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
+        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_background2.png'), 1200, 0, 1200, 1200, -1400-this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
+    
     }
 
     update() {

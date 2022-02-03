@@ -14,8 +14,9 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.pn
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
-ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
-
+//ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
+ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
+ASSET_MANAGER.queueDownload("./assets/water_background/water_background2.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 //trigger downloads and add an entity to the canvas
