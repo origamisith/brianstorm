@@ -35,7 +35,7 @@ class levelOneGenerator {
       place = Math.floor(Math.random() * 50);
       // place enemies at the top of the map so that gravity will pull them down onto the terrain
       // It's a little hacky but coming up with an algorithm to place them ON generated blocks and not inside wasn't coming to me
-      enemies[i] = {x: place, y: 100}
+      enemies[i] = {x: params.blockSize*2*place, y: 100}
     }
     return enemies;
   }
