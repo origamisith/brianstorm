@@ -55,6 +55,11 @@ class SceneManager {
             this.game.addEntity(terrain);
             terrainX[i++] = terrain;
         });
+        levelOne.enemies.forEach(e => {
+            let enemy = new defaultEnemies.Miniraser(this.game, e.x, e.y);
+            this.enemies.gravity = 28;
+            this.game.addEntity(enemy);
+        });
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
     }
     loadWater(x, y) {

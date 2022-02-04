@@ -26,10 +26,25 @@ class levelOneGenerator {
     return terrain;
 
   };
+
+  static enemyGenerator(count) {
+    var enemies = new Array();
+    let i=0;
+    let place = 0;
+    for (i=0; i<count; i++) {
+      place = Math.floor(Math.random() * 50);
+      // place enemies at the top of the map so that gravity will pull them down onto the terrain
+      // It's a little hacky but coming up with an algorithm to place them ON generated blocks and not inside wasn't coming to me
+      enemies[i] = {x: place, y: 100}
+    }
+    return enemies;
+  }
 }
 
 const levelOne = {
   clouds: [{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
   terrain: levelOneGenerator.generateFloorTerrain(100),
+  enemies: levelOneGenerator.enemyGenerator(10),
   music: "./assets/music/FreedomM.mp3"
+
 };
