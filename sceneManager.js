@@ -14,7 +14,7 @@ class SceneManager {
         this.checkStart();
 
 
-        // this.player = new this.player(this.game, 0, 0);
+        // this.player = new Player(this.game, "default", 0, 0);
         // this.game.addEntity(this.player);
         //this.test_sprite = new this.test_sprite(this.game, 0, 0);
         //this.game.addEntity(this.test_sprite);
@@ -55,8 +55,13 @@ class SceneManager {
             this.game.addEntity(terrain);
             terrainX[i++] = terrain;
         });
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
+        levelOne.enemies.forEach(e => {
+            let enemy = new Miniraser(this.game, e.x, e.y);
+            this.game.addEntity(enemy);
+        });
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music_color.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
     }
+    
     loadWater(x, y) {
         this.level = 2;
         // this.clearEntities();
