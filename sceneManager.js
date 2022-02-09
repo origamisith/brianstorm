@@ -59,7 +59,7 @@ class SceneManager {
             let enemy = new Miniraser(this.game, e.x, e.y);
             this.game.addEntity(enemy);
         });
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music_color.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
     }
     
     loadWater(x, y) {
