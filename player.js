@@ -68,12 +68,11 @@ class Player {
 
     updateBB() {
         //Bounding box for collision
-        this.BB = new BoundingBox(this.x, this.y, 200, 200)
+        this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
     }
 
     /** Updates state frame by frame */
     update() {
-
 
         //GENERAL PLAYER STATE ANIMATIONS
         if(this.player_type === "default" && this.facing === 1) {this.animation = this.leftFacingAnimation;}
@@ -208,7 +207,7 @@ class Player {
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
         ctx.strokeStyle = 'red';
-        //ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
     /** Helper method to update the player type */

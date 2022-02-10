@@ -4,16 +4,18 @@
 const gameEngine = new GameEngine();
 const ASSET_MANAGER = new AssetManager();
 
-//although these assets are technically loaded in the entity classes,
+// although these assets are technically loaded in the entity classes,
 // they must also be downloaded by the asset mangager here as well. (afik)
 ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
-// ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
-// ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
+ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetnew.png");
+ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
-ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet.png")
-ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music.jpg")
+ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
+ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
+ASSET_MANAGER.queueDownload("./assets/characters/dino/idle_1.png")
+//ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
 //ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
