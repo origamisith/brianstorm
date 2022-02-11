@@ -68,8 +68,8 @@ class SceneManager {
         this.player = new Submarine(this.game, "submarine", x, y);
         this.player.gravity = 10
         this.game.addEntity(this.player);
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_background.png'), 0, 0, 1200, 1200, -1400 - this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
-        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -1600-this.game.camera.y/5, 3200, 3200), update: () => null})
+        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_background.png'), 0, 0, 1200, 1200, -1400 - this.game.camera.x/5, -800-this.game.camera.y/5, 1600, 1600), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
 
         //this.animator = new Animation(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"),  -1200, 0, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game,c.x, c.y));

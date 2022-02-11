@@ -17,7 +17,7 @@ ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
 ASSET_MANAGER.queueDownload("./assets/characters/dino/idle_1.png")
 //ASSET_MANAGER.queueDownload("./assets/water_background/water.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
-//ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
+ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/smallfish_sheetnew.png");
