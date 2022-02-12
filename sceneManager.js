@@ -36,12 +36,9 @@ class SceneManager {
     loadLevel() {
         console.log("value of variable level passed in: " + this.level)
 
-
         if (this.level === 1) {this.loadLevelOne(0,0);}
         else if (this.level === 2) {this.loadWater(0,0);}
         else if (this.level === 4) {this.loadMusicLevel(0,0);}
-
-
 
     }
 
@@ -99,7 +96,6 @@ class SceneManager {
         this.player = new Player(this.game, "default", x, y)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
-
         musicLevel.chords.forEach(n => {
             let note = new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position);
             this.game.addEntity(note);

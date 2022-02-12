@@ -38,8 +38,6 @@ class Submarine extends Player {
 
     };
 
-
-
     updateBB() {
         //Bounding box for collision
         this.BB = new BoundingBox(this.x - 400, this.y, 800, 400)
