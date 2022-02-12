@@ -100,11 +100,11 @@ class SceneManager {
         this.player.gravity = 28;
         this.game.addEntity(this.player);
 
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
         musicLevel.chords.forEach(n => {
-            console.log(n);
-            this.game.addEntity(new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position));
+            let note = new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position);
+            this.game.addEntity(note);
         });
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
 
         console.log("loaded music level");
     }

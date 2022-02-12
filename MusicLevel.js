@@ -1,9 +1,3 @@
-// a class to load the music level
-class MusicLevelGenerator {
-
-
-}
-
 //the following will load individual notes to their positions on the grids
 //position_offset is the number of half grid squares away from 0,0 to position the note.
 //up indicates up stem notation, and down the reverse
