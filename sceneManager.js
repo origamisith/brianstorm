@@ -2,7 +2,7 @@ class SceneManager {
     constructor(game) {
         this.game = game;
         this.game.camera = this;
-        this.x = 0
+        this.x = 0;
         this.y = 0;
         this.playerCount = 0;
         this.level = 1;
@@ -26,7 +26,7 @@ class SceneManager {
 
             this.loadLevelOne(50, 500);
             ASSET_MANAGER.pauseBackgroundMusic();
-            ASSET_MANAGER.playAsset(levelOne.music);
+            // ASSET_MANAGER.playAsset(levelOne.music);
         }
     };
 
@@ -47,19 +47,26 @@ class SceneManager {
         var terrainX = [];
         var i = 0;
 
-        levelOne.clouds.forEach(c => {
-            this.game.addEntity(new Cloud(this.game, c.x, c.y))
-        });
+
+
+        // levelOne.clouds.forEach(c => {
+        //     this.game.addEntity(new Cloud(this.game, c.x, c.y))
+        // });
         levelOne.terrain.forEach(t => {
             let terrain = new Terrain(this.game, t.x, t.y);
             this.game.addEntity(terrain);
             terrainX[i++] = terrain;
         });
-        levelOne.enemies.forEach(e => {
-            let enemy = new Miniraser(this.game, e.x, e.y);
-            this.game.addEntity(enemy);
-        });
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music_color.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
+        // levelOne.enemies.forEach(e => {
+        //     let enemy = new Miniraser(this.game, e.x, e.y);
+        //     this.game.addEntity(enemy);
+        // });
+        this.game.addEntity(new Quarter_note(this.game,0 ,0, 14, 5));
+
+        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560, 1024, 0, 0, 2560, 1024), update: () => null})
+
     }
     
     loadWater(x, y) {

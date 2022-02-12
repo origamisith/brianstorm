@@ -68,7 +68,7 @@ class Miniraser {
         /** BECOME AGGRO'D */
         let {x, y} = this.game.camera.player;
 
-        console.log("enemy x=" + this.x + ", player x=" + x);
+        // console.log("enemy x=" + this.x + ", player x=" + x);
 
         if (Math.abs(x - (this.x+100)) < this.agroDistance || Math.abs((this.x+100) - x) < this.agroDistance) {
             // player is on the left
