@@ -53,3 +53,14 @@ class Note {
 
     };
 }
+
+
+class ChordBar{
+
+    constructor(game, x, y, x_position_offset, y_position_offset) {
+        this.game = game;
+
+
+    }
+
+}

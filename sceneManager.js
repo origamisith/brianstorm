@@ -5,13 +5,13 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
-        this.level = 1;
+        this.level = 4;
         this.title = true;
         this.player = new Player(this.game, "default", 0,0);
 
         this.game.addEntity(new Title(this.game, 250, 250));
 
-        this.checkStart();
+        this.checkStart(this.level);
 
 
         // this.player = new Player(this.game, "default", 0, 0);
@@ -21,21 +21,29 @@ class SceneManager {
 
     };
 
+
     checkStart() {
         if (this.game.click && this.title) {
-
-            this.loadLevelOne(50, 500);
+            console.log("in check start loading")
+            this.title = false;
+            this.loadLevel();
+            console.log("called load level")
             ASSET_MANAGER.pauseBackgroundMusic();
             // ASSET_MANAGER.playAsset(levelOne.music);
         }
     };
 
-    clearEntities() {
-        this.game.entities.forEach(function (entity) {
-            entity.removeFromWorld = true;
-        });
-    };
+    loadLevel() {
+        console.log("value of variable level passed in: " + this.level)
 
+
+        if (this.level === 1) {this.loadLevelOne(0,0);}
+        else if (this.level === 2) {this.loadWater(0,0);}
+        else if (this.level === 4) {this.loadMusicLevel(0,0);}
+
+
+
+    }
 
 
     loadLevelOne(x, y) {
@@ -48,53 +56,19 @@ class SceneManager {
         var i = 0;
 
 
-
-        // levelOne.clouds.forEach(c => {
-        //     this.game.addEntity(new Cloud(this.game, c.x, c.y))
-        // });
-        // levelOne.terrain.forEach(t => {
-        //     let terrain = new Terrain(this.game, t.x, t.y);
-        //     this.game.addEntity(terrain);
-        //     terrainX[i++] = terrain;
-        // });
-        // levelOne.enemies.forEach(e => {
-        //     let enemy = new Miniraser(this.game, e.x, e.y);
-        //     this.game.addEntity(enemy);
-        // });
-        this.game.addEntity(new Note(this.game,0 ,0, 14, 7, "quarter","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 14, 12, "quarter","down"));
-        this.game.addEntity(new Note(this.game,0 ,0, 14, 14, "half","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 14, 19, "half","down"));
-
-        this.game.addEntity(new Note(this.game,0 ,0, 22, 5, "quarter","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 22, 9, "quarter","down"));
-        this.game.addEntity(new Note(this.game,0 ,0, 22, 20, "quarter","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 22, 25, "quarter","down"));
-
-        this.game.addEntity(new Note(this.game,0 ,0, 26, 5, "quarter","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 26, 10, "quarter","down"));
-        this.game.addEntity(new Note(this.game,0 ,0, 26, 19, "quarter","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 26, 23, "quarter","down"));
-
-        this.game.addEntity(new Note(this.game,0 ,0, 31, 2.5, "half","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 31, 10, "half","down"));
-        this.game.addEntity(new Note(this.game,0 ,0, 31, 16, "half","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 31, 21, "half","down"));
-
-        this.game.addEntity(new Note(this.game,0 ,0, 39, 2, "half","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 39, 10, "half","down"));
-        this.game.addEntity(new Note(this.game,0 ,0, 39, 16, "half","up"));
-        this.game.addEntity(new Note(this.game,0 ,0, 39, 23, "half","down"));
-
-
-
-
-
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
-
-
-
+        levelOne.clouds.forEach(c => {
+            this.game.addEntity(new Cloud(this.game, c.x, c.y))
+        });
+        levelOne.terrain.forEach(t => {
+            let terrain = new Terrain(this.game, t.x, t.y);
+            this.game.addEntity(terrain);
+            terrainX[i++] = terrain;
+        });
+        levelOne.enemies.forEach(e => {
+            let enemy = new Miniraser(this.game, e.x, e.y);
+            this.game.addEntity(enemy);
+        });
+        console.log("loaded level one");
     }
     
     loadWater(x, y) {
@@ -114,15 +88,44 @@ class SceneManager {
         levelWater.doubleSeahorses.forEach(e => {
           let seahorse = new Seahorses(this.game, e.x, e.y);
           this.game.addEntity(seahorse);
-        }); 
-      
+        });
+        console.log("loaded water level");
     }
+
+    loadMusicLevel(x, y) {
+        console.log("in music level loading")
+        this.level = 4;
+        this.clearEntities();
+        this.player = new Player(this.game, "default", x, y)
+        this.player.gravity = 28;
+        this.game.addEntity(this.player);
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        musicLevel.chords.forEach(n => {
+            console.log(n);
+            this.game.addEntity(new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position));
+        });
+
+        console.log("loaded music level");
+    }
+
+
+    clearEntities() {
+        this.game.entities.forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+    };
+
 
     update() {
         this.checkStart();
         if(this.game.click) {this.title = false;}
 
         this.updateAudio();
+
+        //collide with chord bar to make noise
+
+
 
         let {width: w, height: h} = this.game.ctx.canvas
         this.x =  this.player.x - w/2; // Keep camera centered on storm at all times
@@ -144,10 +147,10 @@ class SceneManager {
             this.player.removeFromWorld = true;
             this.loadWater(this.player.x, this.player.y);
         }
-        if(this.player.x >= -500 && this.level !== 1) {
-            this.player.removeFromWorld = true;
-            this.loadLevelOne(this.player.x, this.player.y);
-        }
+        // if(this.player.x >= -500 && this.level !== 1) {
+        //     this.player.removeFromWorld = true;
+        //     this.loadLevelOne(this.player.x, this.player.y);
+        // }
     }
 
     updateAudio() {
