@@ -52,20 +52,48 @@ class SceneManager {
         // levelOne.clouds.forEach(c => {
         //     this.game.addEntity(new Cloud(this.game, c.x, c.y))
         // });
-        levelOne.terrain.forEach(t => {
-            let terrain = new Terrain(this.game, t.x, t.y);
-            this.game.addEntity(terrain);
-            terrainX[i++] = terrain;
-        });
+        // levelOne.terrain.forEach(t => {
+        //     let terrain = new Terrain(this.game, t.x, t.y);
+        //     this.game.addEntity(terrain);
+        //     terrainX[i++] = terrain;
+        // });
         // levelOne.enemies.forEach(e => {
         //     let enemy = new Miniraser(this.game, e.x, e.y);
         //     this.game.addEntity(enemy);
         // });
-        this.game.addEntity(new Quarter_note(this.game,0 ,0, 14, 5));
+        this.game.addEntity(new Note(this.game,0 ,0, 14, 7, "quarter","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 14, 12, "quarter","down"));
+        this.game.addEntity(new Note(this.game,0 ,0, 14, 14, "half","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 14, 19, "half","down"));
 
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        this.game.addEntity(new Note(this.game,0 ,0, 22, 5, "quarter","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 22, 9, "quarter","down"));
+        this.game.addEntity(new Note(this.game,0 ,0, 22, 20, "quarter","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 22, 25, "quarter","down"));
 
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560, 1024, 0, 0, 2560, 1024), update: () => null})
+        this.game.addEntity(new Note(this.game,0 ,0, 26, 5, "quarter","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 26, 10, "quarter","down"));
+        this.game.addEntity(new Note(this.game,0 ,0, 26, 19, "quarter","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 26, 23, "quarter","down"));
+
+        this.game.addEntity(new Note(this.game,0 ,0, 31, 2.5, "half","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 31, 10, "half","down"));
+        this.game.addEntity(new Note(this.game,0 ,0, 31, 16, "half","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 31, 21, "half","down"));
+
+        this.game.addEntity(new Note(this.game,0 ,0, 39, 2, "half","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 39, 10, "half","down"));
+        this.game.addEntity(new Note(this.game,0 ,0, 39, 16, "half","up"));
+        this.game.addEntity(new Note(this.game,0 ,0, 39, 23, "half","down"));
+
+
+
+
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+
+
 
     }
     
