@@ -47,23 +47,16 @@ class Player {
         ];
 
         this.loadAnimations();
+        this.update();
 
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
     loadAnimations() {
-        if (this.player_type === "default" && this.facing === 0) {
-            this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
-        }
-
-        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.leftFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 4200, 200, 200, 200, 21, 0.1, false, true);
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
-        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
-        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
-
     };
 
     updateBB() {
@@ -71,16 +64,17 @@ class Player {
         this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
     }
 
-    /** Updates state frame by frame */
-    update() {
-
-        //GENERAL PLAYER STATE ANIMATIONS
+    updateAnimations() {
         if(this.player_type === "default" && this.facing === 1) {this.animation = this.leftFacingAnimation;}
         else if(this.player_type === "default" && this.facing === 0) {this.animation = this.rightFacingAnimation;}
         else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
         else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
-        else if(this.player_type === "submarine" && this.facing === 1){this.animation = this.submarineLeftFacing;}
-        else if(this.player_type === "submarine" && this.facing === 0){this.animation = this.submarineRightFacing;}
+    }
+    /** Updates state frame by frame */
+    update() {
+        this.updateAnimations()
+
+        //GENERAL PLAYER STATE ANIMATIONS
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -124,28 +118,31 @@ class Player {
             }
         });
 
+        if(this.player_type !== "submarine" || true) {
+
 
 
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
-        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type != "submarine") {
+        if(!this.jumping && (this.game.space || !this.onGround)) {
+            this.jumping = true;
+            // decrease velocity to increase initial jump power if not just falling off ledge.
+            if(this.game.space) this.velocity.y = -1000;
+        }
+        if (this.jumping && !this.falling) {
             this.updatePlayerType("jumping");
             if (this.game.left) {
                 this.facing = 1;
-                this.jumpingLeft = true;
             }
-            else if (this.game.right && this.player_type != "submarine") {
+            else if (this.game.right) {
                 this.facing = 0;
-                this.jumpingRight = true;
             }
 
             this.jumping = true;
             this.onGround = false;
-
-            // decrease velocity to increase initial jump power if not just falling off ledge.
-            if(this.game.space) this.velocity.y = -1000;
         }
+
         //If not on ground but haven't pressed space, falling off ledge
         // Edit this.gravity to change gravitational force.
         // ** NOTE: potentially make gravity a constant rather than a field,
@@ -161,12 +158,12 @@ class Player {
         // The jump & fall action
         // Note: will Storm be able to have variable speed? As it is, he will always have same horizontal speed after jumping
         if(this.side) this.velocity.x= 0;
-        else if (this.jumping || !this.onGround && this.player_type != "submarine" ) {
+        else if (this.jumping || !this.onGround) {
             this.updatePlayerType("jumping");
-            if (this.jumpingLeft) {
+            if (this.jumping && this.facing === 1) {
                 this.velocity.x = 6;
                 this.x -= this.velocity.x;
-            } else if (this.jumpingRight) {
+            } else if (this.jumping && this.facing === 0) {
                 this.velocity.x = 6;
                 this.x += this.velocity.x;
             }
@@ -174,14 +171,14 @@ class Player {
                 this.jumping = false;
             }
         }
+        }
 
         // Stops the jump once player hits the ground.
-        if (this.onGround && this.player_type != "submarine") {
+        if (this.onGround) {
             this.updatePlayerType("default");
             this.falling = false;
             this.velocity.y = 0;
-            this.jumpingLeft = false;
-            this.jumpingRight = false;
+            this.jumping = false;
         }
 
         // Left and right movement

@@ -35,9 +35,14 @@ class Submarine extends Player {
         ];
 
         this.loadAnimations();
+        this.update();
 
     };
 
+    loadAnimations() {
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
+    }
 
 
     updateBB() {
@@ -45,7 +50,10 @@ class Submarine extends Player {
         this.BB = new BoundingBox(this.x - 400, this.y, 800, 400)
     }
 
-
+    updateAnimations() {
+        if(this.facing === 1){this.animation = this.submarineLeftFacing;}
+        else if(this.facing === 0){this.animation = this.submarineRightFacing;}
+    }
     //draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, 1);
