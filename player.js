@@ -195,12 +195,12 @@ class Player {
         this.velocity.x = 0;
         if (this.game.left && !this.jumping && !this.falling && !this.side) {
             this.facing = 1;
-            this.velocity.x = 20;
+            this.velocity.x = 6;
             this.x -= this.velocity.x;
         }
         else if (this.game.right && !this.jumping && !this.falling && !this.side) {
             this.facing = 0;
-            this.velocity.x = 20;
+            this.velocity.x = 6;
             this.x += this.velocity.x;
         }
 

@@ -5,7 +5,7 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
-        this.level = 4;
+        this.level = 1;
         this.title = true;
         this.player = new Player(this.game, "default", 0,0);
 
