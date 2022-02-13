@@ -10,7 +10,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 2;
+        this.level = 1;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -44,7 +44,7 @@ class SceneManager {
     loadIntroLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", x,y)
+        this.player = new Player(this.game, "default", x,y, 6, 0)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         const terrainX = [];
