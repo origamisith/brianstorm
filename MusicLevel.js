@@ -32,4 +32,15 @@ const musicLevel = {
         {x: 0, y: 0, x_position_offset: 39, y_position_offset: 10, type: "half", position: "down"},
         {x: 0, y: 0, x_position_offset: 39, y_position_offset: 16, type: "half", position: "up"},
         {x: 0, y: 0, x_position_offset: 39, y_position_offset: 23, type: "half", position: "down"}
+
+
+
+
+
+
+
+
+
+
+
     ]};

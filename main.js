@@ -9,15 +9,20 @@ const ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
+
+ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetnew.png");
+
+
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet.png");
+
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
-
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/dino/idle_1.png")
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
@@ -41,9 +46,6 @@ ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = true;
-
-	// // Adds a default player
-	// gameEngine.addEntity(new Player(gameEngine, "default"));
 	gameEngine.init(ctx);
 	new SceneManager(gameEngine);
 	gameEngine.start();

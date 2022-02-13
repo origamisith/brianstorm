@@ -1,4 +1,4 @@
-//main player object
+//submarine player object
 
 //PARAMS:
 //game is the game engine that the player will be placed into
@@ -6,8 +6,8 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Submarine extends Player {
 
-    constructor(game, player_type, x, y) {
-        super(game, player_type, x, y);
+    constructor(game, player_type, x, y, x_vel, y_vel) {
+        super(game, player_type, x, y, x_vel, y_vel);
         Object.assign(this, { game, player_type, x, y });
 
         //assign the game engine to this object
@@ -16,23 +16,10 @@ class Submarine extends Player {
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 800, 400);
 
-
-
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
         // Player facing: 0=right. 1=left.
         this.facing = 0;
-        // a 2D array to store all the player's states.
-        this.animations = [
-            [0,0],
-            [0,1],
-            [1,0],
-            [1,1],
-            [2,0],
-            [2,1],
-            [3,0],
-            [3,1]
-        ];
 
         this.loadAnimations();
 
@@ -48,8 +35,21 @@ class Submarine extends Player {
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, 1);
         ctx.strokeStyle = 'red';
-       // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // uncomment for bb
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
+
+
+    update() {
+
+        if(this.player_type === "submarine" && this.facing === 1){this.animation = this.submarineLeftFacing;}
+        else if(this.player_type === "submarine" && this.facing === 0){this.animation = this.submarineRightFacing;}
+        // Left and right movement
+        if(this.player_type === "submarine") {
+            this.leftRightMovement();
+        }
+
+    }
 
     /** Helper method to update the player type */
     updatePlayerType(player_type) {

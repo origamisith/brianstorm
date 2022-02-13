@@ -6,19 +6,20 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y) {
+    constructor(game, player_type, x, y, x_vel, y_vel) {
         Object.assign(this, { game, player_type, x, y });
 
         //assign the game engine to this object
         this.game = game;
 
-
+        this.x_vel = x_vel;
+        this.y_vel =y_vel;
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
 
-        // update x and y position
-        this.velocity = { x: 0, y: 0 };
+        // update x and y position, use velocity values passed in from calling function
+        this.velocity = { x: x_vel, y: y_vel };
         this.gravity = 28;
         this.onGround = true;
         this.jumping = false;
@@ -79,8 +80,7 @@ class Player {
         else if(this.player_type === "default" && this.facing === 0) {this.animation = this.rightFacingAnimation;}
         else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
         else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
-        else if(this.player_type === "submarine" && this.facing === 1){this.animation = this.submarineLeftFacing;}
-        else if(this.player_type === "submarine" && this.facing === 0){this.animation = this.submarineRightFacing;}
+
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -136,13 +136,13 @@ class Player {
        /** JUMP MECHANIC **/
        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
-        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type != "submarine") {
+        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type !== "submarine") {
             this.updatePlayerType("jumping");
             if (this.game.left) {
                 this.facing = 1;
                 this.jumpingLeft = true;
             }
-            else if (this.game.right && this.player_type != "submarine") {
+            else if (this.game.right && this.player_type !== "submarine") {
                 this.facing = 0;
                 this.jumpingRight = true;
             }
@@ -168,7 +168,7 @@ class Player {
         // The jump & fall action
         // Note: will Storm be able to have variable speed? As it is, he will always have same horizontal speed after jumping
         if(this.side) this.velocity.x= 0;
-        else if (this.jumping || !this.onGround && this.player_type != "submarine" ) {
+        else if (this.jumping || !this.onGround && this.player_type !== "submarine" ) {
             this.updatePlayerType("jumping");
             if (this.jumpingLeft) {
                 this.velocity.x = 6;
@@ -183,26 +183,14 @@ class Player {
         }
 
         // Stops the jump once player hits the ground.
-        if (this.onGround && this.player_type != "submarine") {
+        if (this.onGround && this.player_type !== "submarine") {
             this.updatePlayerType("default");
             this.falling = false;
             this.velocity.y = 0;
             this.jumpingLeft = false;
             this.jumpingRight = false;
         }
-
-        // Left and right movement
-        this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
-            this.facing = 1;
-            this.velocity.x = 6;
-            this.x -= this.velocity.x;
-        }
-        else if (this.game.right && !this.jumping && !this.falling && !this.side) {
-            this.facing = 0;
-            this.velocity.x = 6;
-            this.x += this.velocity.x;
-        }
+        this.leftRightMovement();
 
         /** UNIVERSAL POSITION UPDATE **/
         this.x += this.velocity.x * TICK;
@@ -210,7 +198,21 @@ class Player {
 
     };
 
-    //draw method will render this entity to the canvas
+    leftRightMovement() {
+        // Left and right movement
+        this.velocity.x = 0;
+        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+            this.facing = 1;
+            this.velocity.x = this.x_vel;
+            this.x -= this.velocity.x;
+        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+            this.facing = 0;
+            this.velocity.x = this.x_vel;
+            this.x += this.velocity.x;
+        }
+    }
+
+//draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
         ctx.strokeStyle = 'red';
@@ -224,4 +226,4 @@ class Player {
             this.loadAnimations();
         }
     }
-};
+}

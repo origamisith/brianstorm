@@ -1,7 +1,9 @@
 class levelWaterGenerator {
 
+
   static double_seahorses(count) {
       var doubleSeahorses = new Array();
+
       let place = 0;
       for (let i=0; i<count; i++) {
         place = Math.floor(Math.random() * 50);
