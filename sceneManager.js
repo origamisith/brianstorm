@@ -5,53 +5,53 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
+
+        //1 = intro level
+        //2 = water level
+        //3 = space level
+        //4 = music level
         this.level = 1;
+
+        //initially set the game in the title screen state
         this.title = true;
         this.player = new Player(this.game, "default", 0,0);
-
+        //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
-
         this.checkStart(this.level);
-
-
-        // this.player = new Player(this.game, "default", 0, 0);
-        // this.game.addEntity(this.player);
-        //this.test_sprite = new this.test_sprite(this.game, 0, 0);
-        //this.game.addEntity(this.test_sprite);
 
     };
 
-
+    //checks to see if game is starting for the first time
+    //forced player to click on screen which enables sound
     checkStart() {
         if (this.game.click && this.title) {
-            console.log("in check start loading")
             this.title = false;
             this.loadLevel();
-            console.log("called load level")
             ASSET_MANAGER.pauseBackgroundMusic();
-            // ASSET_MANAGER.playAsset(levelOne.music);
+
         }
     };
 
+    //called byCheckStart to load the chosen level
     loadLevel() {
-        console.log("value of variable level passed in: " + this.level)
-
-        if (this.level === 1) {this.loadLevelOne(0,0);}
+        if (this.level === 1) {this.loadIntroLevel(0,0);}
         else if (this.level === 2) {this.loadWater(0,0);}
         else if (this.level === 4) {this.loadMusicLevel(0,0);}
 
     }
 
 
-    loadLevelOne(x, y) {
+    loadIntroLevel(x, y) {
         this.level = 1;
         this.clearEntities();
         this.player = new Player(this.game, "default", x,y)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
-        var terrainX = [];
-        var i = 0;
+        const terrainX = [];
+        let i = 0;
 
+        //uncomment line below to start music on page click
+        // ASSET_MANAGER.playAsset(levelOne.music);
 
         levelOne.clouds.forEach(c => {
             this.game.addEntity(new Cloud(this.game, c.x, c.y))
@@ -105,7 +105,7 @@ class SceneManager {
         console.log("loaded music level");
     }
 
-
+    //removes all entities from the canvas
     clearEntities() {
         this.game.entities.forEach(function (entity) {
             entity.removeFromWorld = true;
@@ -118,9 +118,6 @@ class SceneManager {
         if(this.game.click) {this.title = false;}
 
         this.updateAudio();
-
-        //collide with chord bar to make noise
-
 
 
         let {width: w, height: h} = this.game.ctx.canvas
@@ -150,12 +147,12 @@ class SceneManager {
     }
 
     updateAudio() {
-        var mute = document.getElementById("mute").checked;
-        var volume = document.getElementById("volume").value;
+        const mute = document.getElementById("mute").checked;
+        const volume = document.getElementById("volume").value;
 
         ASSET_MANAGER.muteAudio(mute);
         ASSET_MANAGER.adjustVolume(volume);
 
     };
 
-};
+}
