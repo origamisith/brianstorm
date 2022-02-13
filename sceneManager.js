@@ -68,20 +68,18 @@ class SceneManager {
         this.player = new Submarine(this.game, "submarine", x, y);
         this.player.gravity = 10
         this.game.addEntity(this.player);
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
-
-    
-        
-        //this.game.addEntity(new Fishes(this.game, x, y - 500));
-        
         levelWater.fish.forEach(f => {
-            this.game.addEntity(new Fishes(this.game, f.x, f.y));
+            this.game.addEntity(new Fishes(this.game, f.x , f.y));
         }); 
        
-        levelWater.doubleSeahorses.forEach(s => {
-          this.game.addEntity(new Seahorses(this.game, s.x, s.y));
-        }); 
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
       
+       /*  levelWater.doubleSeahorses.forEach(s => {
+          this.game.addEntity(new Seahorses(this.game, s.x, s.y));
+        });  */ 
+        /*   levelWater.shark.forEach(s => {
+            this.game.addEntity(new Shark(this.game, s.x, s.y));
+        });   */
     }
 
     update() {

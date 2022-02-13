@@ -5,7 +5,7 @@ class Seahorses {
         this.game = game;
         this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), 0, 0, 700, 700, 7, 0.7, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse_sheetnew.png"), 0, 0, 700, 700, 7, 0.7, false, true);
       
     };
 
@@ -24,7 +24,7 @@ class Fishes {
         this.game = game;
         this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/smallfish_sheetnew.png"), 0, 0, 600, 600, 6, 0.6, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/fishes/smallfish_sheetnew.png"), 0, 0, 600, 600, 6, 0.6, false, true);
         
     };
 
@@ -33,7 +33,7 @@ class Fishes {
     };
 
     update() {
-        //  this.x += this.speed + this.game.clockTick;
-        // if (this.x < -2400) this.x = 0; 
+         this.x -= this.speed + this.game.clockTick;
+        if (this.x < -2800) this.x = 0; 
     };
 };
