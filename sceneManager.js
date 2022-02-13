@@ -10,14 +10,14 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 2;
 
         //initially set the game in the title screen state
         this.title = true;
         this.player = new Player(this.game, "default", 0,0);
         //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
-        this.checkStart(this.level);
+        this.checkStart();
 
     };
 
@@ -42,7 +42,7 @@ class SceneManager {
 
 
     loadIntroLevel(x, y) {
-        this.level = 1;
+
         this.clearEntities();
         this.player = new Player(this.game, "default", x,y)
         this.player.gravity = 28;
@@ -65,44 +65,48 @@ class SceneManager {
             let enemy = new Miniraser(this.game, e.x, e.y);
             this.game.addEntity(enemy);
         });
-        console.log("loaded level one");
+
     }
     
     loadWater(x, y) {
-        this.level = 2;
-        // this.clearEntities();
-        this.player = new Submarine(this.game, "submarine", x, y);
-        this.player.gravity = 10
+        this.clearEntities();
+        this.player = new Submarine(this.game, "submarine", 100, 100, 20, 10);
+        this.player.gravity = 0;
         this.game.addEntity(this.player);
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
 
         //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
         
-        this.game.addEntity(new Fishes(this.game, this.player.x, y- 500));
-        
-       
+        this.game.addEntity(new Fishes(this.game, this.player.x, y));
+
         levelWater.doubleSeahorses.forEach(e => {
           let seahorse = new Seahorses(this.game, e.x, e.y);
           this.game.addEntity(seahorse);
         });
-        console.log("loaded water level");
+
+
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, 0 - this.game.camera.x/5, 0-this.game.camera.y/5, 3200, 1600), update: () => null})
     }
 
     loadMusicLevel(x, y) {
-        console.log("in music level loading")
-        this.level = 4;
+
         this.clearEntities();
-        this.player = new Player(this.game, "default", x, y)
+        this.player = new Player(this.game, "default", x, y, 30, 10)
         this.player.gravity = 28;
+
         this.game.addEntity(this.player);
+
+        //iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
             let note = new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position);
             this.game.addEntity(note);
         });
+
+        //add sheet music background to canvas
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
 
-        console.log("loaded music level");
+
     }
 
     //removes all entities from the canvas
@@ -135,15 +139,8 @@ class SceneManager {
         else if(this.player.y - this.y < ph / 2) {
             this.y = this.player.y - ph / 2;
         }
-        //submarine condition
-        if(this.player.x < -500 && this.level !== 2) {
-            this.player.removeFromWorld = true;
-            this.loadWater(this.player.x, this.player.y);
-        }
-        // if(this.player.x >= -500 && this.level !== 1) {
-        //     this.player.removeFromWorld = true;
-        //     this.loadLevelOne(this.player.x, this.player.y);
-        // }
+
+
     }
 
     updateAudio() {

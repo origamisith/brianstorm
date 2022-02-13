@@ -1,7 +1,7 @@
 class levelWaterGenerator {
 
     static double_seahorses(count) {
-      var doubleSeahorses = new Array();
+      const doubleSeahorses = [];
       let i=0;
       let place = 0;
       for (i=0; i<count; i++) {
