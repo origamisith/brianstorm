@@ -10,7 +10,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 4;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -104,7 +104,9 @@ class SceneManager {
         });
 
         //add sheet music background to canvas
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        //add debug grid
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
 
 
     }
