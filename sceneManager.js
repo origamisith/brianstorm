@@ -132,7 +132,7 @@ class SceneManager {
 
 
 
-    }
+    
 
     //removes all entities from the canvas
     clearEntities() {
