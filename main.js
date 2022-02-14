@@ -22,6 +22,7 @@ ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/dino/idle_1.png")
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
@@ -37,6 +38,9 @@ ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_down
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_down_sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/barline/barline_spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/treble_clef/treble_clef_spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/bass_clef/bass_clef_spritesheet.png");
 
 
 

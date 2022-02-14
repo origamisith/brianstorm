@@ -2,9 +2,9 @@ class levelWaterGenerator {
 
 
   static double_seahorses(count) {
-      var doubleSeahorses = new Array();
+    const doubleSeahorses = [];
 
-      let place = 0;
+    let place = 0;
       for (let i=0; i<count; i++) {
         place = Math.floor(Math.random() * 50);
         doubleSeahorses[i] = {x:params.blockSize*2*place, y: 50}
@@ -13,7 +13,7 @@ class levelWaterGenerator {
   }
 
   static fishes(count) {
-    var fish = new Array();
+    const fish = [];
     let place = 0;
     for (let i=0; i<count; i++) {
       place = Math.floor(Math.random());
@@ -23,7 +23,7 @@ class levelWaterGenerator {
   }
 
   static sharkGenerate(count) {
-    var shark = new Array();
+    const shark = [];
     let place = 0;
     for (let i=0; i<count; i++) {
       place = Math.floor(Math.random());

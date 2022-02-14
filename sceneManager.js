@@ -1,10 +1,12 @@
 class SceneManager {
-    constructor(game) {
+    constructor(game, debug) {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
+
+        this.debug = debug;
 
         //1 = intro level
         //2 = water level
@@ -109,30 +111,32 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", x, y, 30, 10)
+        this.player = new Player(this.game, "default", 0, y, 100, 10, false)
         this.player.gravity = 28;
 
         this.game.addEntity(this.player);
 
-        //iterate through all chord structures and add them to the game canvas
+        // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
-            let note = new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position);
+            let note = new Note(this.game, n.beat_offset, n.note_value, n.type, n.stem_direction, n.clef);
             this.game.addEntity(note);
         });
 
+        musicLevel.barlines.forEach(b => {
+            let barline = new Barline(this.game, b.position);
+            this.game.addEntity(barline);
+        });
 
-        //add sheet music background to canvas
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
-        //add debug grid
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
+        musicLevel.clefs.forEach(cl => {
+            let clef = new Clefs(this.game, cl.x_position, cl.y_position, cl.type);
+            this.game.addEntity(clef);
+        });
 
-
-
+        // add sheet music background to canvas
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
     }
 
 
-
-    
 
     //removes all entities from the canvas
     clearEntities() {
@@ -143,6 +147,9 @@ class SceneManager {
 
 
     update() {
+
+        const debug = document.getElementById("debug").checked;
+
         this.checkStart();
         if(this.game.click) {this.title = false;}
 
@@ -164,8 +171,6 @@ class SceneManager {
         else if(this.player.y - this.y < ph / 2) {
             this.y = this.player.y - ph / 2;
         }
-
-
     }
 
     updateAudio() {
