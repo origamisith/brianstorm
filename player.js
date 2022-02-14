@@ -6,11 +6,14 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel) {
+    constructor(game, player_type, x, y, x_vel, y_vel, show_bb) {
         Object.assign(this, { game, player_type, x, y });
 
         //assign the game engine to this object
         this.game = game;
+
+        //debug optional boolean
+        this.bb_enable = show_bb;
 
         this.x_vel = x_vel;
         this.y_vel =y_vel;
@@ -215,8 +218,12 @@ class Player {
 //draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+
+        if(this.bb_enable) {
+            ctx.strokeStyle = 'red';
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        }
+
     };
 
     /** Helper method to update the player type */

@@ -5,33 +5,23 @@
 const musicLevel = {
 
     chords: [
-        //1st chord
-        {x: 0, y: 0, x_position_offset: 14, y_position_offset: 7, type: "quarter", position: "up"},
-        {x: 0, Y: 0, x_position_offset: 14, y_position_offset: 12, type: "quarter", position: "down"},
-        {x: 0, y: 0, x_position_offset: 14, y_position_offset: 14, type: "half", position: "up"},
-        {x: 0, y: 0, x_position_offset: 14, y_position_offset: 19, type: "half", position: "down"},
 
-        //2nd chord
-        {x: 0, y: 0, x_position_offset: 22, y_position_offset: 5, type: "quarter", position: "up"},
-        {x: 0, y: 0, x_position_offset: 22, y_position_offset: 9, type: "quarter", position: "down"},
-        {x: 0, y: 0, x_position_offset: 22, y_position_offset: 20, type: "quarter", position: "up"},
-        {x: 0, y: 0, x_position_offset: 22, y_position_offset: 25, type: "quarter", position: "down"},
+        //bar 1
+        {x_position_offset: 16, y_position_offset: 7, type: "quarter", position: "up"},
+        {x_position_offset: 16, y_position_offset: 12, type: "quarter", position: "down"},
+        {x_position_offset: 16, y_position_offset: 14, type: "half", position: "up"},
+        {x_position_offset: 16, y_position_offset: 19, type: "half", position: "down"},
 
-        //etc
-        {x: 0, y: 0, x_position_offset: 26, y_position_offset: 5, type: "quarter", position: "up"},
-        {x: 0, y: 0, x_position_offset: 26, y_position_offset: 10, type: "quarter", position: "down"},
-        {x: 0, y: 0, x_position_offset: 26, y_position_offset: 19, type: "quarter", position: "up"},
-        {x: 0, y: 0, x_position_offset: 26, y_position_offset: 23, type: "quarter", position: "down"},
 
-        {x: 0, y: 0, x_position_offset: 31, y_position_offset: 2.5, type: "half", position: "up"},
-        {x: 0, y: 0, x_position_offset: 31, y_position_offset: 10, type: "half", position: "down"},
-        {x: 0, y: 0, x_position_offset: 31, y_position_offset: 16, type: "half", position: "up"},
-        {x: 0, y: 0, x_position_offset: 31, y_position_offset: 21, type: "half", position: "down"},
-
-        {x: 0, y: 0, x_position_offset: 39, y_position_offset: 2, type: "half", position: "up"},
-        {x: 0, y: 0, x_position_offset: 39, y_position_offset: 10, type: "half", position: "down"},
-        {x: 0, y: 0, x_position_offset: 39, y_position_offset: 16, type: "half", position: "up"},
-        {x: 0, y: 0, x_position_offset: 39, y_position_offset: 23, type: "half", position: "down"}
+        {x_position_offset: 24, y_position_offset: 5, type: "quarter", position: "up"},
+        {x_position_offset: 24, y_position_offset: 9, type: "quarter", position: "down"},
+        {x_position_offset: 24, y_position_offset: 20, type: "quarter", position: "up"},
+        {x_position_offset: 24, y_position_offset: 25, type: "quarter", position: "down"},
+        
+        {x_position_offset: 28, y_position_offset: 5, type: "quarter", position: "up"},
+        {x_position_offset: 28, y_position_offset: 10, type: "quarter", position: "down"},
+        {x_position_offset: 28, y_position_offset: 19, type: "quarter", position: "up"},
+        {x_position_offset: 28, y_position_offset: 23, type: "quarter", position: "down"},
 
 
 

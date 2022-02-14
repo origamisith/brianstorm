@@ -1,16 +1,18 @@
 class SceneManager {
-    constructor(game) {
+    constructor(game, debug) {
         this.game = game;
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
 
+        this.debug = debug;
+
         //1 = intro level
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 4;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -109,24 +111,33 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", x, y, 30, 10)
+        this.player = new Player(this.game, "default", 0, y, 100, 10, false)
         this.player.gravity = 28;
 
         this.game.addEntity(this.player);
 
         //iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
-            let note = new Note(this.game, n.x, n.y, n.x_position_offset, n.y_position_offset, n.type, n.position);
+            let note = new Note(this.game, n.x_position_offset, n.y_position_offset, n.type, n.position);
             this.game.addEntity(note);
         });
 
 
-        //add sheet music background to canvas
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
-        //add debug grid
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560, 1024), update: () => null})
 
 
+            // add sheet music background to canvas
+                this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 9216 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 9216, 1024), update: () => null})
+        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music_no_clef.png'), 1000, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560 * 2, 1024), update: () => null})
+
+
+
+
+            //draw sheet music grid
+            // this.game.addEntity({
+            //     draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560, 1024, 0 - this.game.camera.x / 5, 0 - this.game.camera.y / 5, 2560, 1024),
+            //     update: () => null
+            // })
+            //
 
     }
 
@@ -141,6 +152,9 @@ class SceneManager {
 
 
     update() {
+
+        const debug = document.getElementById("debug").checked;
+
         this.checkStart();
         if(this.game.click) {this.title = false;}
 
