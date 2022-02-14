@@ -4,7 +4,7 @@ class Barline {
     constructor(game, beat_offset) {
         this.game = game;
 
-        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/music/barline/barline_spritesheet.png"), 0, 0, 25, 1024, 3, 0.1);
+        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/music/barline/barline_spritesheet.png"), 2, 0, 25, 1024, 3, 0.1);
         this.x = ((32 * beat_offset)- 10);
         this.y = 0;
     }

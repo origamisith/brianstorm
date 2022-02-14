@@ -111,14 +111,14 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", 0, y, 100, 10, false)
+        this.player = new Player(this.game, "default", 4000 * 16, y, 100, 10, false)
         this.player.gravity = 28;
 
         this.game.addEntity(this.player);
 
         // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
-            let note = new Note(this.game, n.beat_offset, n.note_value, n.type, n.orientation, n.clef);
+            let note = new Note(this.game, n.beat_offset, n.note_value, n.type, n.stem_direction, n.clef);
             this.game.addEntity(note);
         });
 
@@ -133,8 +133,7 @@ class SceneManager {
         });
 
             // add sheet music background to canvas
-                this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 9216 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 9216, 1024), update: () => null})
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music_no_clef.png'), 1000, 0, 2560 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 2560 * 2, 1024), update: () => null})
+                this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
 
 
 
