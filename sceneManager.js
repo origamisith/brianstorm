@@ -12,7 +12,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 4;
+        this.level = 1;
 
         //initially set the game in the title screen state
         this.title = true;
