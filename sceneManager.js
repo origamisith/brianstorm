@@ -116,13 +116,16 @@ class SceneManager {
 
         this.game.addEntity(this.player);
 
-        //iterate through all chord structures and add them to the game canvas
+        // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
-            let note = new Note(this.game, n.x_position_offset, n.y_position_offset, n.type, n.position);
+            let note = new Note(this.game, n.beat_offset, n.note_value, n.type, n.orientation, n.clef);
             this.game.addEntity(note);
         });
 
-
+        musicLevel.barlines.forEach(b => {
+            let barline = new Barline(this.game, b.position);
+            this.game.addEntity(barline);
+        });
 
 
             // add sheet music background to canvas

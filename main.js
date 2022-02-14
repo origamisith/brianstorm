@@ -38,6 +38,7 @@ ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_down
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_down_sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/barline/barline_spritesheet.png");
 
 
 
