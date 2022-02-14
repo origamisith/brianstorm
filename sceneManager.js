@@ -132,19 +132,8 @@ class SceneManager {
             this.game.addEntity(clef);
         });
 
-            // add sheet music background to canvas
-                this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
-
-
-
-
-            //draw sheet music grid
-            // this.game.addEntity({
-            //     draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/sheet_music.jpg'), 0, 0, 2560, 1024, 0 - this.game.camera.x / 5, 0 - this.game.camera.y / 5, 2560, 1024),
-            //     update: () => null
-            // })
-            //
-
+        // add sheet music background to canvas
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
     }
 
 
@@ -182,8 +171,6 @@ class SceneManager {
         else if(this.player.y - this.y < ph / 2) {
             this.y = this.player.y - ph / 2;
         }
-
-
     }
 
     updateAudio() {
