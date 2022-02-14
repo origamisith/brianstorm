@@ -111,7 +111,7 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", 4000 * 16, y, 100, 10, false)
+        this.player = new Player(this.game, "default", 0, y, 100, 10, false)
         this.player.gravity = 28;
 
         this.game.addEntity(this.player);
