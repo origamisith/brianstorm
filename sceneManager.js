@@ -127,6 +127,10 @@ class SceneManager {
             this.game.addEntity(barline);
         });
 
+        musicLevel.clefs.forEach(cl => {
+            let clef = new Clefs(this.game, cl.x_position, cl.y_position, cl.type);
+            this.game.addEntity(clef);
+        });
 
             // add sheet music background to canvas
                 this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 9216 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 9216, 1024), update: () => null})
