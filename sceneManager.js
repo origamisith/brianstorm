@@ -42,7 +42,7 @@ class SceneManager {
         this.level = 1;
         this.clearEntities();
         this.player = new Player(this.game, "default", x,y)
-        this.player.gravity = .3
+        this.player.gravity = .20
         this.game.addEntity(this.player);
         var terrainX = [];
         var i = 0;
