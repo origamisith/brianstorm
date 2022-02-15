@@ -10,7 +10,7 @@ ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetnew.png");
-ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
+ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")

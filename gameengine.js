@@ -16,7 +16,7 @@ class GameEngine {
         this.left = false;
         this.right = false;
         this.space = false;
-        this.lctrl = false;
+        this.shift = false;
         this.keys = {};
 
         // THE KILL SWITCH

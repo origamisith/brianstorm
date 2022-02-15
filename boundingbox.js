@@ -45,6 +45,7 @@ class BoundingBox {
         if(centerDist.y < 0) {
             overlap.y *= -1;
         }
+        overlap.dist = Math.sqrt(centerDist.x * centerDist.x + centerDist.y * centerDist.y);
         return overlap;
     }
 
