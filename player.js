@@ -16,10 +16,11 @@ class Player {
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
+        this.lastBB = this.Bb;
 
         // update x and y position
         this.velocity = { x: 0, y: 0 };
-        this.gravity = 28;
+        this.gravity = 2;
         this.onGround = true;
         this.jumping = false;
         this.jumpingLeft = false;
@@ -27,6 +28,7 @@ class Player {
         this.falling = false;
         this.player_type = player_type;
         this.removeFromWorld = false;
+        this.prevGround = false;
         this.leftCol = false;
         this.rightCol = false;
 
@@ -48,7 +50,10 @@ class Player {
 
         this.loadAnimations();
         this.update();
-
+        // this.updateCollisions();
+        this.onGround = false;
+        this.onSide = false;
+        this.sideDir = 0;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
@@ -61,6 +66,7 @@ class Player {
 
     updateBB() {
         //Bounding box for collision
+        this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
     }
 
@@ -70,8 +76,62 @@ class Player {
         else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
         else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
     }
+
+    updateCollisions() {
+        this.prevGround = this.onGround;
+
+        let dx = this.velocity.x
+        let dy = this.velocity.y
+        const that = this;
+        // console.log(this.onGround)
+        let touchGround = false;
+        let touchSide = false;
+        this.game.entities.forEach(function (entity) {
+            //Don't collide with self, only check entity's with bounding boxes
+            if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+                // Currently only handling map block collisions, no entity collisions yet
+                if (entity instanceof Terrain) {
+                    const {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
+                    const {x: x2, y: y2} = that.BB.overlapDist(entity)
+                    // console.log(ox + ", " + oy);
+                    let d = Math.sqrt(ox*ox + oy*oy)
+                    const {x: vx, y: vy} = that.velocity;
+                    let speed = vx*ox/d + vy*oy/d;
+                    if(oy !== 0) {
+                        // that.onGround = true;
+                        touchGround = true;
+                    }
+                    if(ox !== 0) {
+                        console.log(ox)
+                        touchSide = true;
+                        that.sideDir = vx > 0 ? 0 : 1;
+                    }
+                    if(speed <= 0 /*&& Math.abs(ox) + Math.abs(oy) > 5*/) {
+                        // console.log('hi')
+                        if(!that.onGround && !that.prevGround) {
+                            that.x += ox;
+                            // console.log('x')
+                        }
+                        // if(ox !== 0) {
+                        //     that.x =
+                        // }
+                        that.y += oy;
+                        that.updateBB();
+                    }
+                }
+            }
+        });
+        this.onGround = touchGround;
+        if(this.sideDir === this.facing && this.onSide === false) {
+            this.onSide = touchSide;
+            console.log('hi')
+        }
+        // window.requestAnimFrame(this.updateCollisions.bind(this))
+    }
+
     /** Updates state frame by frame */
     update() {
+        // console.log(this.onGround)
         this.updateAnimations()
 
         //GENERAL PLAYER STATE ANIMATIONS
@@ -88,23 +148,123 @@ class Player {
             For the future: Instead of setting velocity to 0 on intersection, manually align Storm's position where he should be like in SMB
          */
 
-        this.side = false;
-        this.onGround = false;
         this.updateBB();
+
+        if (this.game.left) {
+            this.facing = 1;
+        }
+        else if (this.game.right) {
+            this.facing = 0;
+        }
+        // console.log("ground " + this.onGround)
+        if(!this.game.right && !this.game.left) this.velocity.x = 0;
+        if(true) {
+            // this.velocity.y = 0;
+            if(this.game.space && this.onGround) {
+                this.velocity.y = -8;
+
+                this.onGround = false;
+            }
+            if(this.game.left) {
+                if(this.velocity.x === 0) this.velocity.x = -5;
+                // else this.velocity.x -= 1;
+            }
+            else if(this.game.right) {
+                if(this.velocity.x === 0) this.velocity.x = 5;
+                // else this.velocity.x += 1;
+
+            }
+        }
+        else {
+            if(this.game.left) this.x -= 1 * params.blockSize * TICK;
+            else if(this.game.right) this.x += 1 * params.blockSize * TICK;
+        }
+
+        // console.log(this.velocity)
+        // Collisions
+
         // Prevents the animation from falling through the window.
         if (this.y >= params.floor - this.BB.height/2) {
             this.onGround = true;
         }
 
-        // Collisions
+        if(!this.onGround || (this.onSide && this.facing !== this.sideDir)) this.onSide = false;
+        this.velocity.y += this.gravity*.5;
+        if(this.onGround) this.velocity.y = 0;
+        if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
+        if(this.velocity.x >= 7) this.velocity.x = 7;
+        if(this.velocity.x <= -7) this.velocity.x = -7;
+        if(this.velocity.y >= 10) this.velocity.y  = 10;
+        if(this.velocity.y <= -10) this.velocity.y = -10;
 
+        /** UNIVERSAL POSITION UPDATE **/
+        // let dx = this.velocity.x *params.blockSize * TICK;
+        // let dy = this.velocity.y * params.blockSize * TICK;
+        let dx = this.velocity.x;
+        let dy = this.velocity.y
+        this.x += dx
+        this.y += dy
+        // console.log(this.velocity)
+        // console.log(this.onSide)
+        this.updateCollisions();
+
+        // this.onGround = false;
+        // console.log(dx);
+        // console.log(this.velocity.x + ", " + params.blockSize  + ", " + TICK)
         //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
+        /*
         const that = this;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
+                // console.log('how');
                 if (entity instanceof Terrain) {
+                    // let lastX = new BoundingBox(that.BB.x-that.velocity.x, that.BB.y);
+                    // let lastY = new BoundingBox(that.Bb.x, that.BB.y-that.velocity.y);
+                    console.log('ayo')
+                    while(that.BB.collide(entity.BB)
+                    && !entity.BB.collide(new BoundingBox(that.BB.x-5*Math.sign(that.velocity.x), that.BB.y, that.BB.width, that.BB.height))) {
+                        console.log(dx);
+                        that.x -= Math.sign(that.velocity.x);
+                        that.updateBB()
+                    }
+                    while(that.BB.collide(entity.BB)
+                    && !entity.BB.collide(new BoundingBox(that.BB.x, that.BB.y-dy*5, that.BB.width, that.BB.height))) {
+                        that.y -= Math.sign(that.velocity.y);
+                        that.updateBB()
+                    }
+                    /* First try
+                    if(that.velocity.y > 0) {
+                        if (that.lastBB.bottom <= entity.BB.top) {
+                            that.y = entity.BB.top - that.BB.height;
+                            that.velocity.y = 0;
+                            that.onGround = true;
+                            that.updatePlayerType("default");
+                        }
+                    }
+                    if(that.velocity.y < 0) {
+                        if(that.lastBB.top >= entity.BB.bottom) {
+                            that.y = entity.BB.bottom;
+                            that.velocity.y = 0;
+                        }
+                    }
+                    if (that.velocity.x > 0) {
+                        if (that.lastBB.left <= entity.BB.left) {
+                            that.x = entity.BB.left - 200 + (200 - that.BB.width) / 2;
+                            that.velocity.x = 0;
+                        }
+                    }
+                    if (that.velocity.x < 0) {
+                        if (that.lastBB.right >= entity.BB.right) {
+                            // console.log("before: " + that.x + ", " + that.BB.right)
+                            that.x = entity.BB.right - (200 - that.BB.width) / 2;
+                            that.velocity.x = 0;
+                            // console.log("after: " + that.x + ", " + that.BB.right)
+                        }
+                    }
+                     */
+                    /*
                     // Case 1: Jumping up while hitting the side
                     // Case 2: Walking into the side while on the ground
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
@@ -113,31 +273,26 @@ class Player {
                     // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
+
                     }
+
                 }
             }
         });
 
-        if(this.player_type !== "submarine" || true) {
-
-
+                     */
 
        /** JUMP MECHANIC **/
+       /*
        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
         if(!this.jumping && (this.game.space || !this.onGround)) {
             this.jumping = true;
             // decrease velocity to increase initial jump power if not just falling off ledge.
-            if(this.game.space) this.velocity.y = -1000;
+            if(this.game.space) this.velocity.y = -10;
         }
         if (this.jumping && !this.falling) {
             this.updatePlayerType("jumping");
-            if (this.game.left) {
-                this.facing = 1;
-            }
-            else if (this.game.right) {
-                this.facing = 0;
-            }
 
             this.jumping = true;
             this.onGround = false;
@@ -162,15 +317,14 @@ class Player {
             this.updatePlayerType("jumping");
             if (this.jumping && this.facing === 1) {
                 this.velocity.x = 6;
-                this.x -= this.velocity.x;
+                // this.x -= this.velocity.x;
             } else if (this.jumping && this.facing === 0) {
                 this.velocity.x = 6;
-                this.x += this.velocity.x;
+                // this.x += this.velocity.x;
             }
             if (this.onGround) {
                 this.jumping = false;
             }
-        }
         }
 
         // Stops the jump once player hits the ground.
@@ -186,18 +340,16 @@ class Player {
         if (this.game.left && !this.jumping && !this.falling && !this.side) {
             this.facing = 1;
             this.velocity.x = 6;
-            this.x -= this.velocity.x;
+            // this.x -= this.velocity.x;
         }
         else if (this.game.right && !this.jumping && !this.falling && !this.side) {
             this.facing = 0;
             this.velocity.x = 6;
-            this.x += this.velocity.x;
+            console.log('hi')
+            // this.x += this.velocity.x;
         }
-
-        /** UNIVERSAL POSITION UPDATE **/
-        this.x += this.velocity.x * TICK;
-        this.y += this.velocity.y * TICK;
-
+        */
+        // console.log(this.velocity.x)
     };
 
     //draw method will render this entity to the canvas

@@ -42,7 +42,7 @@ class SceneManager {
         this.level = 1;
         this.clearEntities();
         this.player = new Player(this.game, "default", x,y)
-        this.player.gravity = 28;
+        this.player.gravity = .3
         this.game.addEntity(this.player);
         var terrainX = [];
         var i = 0;
@@ -61,7 +61,7 @@ class SceneManager {
         });
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/sheet_music_color.jpg'), 0, 0, 2560, 1024, 1200-this.game.camera.x/5, 0-this.game.camera.y/5, 2560, 1024), update: () => null})
     }
-    
+
     loadWater(x, y) {
         this.level = 2;
         // this.clearEntities();
@@ -72,15 +72,15 @@ class SceneManager {
 
         //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
-        
+
         this.game.addEntity(new Fishes(this.game, this.player.x, y- 500));
-        
-       
+
+
         levelWater.doubleSeahorses.forEach(e => {
           let seahorse = new Seahorses(this.game, e.x, e.y);
           this.game.addEntity(seahorse);
-        }); 
-      
+        });
+
     }
 
     update() {
