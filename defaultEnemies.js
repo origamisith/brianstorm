@@ -7,7 +7,7 @@ class Miniraser {
         this.gravity = 28;
         this.falling = false;
         this.onGround = false;
-        this.jumpDistance = 100;
+        this.jumpDistance = 20;
         this.agro = false;
         this.agroDistance = 400;
         this.walkSpeed = 4;
@@ -19,14 +19,14 @@ class Miniraser {
 
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/dino/idle_1.png"), 0, 0, 400, 400, 1, 0.12, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/dino/idle_1.png"), 200, 0, 200, 200, 1, 0.12, false, true);
         this.updateBB();
         this.facing = 1; 
 
     };
 
     updateBB() {
-        this.BB = new BoundingBox(this.x+200, this.y+50, 200, 200);
+        this.BB = new BoundingBox(this.x, this.y, 200, 200);
         
     };
 
@@ -60,6 +60,7 @@ class Miniraser {
                     // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
+                        that.y = entity.BB.top - that.BB.height;
                     }
                 }
             }

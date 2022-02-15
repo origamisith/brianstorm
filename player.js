@@ -119,6 +119,7 @@ class Player {
                     // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
+                        that.y = entity.BB.top - 200; // 200 = player height
                     }
                 }
             }
