@@ -4,6 +4,7 @@
 //game is the game engine that the player will be placed into
 //player is a string representing the player type
 //x and y are positional coordinates in pixels, can be used for various purposes.
+var count = 0;
 class Player {
 
     constructor(game, player_type, x, y) {
@@ -64,7 +65,7 @@ class Player {
 
     updateBB() {
         //Bounding box for collision
-        this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
+        this.BB = new BoundingBox(this.x+55, this.y+20, 90, 180)
     }
 
     updateAnimations() {
@@ -99,14 +100,18 @@ class Player {
                         if(oy > 0) {
                             if(that.game.sticking && !that.onCeiling) {
                                 that.velocity.y = 0;
+                                that.velocity.x = 0;
                                 that.onCeiling = true;
+                                console.log('hey there')
                             }
                             else if(!that.onCeiling && !that.bumpedCeiling) {
+                                console.log('hi')
                                 that.velocity.y *=-.5;
                                 that.bumpedCeiling = true;
                             }
                         }
                         else if(oy < 0){
+                            console.log('why')
                             touchGround = true;
                             that.bumpedCeiling = false;
                             that.onCeiling = false;
@@ -156,10 +161,10 @@ class Player {
         if(saved.y === 0 && saved.x === 0) {
             this.onSide = false;
             this.onGround = false;
-            if(!this.game.sticking) this.onCeiling = false;
+            if(true || !this.game.sticking) this.onCeiling = false;
         }
         // if(this.onCeiling) this.onSide = false;
-        // console.log(this.onGround + ", " + this.onSide + ", " + this.onCeiling)
+        // console.log(count++ + ", " + this.onGround + ", " + this.onSide + ", " + this.onCeiling)
         // console.log(saved)
         that.updateBB();
     }
@@ -184,7 +189,7 @@ class Player {
         if(this.onGround) this.onCeiling = false;
         if(this.onCeiling) this.onGround = false;
         // console.log("ground " + this.onGround)
-        if(!this.game.right && !this.game.left) this.velocity.x = 0;
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) this.velocity.x = 0;
         if(this.onGround && !this.onCeiling) {
             if(this.game.space && this.airTime < 2) {
                 this.velocity.y = -10;
