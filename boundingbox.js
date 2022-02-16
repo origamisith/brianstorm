@@ -15,6 +15,10 @@ class BoundingBox {
       
     };
 
+    topCollide(oth) {
+        return (Math.abs(this.bottom - oth.top) < 10);
+    }
+
     inRange(oth, dist, lg) {
         if (lg) {
             console.log(this.midx + ' ' + oth.midx);
