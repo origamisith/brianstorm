@@ -14,6 +14,8 @@ class Miniraser {
         this.leftJump = false;
         this.leftJump = true;
         this.jumpflag = false;
+        this.elapsedTime = 0;
+        this.hp = 50;
 
         this.velocity = { x: 0, y: 0 }
 
@@ -44,6 +46,7 @@ class Miniraser {
         this.updateBB();
         const TICK = this.game.clockTick;
         const midx = (this.x + this.BB.width/2);
+        this.elapsedTime += TICK;
 
         const that = this;
         this.game.entities.forEach(function (entity) {
@@ -85,13 +88,21 @@ class Miniraser {
                             that.jumpflag = true;
                             that.rightJump = true;
                        }
+                    } else if (entity instanceof Player) {
+                        if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8) {
+                            that.hp -= 5;
+                            console.log("miniraser HP: " + that.hp);
+                            that.elapsedTime = 0;
+                        }
                     }
                 }
             }
         });
         //console.log('from Miniraser: Player.x' + this.game.player.x + 'Player.y' + this.game.player.y);
 
-        
+        if (this.hp == 0) {
+            this.removeFromWorld = true;
+        }
          /** BECOME AGGRO'D */
          let {x, y} = this.game.camera.player;
 
