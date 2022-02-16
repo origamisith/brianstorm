@@ -156,7 +156,9 @@ class SceneManager {
         this.updateAudio();
 
 
+
         let {width: w, height: h} = this.game.ctx.canvas
+
         this.x =  this.player.x - w/2; // Keep camera centered on storm at all times
         // If storm nears the bottom of the frame, pan the camera to keep him in frame
         let ph = this.player.BB.height;
