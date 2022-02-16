@@ -68,13 +68,13 @@ class Shark {
     };
 
 };
+
 class Starfish {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
 
         this.game = game;
         this.speed = 3;
-        // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset();
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.12, false, true);
         this.updateBB();

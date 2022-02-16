@@ -3,18 +3,15 @@ class Seahorses {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_sheetnew.png"), 0, 0, 700, 700, 7, 0.12, false, true);
-        this.updateBB();
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse_sheetnew.png"), 0, 0, 700, 700, 7, 0.7, false, true);
+      
     };
 
-    updateBB() {
-        this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, 700, 700);
-    };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.y, 0.4);
+        
     };
 
     update() {
@@ -25,20 +22,18 @@ class Fishes {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/water_level/smallfish_sheetnew.png"), 0, 0, 600, 600, 6, 0.12, false, true);
-        this.updateBB();
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/fishes/smallfish_sheetnew.png"), 0, 0, 600, 600, 6, 0.6, false, true);
+        
     };
 
-    updateBB() {
-        this.lastBB = this.BB;
-        this.BB = new BoundingBox(this.x, this.y, 600, 600);
-    };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y/5, 0.6);
     };
 
     update() {
+         this.x -= this.speed + this.game.clockTick;
+        if (this.x < -2800) this.x = 0; 
     };
 };
