@@ -52,7 +52,7 @@ class Shark {
         this.game = game;
         this.speed = 3;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/shark/shark_sheet2.png"), 0, 0, 500, 500, 8, 0.12, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/shark/shark_sheet.png"), 0, 0, 500, 500, 8, 0.12, false, true);
         this.updateBB();
     };
 
@@ -61,7 +61,7 @@ class Shark {
         this.BB = new BoundingBox(this.x, this.y, 500, 500);
     };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.5);
     };
 
     update() {
