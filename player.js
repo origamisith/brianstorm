@@ -122,7 +122,9 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
+
                     // Case 3: Falling onto flat ground
+
 
 //                         // music note case, plays sound upon player contact
 //                     else if(entity instanceof ChordBar) {
@@ -155,8 +157,8 @@ class Player {
 
 
 
-       /** JUMP MECHANIC **/
-       // Prevent changing trajectory in the air
+        /** JUMP MECHANIC **/
+        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
         if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type !== "submarine") {
             this.updatePlayerType("jumping");
