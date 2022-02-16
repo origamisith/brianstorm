@@ -96,13 +96,15 @@ class SceneManager {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
 
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
+        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
 
 
         //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
 
-        this.game.addEntity(new Fishes(this.game, this.player.x, y));
+        
+       // this.game.addEntity(new Fishes(this.game, this.player.x, y));
+
 
         levelWater.doubleSeahorses.forEach(e => {
             let seahorse = new Seahorses(this.game, e.x, e.y);
@@ -162,7 +164,9 @@ class SceneManager {
         this.updateAudio();
 
 
+
         let {width: w, height: h} = this.game.ctx.canvas
+
         this.x =  this.player.x - w/2; // Keep camera centered on storm at all times
         // If storm nears the bottom of the frame, pan the camera to keep him in frame
         let ph = this.player.BB.height;
