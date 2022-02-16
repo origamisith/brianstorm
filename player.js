@@ -33,7 +33,6 @@ class Player {
         this.removeFromWorld = false;
         this.leftCol = false;
         this.rightCol = false;
-        this.hp = 60;
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -52,7 +51,6 @@ class Player {
         ];
 
         this.loadAnimations();
-        this.elapsedTime = 0;
 
     };
 
@@ -89,7 +87,6 @@ class Player {
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
-        this.elapsedTime += TICK;
         /* Currently, order of operations for collision is:
             Initialize flags to represent state
             Iterate through each entity and check if there's a collision
@@ -122,8 +119,7 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
-                    // Case 3: Falling onto flat ground
-
+                        // Case 3: Falling onto flat ground
 
 //                         // music note case, plays sound upon player contact
 //                     else if(entity instanceof ChordBar) {
@@ -131,34 +127,17 @@ class Player {
 //                             entity.game.removeFromWorld = true;
 //                         }
 //                     }
-
                     else {
                         that.onGround = true;
-                        that.y = entity.BB.top - 200; // 200 = player height
-                    }
-                }
-                else if (entity instanceof Miniraser) {
-                    if (that.BB.topCollide(entity.BB)) {
-                        // take no damage.
-                    } else {
-                        if (that.elapsedTime > 0.8) {
-                            that.hp -= 5;
-                            console.log("storm HP: " + that.hp);
-                            that.elapsedTime = 0;
-                        }
                     }
                 }
             }
         });
 
-        if (this.hp==0) {
-            this.removeFromWorld = true;
-        }
 
 
-
-       /** JUMP MECHANIC **/
-       // Prevent changing trajectory in the air
+        /** JUMP MECHANIC **/
+        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
         if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type !== "submarine") {
             this.updatePlayerType("jumping");
