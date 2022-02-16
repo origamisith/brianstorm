@@ -68,6 +68,12 @@ class SceneManager {
             this.game.addEntity(enemy);
         });
 
+        levelOne.powerUps.forEach(p => {
+            let pUp = new powerUp(this.game, p.x, p.y);
+            this.game.addEntity(pUp);
+        });
+
+
     }
     
     loadWater(x, y) {
