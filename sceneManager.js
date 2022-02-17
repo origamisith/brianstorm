@@ -5,7 +5,7 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
-        this.marker = new LevelMarker(this.game, 0, 0, 4);
+        this.marker = new LevelMarker(this.game, 0, 0, 1);
         this.marker.loadNext = false;
 
         this.debug = debug;
