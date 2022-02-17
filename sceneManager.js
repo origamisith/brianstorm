@@ -5,6 +5,8 @@ class SceneManager {
         this.x = 0;
         this.y = 0;
         this.playerCount = 0;
+        this.marker = new LevelMarker(this.game, 0, 0, 1);
+        this.marker.loadNext = false;
 
         this.debug = debug;
 
@@ -19,6 +21,7 @@ class SceneManager {
         this.player = new Player(this.game, "default", 0,0);
         //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
+
         this.checkStart();
 
     };
@@ -29,13 +32,15 @@ class SceneManager {
         if (this.game.click && this.title) {
             this.title = false;
             this.loadLevel();
-            ASSET_MANAGER.pauseBackgroundMusic();
+            // ASSET_MANAGER.pauseBackgroundMusic();
 
         }
     };
 
     //called byCheckStart to load the chosen level
     loadLevel() {
+
+        this.clearEntities()
         if (this.level === 1) {this.loadIntroLevel(0,0);}
         else if (this.level === 2) {this.loadWater(0,0);}
         else if (this.level === 4) {this.loadMusicLevel(0,0);}
@@ -57,17 +62,22 @@ class SceneManager {
     }
 
 
+
+
+
     loadIntroLevel(x, y) {
 
+
         this.clearEntities();
-        this.player = new Player(this.game, "default", x,y, 6, 0)
+        this.marker = new LevelMarker(this.game, 9000, 100, 4);
+        this.player = new Player(this.game, "default", 100,y, 6, 0)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         const terrainX = [];
         let i = 0;
 
         //uncomment line below to start music on page click
-        // ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.playAsset(levelOne.music);
 
         levelOne.clouds.forEach(c => {
             this.game.addEntity(new Cloud(this.game, c.x, c.y))
@@ -87,9 +97,16 @@ class SceneManager {
             this.game.addEntity(pUp);
         });
 
+<<<<<<< HEAD
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/paper_bg.png'), 0, 0, 1024 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
     }
+=======
+        this.game.addEntity(this.marker);
 
+>>>>>>> origin/main
+
+    }
+    
     loadWater(x, y) {
         this.clearEntities();
         this.player = new Submarine(this.game, "submarine", 100, 100, 20, 10);
@@ -99,13 +116,13 @@ class SceneManager {
 
         levelWater.fish.forEach(f => {
             this.game.addEntity(new Fishes(this.game, f.x , f.y));
-        });
-
+        }); 
+       
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
-
-        /*  levelWater.doubleSeahorses.forEach(s => {
-           this.game.addEntity(new Seahorses(this.game, s.x, s.y));
-         });  */
+      
+       /*  levelWater.doubleSeahorses.forEach(s => {
+          this.game.addEntity(new Seahorses(this.game, s.x, s.y));
+        });  */ 
         /*   levelWater.shark.forEach(s => {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
@@ -115,17 +132,13 @@ class SceneManager {
 
         //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
-
         
        // this.game.addEntity(new Fishes(this.game, this.player.x, y));
 
-
         levelWater.doubleSeahorses.forEach(e => {
-            let seahorse = new Seahorses(this.game, e.x, e.y);
-            this.game.addEntity(seahorse);
+          let seahorse = new Seahorses(this.game, e.x, e.y);
+          this.game.addEntity(seahorse);
         });
-
-
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, 0 - this.game.camera.x/5, 0-this.game.camera.y/5, 3200, 1600), update: () => null})
     }
@@ -133,7 +146,8 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.clearEntities();
-        this.player = new Player(this.game, "default", 0, y, 100, 10, false)
+        this.marker = new LevelMarker(this.game, 9000, 100, 1);
+        this.player = new Player(this.game, "default", 0, y, 50, 10, false)
         this.player.gravity = 28;
 
         this.game.addEntity(this.player);
@@ -154,8 +168,16 @@ class SceneManager {
             this.game.addEntity(clef);
         });
 
+        musicLevel.powerUps.forEach(p => {
+            let pUp = new powerUp(this.game, p.x, p.y);
+            this.game.addEntity(pUp);
+        });
+
         // add sheet music background to canvas
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
+
+        this.game.addEntity(this.marker);
+
     }
 
 
@@ -169,6 +191,9 @@ class SceneManager {
 
 
     update() {
+
+
+        if(this.player.dead){this.loadEndScreen(this.player, "lose")}
 
         const debug = document.getElementById("debug").checked;
 
@@ -198,6 +223,12 @@ class SceneManager {
         else if(this.player.y - this.y < ph / 2) {
             this.y = this.player.y - ph / 2;
         }
+
+        if(this.marker.loadNext === true) {
+            this.level = this.marker.id
+            this.marker.loadNext = false;
+            this.loadLevel()
+            }
     }
 
     updateAudio() {
@@ -208,5 +239,22 @@ class SceneManager {
         ASSET_MANAGER.adjustVolume(volume);
 
     };
+
+    loadEndScreen(entity, win_lose) {
+        if (win_lose === "lose") {
+            entity.removeFromWorld = true;
+            this.clearEntities();
+            this.loseScreen = true;
+            this.loadIntroLevel(0, 0)
+
+           // this.checkStart();
+        } else if (win_lose === "win") {
+            this.clearEntities();
+            this.winScreen = true;
+        } else {
+            // Do nothing
+        }
+    }
+
 
 }

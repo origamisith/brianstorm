@@ -36,6 +36,9 @@ class Player {
         this.hp = 60;
         this.dead = false;
 
+        this.dead = false;
+
+
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
         // Player facing: 0=right. 1=left.
@@ -123,6 +126,7 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
+
                     // Case 3: Falling onto flat ground
 
 
@@ -132,7 +136,6 @@ class Player {
 //                             entity.game.removeFromWorld = true;
 //                         }
 //                     }
-
                     else {
                         that.onGround = true;
                         that.y = entity.BB.top - 200; // 200 = player height
@@ -149,17 +152,24 @@ class Player {
                         }
                     }
                 }
+                else if (entity instanceof LevelMarker){
+                    if(that.BB.collide(entity.BB)){entity.loadNext = true;}
+                }
             }
         });
 
+<<<<<<< HEAD
         if (this.hp==0) {
             this.dead = true;
         }
+=======
+        if (this.hp==0) {this.dead = true;}
+>>>>>>> origin/main
 
 
 
-       /** JUMP MECHANIC **/
-       // Prevent changing trajectory in the air
+        /** JUMP MECHANIC **/
+        // Prevent changing trajectory in the air
         //Update jumping  / onGround status, handle space
         if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type !== "submarine") {
             this.updatePlayerType("jumping");
