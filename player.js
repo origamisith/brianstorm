@@ -35,6 +35,9 @@ class Player {
         this.rightCol = false;
         this.hp = 60;
 
+        this.dead = false;
+
+
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
         // Player facing: 0=right. 1=left.
@@ -146,12 +149,13 @@ class Player {
                         }
                     }
                 }
+                else if (entity instanceof LevelMarker){
+                    if(that.BB.collide(entity.BB)){entity.loadNext = true;}
+                }
             }
         });
 
-        if (this.hp==0) {
-            this.removeFromWorld = true;
-        }
+        if (this.hp==0) {this.dead = true;}
 
 
 

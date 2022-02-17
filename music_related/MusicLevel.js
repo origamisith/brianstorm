@@ -198,10 +198,8 @@ const musicLevel = {
     ],
 
     clefs: [
-
         {x_position: 2, y_position: 3, type: "treble"},
         {x_position: 2, y_position: 21, type: "bass"}
-
-
-    ]
+    ],
+    powerUps: [{x: 9000, y: 700}]
 };
