@@ -1,12 +1,14 @@
 
 
 class SignPost {
-    constructor(game, x_pos, y_pos) {
+    constructor(game, x_pos, y_pos, choice) {
         this.game = game;
 
         this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/signpost/spritesheet.png"), 0, 0, 400, 484, 1, 0.1);
         this.x = x_pos;
-        this.y = y_pos -9;
+        this.y = y_pos -5;
+
+        this.choice = choice;
 
         this.removeFromWorld = false;
 
@@ -19,6 +21,6 @@ class SignPost {
 
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, 0.3);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/signpost/spritesheet.png"), this.choice * 400, 0, 400, 484, this.x - this.game.camera.x, this.y-this.game.camera.y, 400 * 0.3, 484 * 0.3);
     };
 }

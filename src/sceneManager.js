@@ -54,10 +54,9 @@ class SceneManager {
 
     loadIntroLevel(x, y) {
 
-
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9000, 100, 4);
-        this.player = new Player(this.game, "default", 300,y, 20, 0)
+        this.marker = new LevelMarker(this.game, 9000, 100, 2);
+        this.player = new Player(this.game, "default", 8000,y, 10, 0)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         const terrainX = [];
@@ -84,13 +83,12 @@ class SceneManager {
             this.game.addEntity(pUp);
         });
 
-        levelOne.SignPost.forEach(s => {
-            let sign = new SignPost(this.game, s.x, s.y);
-            this.game.addEntity(sign);
-        });
-
         this.game.addEntity(this.marker);
 
+        levelOne.SignPost.forEach(s => {
+            let sign = new SignPost(this.game, s.x, s.y, s.choice);
+            this.game.addEntity(sign);
+        });
 
     }
     
@@ -113,13 +111,6 @@ class SceneManager {
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 6144 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 8192 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 10240 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-
-
-
-
-
-
-
 
 
         // levelWater.fish.forEach(f => {
@@ -176,7 +167,16 @@ class SceneManager {
 
     }
 
+    loadEndScreen() {
+        this.clearEntities();
 
+        this.player = new Player(this.game, "default", 400, 400, 50, 10, false);
+        this.game.addEntity(this.player);
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/end_screen/try_again.jpg"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+
+        this.game.addEntity(new LevelMarker(this.game, 0, 0, 1));
+
+    }
 
     //removes all entities from the canvas
     clearEntities() {
@@ -188,17 +188,11 @@ class SceneManager {
 
     update() {
 
-
         if(this.player.dead){this.loadEndScreen(this.player, "lose")}
-
         const debug = document.getElementById("debug").checked;
-
         this.checkStart();
         if(this.game.click) {this.title = false;}
-
         this.updateAudio();
-
-
 
         let {width: w, height: h} = this.game.ctx.canvas
 
@@ -223,9 +217,6 @@ class SceneManager {
             this.loadLevel()
             }
 
-
-
-
     }
 
     updateAudio() {
@@ -236,22 +227,5 @@ class SceneManager {
         ASSET_MANAGER.adjustVolume(volume);
 
     };
-
-    loadEndScreen(entity, win_lose) {
-        if (win_lose === "lose") {
-            entity.removeFromWorld = true;
-            this.clearEntities();
-            this.loseScreen = true;
-            this.loadIntroLevel(0, 0)
-
-           // this.checkStart();
-        } else if (win_lose === "win") {
-            this.clearEntities();
-            this.winScreen = true;
-        } else {
-            // Do nothing
-        }
-    }
-
 
 }
