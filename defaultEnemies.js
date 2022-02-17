@@ -63,7 +63,6 @@ class Miniraser {
         else if (this.facing == 0) {
             this.animation = this.rightIdle;
         }
-        // console.log('FIRST: jumpflag: ' + this.jumpflag + ', onGround:' + this.onGround);
         this.onGround = false;
 
         this.updateBB();
@@ -123,7 +122,6 @@ class Miniraser {
                 }
             }
         });
-        //console.log('from Miniraser: Player.x' + this.game.player.x + 'Player.y' + this.game.player.y);
 
         if (this.hp == 0) {
             this.removeFromWorld = true;
