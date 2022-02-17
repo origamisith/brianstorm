@@ -34,7 +34,6 @@ class Player {
         this.leftCol = false;
         this.rightCol = false;
         this.hp = 60;
-        this.dead = false;
 
         this.dead = false;
 
@@ -158,13 +157,7 @@ class Player {
             }
         });
 
-<<<<<<< HEAD
-        if (this.hp==0) {
-            this.dead = true;
-        }
-=======
         if (this.hp==0) {this.dead = true;}
->>>>>>> origin/main
 
 
 
@@ -188,9 +181,10 @@ class Player {
             // decrease velocity to increase initial jump power if not just falling off ledge.
             if(this.game.space) this.velocity.y = -1000;
         }
-
         //If not on ground but haven't pressed space, falling off ledge
         // Edit this.gravity to change gravitational force.
+        // ** NOTE: potentially make gravity a constant rather than a field,
+        // ** also consider moving gravity to scene manager once implemented
         if(!this.onGround) {
             this.velocity.y += this.gravity;
         }
