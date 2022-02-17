@@ -13,7 +13,7 @@ class powerUp {
     }
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, 200, 2000);
+        this.BB = new BoundingBox(this.x, this.y, 100, 100);
         if(this.BB.collide(Player)){}
 
     };

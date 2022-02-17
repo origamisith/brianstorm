@@ -149,6 +149,7 @@ class Player {
                     if (that.BB.collide(entity.BB)) {
                         entity.removeFromWorld = true;
                         that.hp += 20;
+                        console.log("+ 20 HP!!");
 
                     }
                 }

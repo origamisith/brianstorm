@@ -57,7 +57,7 @@ class SceneManager {
 
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9000, 100, 4);
-        this.player = new Player(this.game, "default", 100,y, 20, 0)
+        this.player = new Player(this.game, "default", 300,y, 20, 0)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         const terrainX = [];
