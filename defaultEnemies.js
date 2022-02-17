@@ -38,7 +38,6 @@ class Miniraser {
     };
 
     updateBB() {
-<<<<<<< HEAD
         this.BB = new BoundingBox(this.x, this.y, 200*0.7, 360*0.7);
     };
 
@@ -46,10 +45,6 @@ class Miniraser {
         
         this.animations[0][0] = new Animator(ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_right.png"), 0, 0, 200, 360, 2, 0.10, false, true);
         this.animations[0][1] = new Animator(ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png"), 0, 0, 200, 360, 2, 0.10, false, true);
-=======
-        this.BB = new BoundingBox(this.x, this.y, 200, 200);
-
->>>>>>> origin/main
     };
 
 
@@ -105,7 +100,6 @@ class Miniraser {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
-<<<<<<< HEAD
                        if (that.facing == 1 && entity.BB.left > that.BB.left) {
                            console.log('jumping left');
                            that.facing = 1;
@@ -116,16 +110,6 @@ class Miniraser {
                        else if (that.facing == 0 && entity.BB.left < that.BB.left) {
                            console.log('jumping right');
                            that.facing = 0;
-=======
-                        if (that.facing == 1 && entity.BB.left > that.BB.left) {
-                            console.log('jumping left');
-                            that.jumpflag = true;
-                            that.leftJump = true;
-                        }
-                        // If facing left, jump left
-                        else if (that.facing == 0 && entity.BB.left < that.BB.left) {
-                            console.log('jumping right');
->>>>>>> origin/main
                             that.jumpflag = true;
                             that.rightJump = true;
                         }

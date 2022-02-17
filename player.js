@@ -158,13 +158,7 @@ class Player {
             }
         });
 
-<<<<<<< HEAD
-        if (this.hp==0) {
-            this.dead = true;
-        }
-=======
         if (this.hp==0) {this.dead = true;}
->>>>>>> origin/main
 
 
 
