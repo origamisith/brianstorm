@@ -88,9 +88,9 @@ class SceneManager {
         });  
        
       
-        levelWater.doubleSeahorses.forEach(s => {
+       /*  levelWater.doubleSeahorses.forEach(s => {
           this.game.addEntity(new Seahorses(this.game, s.x, s.y));
-        });  
+        });   */
 
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y));
@@ -98,7 +98,7 @@ class SceneManager {
 
         levelWater.seahorse.forEach(s => {
             this.game.addEntity(new Seahorse(this.game, s.x, s.y));
-        });  
+        });   
 
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
         
