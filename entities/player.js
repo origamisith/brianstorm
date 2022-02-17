@@ -33,7 +33,7 @@ class Player {
         this.removeFromWorld = false;
         this.leftCol = false;
         this.rightCol = false;
-        this.hp = 60;
+        this.hp = 20;
 
         this.dead = false;
 

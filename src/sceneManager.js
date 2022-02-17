@@ -14,7 +14,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 2;
+        this.level = 1;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -82,6 +82,11 @@ class SceneManager {
         levelOne.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
             this.game.addEntity(pUp);
+        });
+
+        levelOne.SignPost.forEach(s => {
+            let sign = new SignPost(this.game, s.x, s.y);
+            this.game.addEntity(sign);
         });
 
         this.game.addEntity(this.marker);

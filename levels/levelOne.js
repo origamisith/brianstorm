@@ -1,6 +1,6 @@
 class levelOneGenerator {
   static generateFloorTerrain(size) {
-    var terrain = new Array();
+    const terrain = [];
     let i=0;
     let place = 0;
 
@@ -28,7 +28,7 @@ class levelOneGenerator {
   };
 
   static enemyGenerator(count) {
-    var enemies = new Array();
+    const enemies = [];
     let i=0;
     let place = 0;
     for (i=0; i<count; i++) {
@@ -46,6 +46,7 @@ const levelOne = {
   terrain: levelOneGenerator.generateFloorTerrain(100),
   enemies: levelOneGenerator.enemyGenerator(5),
   powerUps: [{x: 100, y: 700}, {x: 9000, y: 700}],
+  SignPost: [{x: 9000, y: 700}],
   music: "./assets/music/FreedomM.mp3"
 
 };
