@@ -15,29 +15,20 @@ class Miniraser {
         this.leftJump = true;
         this.jumpflag = false;
         this.elapsedTime = 0;
-        this.state = 0; // 0 = idle; 1 = walking; 2 = jumping;
         this.hp = 50;
-
-        this.facing = 1; // 0=right, 1=left;
 
         this.velocity = { x: 0, y: 0 }
 
-        this.animations = [ // [state, facing]
-            [0,0],
-            [0,1]
-        ];
-
-        this.loadAnimations();
-
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png"), 0, 0, 200, 360, 2, 0.10, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/dino/idle_1.png"), 200, 0, 200, 200, 1, 0.12, false, true);
         this.updateBB();
         this.facing = 1;
 
     };
 
     updateBB() {
+<<<<<<< HEAD
         this.BB = new BoundingBox(this.x, this.y, 200*0.7, 360*0.7);
     };
 
@@ -45,17 +36,21 @@ class Miniraser {
         
         this.animations[0][0] = new Animator(ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_right.png"), 0, 0, 200, 360, 2, 0.10, false, true);
         this.animations[0][1] = new Animator(ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png"), 0, 0, 200, 360, 2, 0.10, false, true);
+=======
+        this.BB = new BoundingBox(this.x, this.y, 200, 200);
+
+>>>>>>> origin/main
     };
 
 
     draw(ctx) {
-        // this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.7);
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.7);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
         ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
     update() {
+<<<<<<< HEAD
 
         if (this.facing == 1) {
             this.animation = this.leftIdle;
@@ -63,6 +58,9 @@ class Miniraser {
         else if (this.facing == 0) {
             this.animation = this.rightIdle;
         }
+=======
+        // console.log('FIRST: jumpflag: ' + this.jumpflag + ', onGround:' + this.onGround);
+>>>>>>> origin/main
         this.onGround = false;
 
         this.updateBB();
@@ -99,6 +97,7 @@ class Miniraser {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
+<<<<<<< HEAD
                        if (that.facing == 1 && entity.BB.left > that.BB.left) {
                            console.log('jumping left');
                            that.facing = 1;
@@ -109,6 +108,16 @@ class Miniraser {
                        else if (that.facing == 0 && entity.BB.left < that.BB.left) {
                            console.log('jumping right');
                            that.facing = 0;
+=======
+                        if (that.facing == 1 && entity.BB.left > that.BB.left) {
+                            console.log('jumping left');
+                            that.jumpflag = true;
+                            that.leftJump = true;
+                        }
+                        // If facing left, jump left
+                        else if (that.facing == 0 && entity.BB.left < that.BB.left) {
+                            console.log('jumping right');
+>>>>>>> origin/main
                             that.jumpflag = true;
                             that.rightJump = true;
                         }
@@ -155,6 +164,7 @@ class Miniraser {
         // console.log('ground: ' + this.onGround + ', left jump: ' + this.leftJump + ', right jump: ' + this.rightJump);
         if (!this.onGround && !this.leftJump && !this.rightJump) {
             this.falling = true;
+            console.log('falling is true');
         }
         else {
             this.falling = false;
@@ -179,13 +189,11 @@ class Miniraser {
         }
 
         if (this.rightJump) {
-            this.facing = 0;
             this.onGround = false;
             this.velocity.x = 6;
             this.x += this.velocity.x;
         }
         else if (this.leftJump) {
-            this.facing = 1;
             this.onGround = false;
             this.velocity.x = 6;
             this.x -= this.velocity.x;

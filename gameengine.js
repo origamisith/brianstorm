@@ -118,6 +118,7 @@ class GameEngine {
                     break;
                 case "KeyX":
                 case "Period":
+                    console.log('x pressed');
                     that.space = true;
                     that.A = true;
                     break;
