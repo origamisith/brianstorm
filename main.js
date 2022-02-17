@@ -13,7 +13,6 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.pn
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetnew.png");
 
 
-ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet.png");

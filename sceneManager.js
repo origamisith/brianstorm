@@ -14,7 +14,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 2;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -32,7 +32,8 @@ class SceneManager {
         if (this.game.click && this.title) {
             this.title = false;
             this.loadLevel();
-            // ASSET_MANAGER.pauseBackgroundMusic();
+            //Uncomment this for music
+            ASSET_MANAGER.pauseBackgroundMusic();
 
         }
     };
@@ -56,7 +57,7 @@ class SceneManager {
 
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9000, 100, 4);
-        this.player = new Player(this.game, "default", 100,y, 6, 0)
+        this.player = new Player(this.game, "default", 100,y, 20, 0)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         const terrainX = [];
@@ -90,38 +91,47 @@ class SceneManager {
     
     loadWater(x, y) {
         this.clearEntities();
-        this.player = new Submarine(this.game, "submarine", 100, 100, 20, 10);
+        this.player = new Submarine(this.game, "submarine", 700, 450, 20, 10);
         this.player.gravity = 0;
+        this.player.falling = false;
         this.game.addEntity(this.player);
 
+        levelWater.powerUps.forEach(p => {
+            let pUp = new powerUp(this.game, p.x, p.y);
+            this.game.addEntity(pUp);
+        });
 
-        levelWater.fish.forEach(f => {
-            this.game.addEntity(new Fishes(this.game, f.x , f.y));
-        }); 
-       
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
-      
-       /*  levelWater.doubleSeahorses.forEach(s => {
-          this.game.addEntity(new Seahorses(this.game, s.x, s.y));
-        });  */ 
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 6144 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 8192 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 10240 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+
+
+
+
+
+
+
+
+
+        // levelWater.fish.forEach(f => {
+        //     this.game.addEntity(new Fishes(this.game, f.x , f.y));
+        // });
+
+        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
+
+        /*  levelWater.doubleSeahorses.forEach(s => {
+           this.game.addEntity(new Seahorses(this.game, s.x, s.y));
+         });  */
         /*   levelWater.shark.forEach(s => {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
 
-        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
 
 
-        //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
-        //this.game.addEntity(new Seahorses(this.game, x, y- 400));
-        
-       // this.game.addEntity(new Fishes(this.game, this.player.x, y));
-
-        levelWater.doubleSeahorses.forEach(e => {
-          let seahorse = new Seahorses(this.game, e.x, e.y);
-          this.game.addEntity(seahorse);
-        });
-
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, 0 - this.game.camera.x/5, 0-this.game.camera.y/5, 3200, 1600), update: () => null})
     }
 
     loadMusicLevel(x, y) {
@@ -207,6 +217,10 @@ class SceneManager {
             this.marker.loadNext = false;
             this.loadLevel()
             }
+
+
+
+
     }
 
     updateAudio() {

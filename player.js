@@ -125,19 +125,9 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
-
-                    // Case 3: Falling onto flat ground
-
-
-//                         // music note case, plays sound upon player contact
-//                     else if(entity instanceof ChordBar) {
-//                         if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
-//                             entity.game.removeFromWorld = true;
-//                         }
-//                     }
+                        // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
-                        that.y = entity.BB.top - 200; // 200 = player height
                     }
                 }
                 else if (entity instanceof Miniraser) {
@@ -154,10 +144,18 @@ class Player {
                 else if (entity instanceof LevelMarker){
                     if(that.BB.collide(entity.BB)){entity.loadNext = true;}
                 }
+
+                if (entity instanceof powerUp) {
+                    if (that.BB.collide(entity.BB)) {
+                        entity.removeFromWorld = true;
+                        that.hp += 20;
+
+                    }
+                }
             }
         });
 
-        if (this.hp==0) {this.dead = true;}
+        if (this.hp===0) {this.dead = true;}
 
 
 
@@ -238,6 +236,20 @@ class Player {
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
         }
+
+        if(this.player_type === "submarine") {
+            if(this.game.up) {
+
+                this.y -= this.velocity.y;
+            }
+            else if(this.game.down) {
+                this.y += this.velocity.y;
+            }
+
+
+        }
+
+
     }
 
 //draw method will render this entity to the canvas
