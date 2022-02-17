@@ -40,6 +40,20 @@ class SceneManager {
         else if (this.level === 2) {this.loadWater(0,0);}
         else if (this.level === 4) {this.loadMusicLevel(0,0);}
 
+    };
+
+    loadEndScreen(entity, win_lose) {
+        if (win_lose == "lose") {
+            entity.removeFromWorld = true;
+            this.clearEntities();
+            this.loseScreen = true;
+            this.title = true;
+        } else if (win_lose == "win") {
+            this.clearEntities();
+            this.winScreen = true;
+        } else {
+            // Do nothing
+        }
     }
 
 
@@ -73,7 +87,7 @@ class SceneManager {
             this.game.addEntity(pUp);
         });
 
-
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/paper_bg.png'), 0, 0, 1024 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
     }
 
     loadWater(x, y) {
@@ -163,6 +177,9 @@ class SceneManager {
 
         this.updateAudio();
 
+        if (this.player.dead) {
+            this.loadEndScreen(this.player, "lose");
+        }
 
 
         let {width: w, height: h} = this.game.ctx.canvas

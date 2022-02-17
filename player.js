@@ -34,6 +34,7 @@ class Player {
         this.leftCol = false;
         this.rightCol = false;
         this.hp = 60;
+        this.dead = false;
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -152,7 +153,7 @@ class Player {
         });
 
         if (this.hp==0) {
-            this.removeFromWorld = true;
+            this.dead = true;
         }
 
 
@@ -177,10 +178,9 @@ class Player {
             // decrease velocity to increase initial jump power if not just falling off ledge.
             if(this.game.space) this.velocity.y = -1000;
         }
+
         //If not on ground but haven't pressed space, falling off ledge
         // Edit this.gravity to change gravitational force.
-        // ** NOTE: potentially make gravity a constant rather than a field,
-        // ** also consider moving gravity to scene manager once implemented
         if(!this.onGround) {
             this.velocity.y += this.gravity;
         }
