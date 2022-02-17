@@ -125,7 +125,9 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
-                        // Case 3: Falling onto flat ground
+
+                    // Case 3: Falling onto flat ground
+
 
 //                         // music note case, plays sound upon player contact
 //                     else if(entity instanceof ChordBar) {
