@@ -53,7 +53,7 @@ class SceneManager {
         let i = 0;
 
         //uncomment line below to start music on page click
-        // ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.playAsset(levelOne.music);
 
         levelOne.clouds.forEach(c => {
             this.game.addEntity(new Cloud(this.game, c.x, c.y))
@@ -67,6 +67,12 @@ class SceneManager {
             let enemy = new Miniraser(this.game, e.x, e.y);
             this.game.addEntity(enemy);
         });
+
+        levelOne.powerUps.forEach(p => {
+            let pUp = new powerUp(this.game, p.x, p.y);
+            this.game.addEntity(pUp);
+        });
+
 
     }
     
@@ -153,7 +159,9 @@ class SceneManager {
         this.updateAudio();
 
 
+
         let {width: w, height: h} = this.game.ctx.canvas
+
         this.x =  this.player.x - w/2; // Keep camera centered on storm at all times
         // If storm nears the bottom of the frame, pan the camera to keep him in frame
         let ph = this.player.BB.height;
