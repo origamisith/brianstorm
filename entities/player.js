@@ -19,7 +19,7 @@ class Player {
         this.y_vel =y_vel;
         this.x_cameraLimit = x_cameraLimit;
 
-
+        this.scale = 1;
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
@@ -37,6 +37,9 @@ class Player {
         this.leftCol = false;
         this.rightCol = false;
         this.hp = 20;
+
+        //sets size of submarine and its BB
+        this.scale = 0.5;
 
         this.dead = false;
 
@@ -73,8 +76,8 @@ class Player {
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
-        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
-        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 600, 300, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1200, 0, 600, 300, 2, 0.1, false, true);
 
     };
 
@@ -153,7 +156,6 @@ class Player {
                         entity.removeFromWorld = true;
                         that.hp += 20;
                         console.log("+ 20 HP!!");
-
                     }
                 }
             }
@@ -255,9 +257,9 @@ class Player {
 //draw method will render this entity to the canvas
     draw(ctx) {
 
-        if (this.y >= params.floor) {
-            this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
-        }
+
+        this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
+
         if(this.bb_enable) {
             ctx.strokeStyle = 'red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);

@@ -4,7 +4,6 @@ class SceneManager {
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
-        this.playerCount = 0;
         this.marker = new LevelMarker(this.game, 0, 0, 1);
         this.marker.loadNext = false;
 
@@ -14,12 +13,12 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 2;
+        this.level = 1;
 
         //initially set the game in the title screen state
         this.title = true;
         this.endScreen = true;
-        this.player = new Player(this.game, "default", 0,0);
+        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
         // this.checkStart();
@@ -33,7 +32,7 @@ class SceneManager {
         if (this.game.click && this.title) {
             this.title = false;
             this.loadLevel(600, 400);
-            //Uncomment this for music
+            //comment this for music
             ASSET_MANAGER.pauseBackgroundMusic();
 
         }
@@ -60,7 +59,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9700, 100, 2);
-        this.player = new Player(this.game, "default", x, y, 10, 0, 9000);
+        this.player = new Player(this.game, "default", 6000, y, 15, 20, 9000);
         this.player.gravity = 28;
         this.game.addEntity(this.player);
 
@@ -100,16 +99,22 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.player = new Submarine(this.game, "submarine", x, y, 20, 10, 90000);
+        this.player = new Submarine(this.game, "submarine", 8000, y, 15, 10, 90000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
+        this.marker = new LevelMarker(this.game, 9000, 500, 4);
+
 
         levelWater.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
             this.game.addEntity(pUp);
         });
 
+        levelWater.signPost.forEach(s => {
+            let sign = new SignPost(this.game, s.x, s.y, s.choice);
+            this.game.addEntity(sign);
+        });
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
@@ -131,7 +136,7 @@ class SceneManager {
         /*   levelWater.shark.forEach(s => {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
-
+        this.game.addEntity(this.marker);
 
 
     }
@@ -202,7 +207,7 @@ class SceneManager {
 
     update() {
 
-        if(this.player.dead){this.loadEndScreen(this.player, "lose")}
+        if(this.player.dead){this.loadEndScreen(0,0)}
         const debug = document.getElementById("debug").checked;
         this.checkStart();
         if(this.game.click) {this.title = false;}
