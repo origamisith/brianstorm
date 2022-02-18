@@ -6,7 +6,7 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Submarine extends Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel) {
+    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit) {
         super(game, player_type, x, y, x_vel, y_vel);
         Object.assign(this, { game, player_type, x, y });
 
@@ -20,6 +20,8 @@ class Submarine extends Player {
         this.state = 0;
         // Player facing: 0=right. 1=left.
         this.facing = 0;
+
+        this.x_cameraLimit = x_cameraLimit;
 
         this.loadAnimations();
 

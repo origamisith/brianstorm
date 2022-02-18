@@ -46,7 +46,7 @@ const levelOne = {
   terrain: levelOneGenerator.generateFloorTerrain(100),
   enemies: levelOneGenerator.enemyGenerator(5),
   powerUps: [{x: 100, y: 700}, {x: 7000, y: 700}],
-  SignPost: [{x: 9000, y: 700, choice: 2}],
+  SignPost: [{x: 9000, y: 700, choice: 0}],
   music: "./assets/music/FreedomM.mp3"
 
 };

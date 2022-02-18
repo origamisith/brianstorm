@@ -78,7 +78,7 @@ class Note {
     // returnPosition(x_offset, y_offset) {}
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x/5, this.y -this.game.camera.y/5, this.scale);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x/2, this.y -this.game.camera.y/2, this.scale);
         // ctx.strokeStyle = 'red';
         // ctx.strokeRect(this.x, this.y, 120, 120);
 

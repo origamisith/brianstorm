@@ -6,7 +6,7 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, show_bb) {
+    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_cameraLimit, show_bb) {
         Object.assign(this, { game, player_type, x, y });
 
         //assign the game engine to this object
@@ -17,6 +17,9 @@ class Player {
 
         this.x_vel = x_vel;
         this.y_vel =y_vel;
+        this.x_cameraLimit = x_cameraLimit;
+
+
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
@@ -238,25 +241,23 @@ class Player {
             this.x += this.velocity.x;
         }
 
+        //submarine movement mechanics
         if(this.player_type === "submarine") {
-            if(this.game.up) {
-
+            if(this.game.up && this.y > -10) {
                 this.y -= this.velocity.y;
             }
-            else if(this.game.down) {
+            else if(this.game.down && this.y < 630) {
                 this.y += this.velocity.y;
             }
-
-
         }
-
-
     }
 
 //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
 
+        if (this.y >= params.floor) {
+            this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
+        }
         if(this.bb_enable) {
             ctx.strokeStyle = 'red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);

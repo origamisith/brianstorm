@@ -14,6 +14,6 @@ class Barline {
     }
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x/5, this.y -this.game.camera.y/5, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x/2, this.y -this.game.camera.y/2, 1);
     };
 }
