@@ -21,8 +21,8 @@ class SceneManager {
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
-        // this.checkStart();
-        this.loadLevel(600, 400);
+        this.checkStart();
+        // this.loadLevel(600, 400);
 
     };
 
@@ -59,7 +59,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9700, 100, 2);
-        this.player = new Player(this.game, "default", 6000, y, 15, 20, 9000);
+        this.player = new Player(this.game, "default", x, y, 10, 20, 9000);
         this.player.gravity = 28;
         this.game.addEntity(this.player);
 
@@ -89,7 +89,7 @@ class SceneManager {
         this.game.addEntity(this.marker);
 
         levelOne.SignPost.forEach(s => {
-            let sign = new SignPost(this.game, s.x, s.y, s.choice);
+            let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
             this.game.addEntity(sign);
         });
 
@@ -99,11 +99,11 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.player = new Submarine(this.game, "submarine", 8000, y, 15, 10, 90000);
+        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 9000, 500, 4);
+        this.marker = new LevelMarker(this.game, 10000, 500, 4);
 
 
         levelWater.powerUps.forEach(p => {
@@ -112,7 +112,7 @@ class SceneManager {
         });
 
         levelWater.signPost.forEach(s => {
-            let sign = new SignPost(this.game, s.x, s.y, s.choice);
+            let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
             this.game.addEntity(sign);
         });
 
