@@ -177,7 +177,6 @@ const musicLevel = {
     ],
 
     barlines: [
-        {position: 0},
         {position: 44},
         {position: 76},
         {position: 108},
