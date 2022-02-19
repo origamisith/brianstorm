@@ -3,12 +3,12 @@
 class Meteor {
     constructor(game, levelWidth) {
         this.game = game;
-        this.radius = 10;
+        this.radius = 30;
         this.levelWidth = levelWidth;
         this.x = this.radius + Math.random() * (this.levelWidth - this.radius * 2);
         this.y = this.radius + Math.random() * (this.game.surfaceHeight - this.radius * 2);
         this.friction = 1;
-        this.acceleration = 1000000;
+        this.acceleration = 10000000;
         this.maxSpeed = 0;
         this.visualRadius = 0;
         this.colors = ["White", "White"];
@@ -73,7 +73,7 @@ class Meteor {
 
             // collision with left or right walls
             if (this.collideLeft() || this.collideRight()) {
-                this.velocity.x += this.velocity.x * -10;
+                this.velocity.x += this.velocity.x * -1000;
                 if (this.collideLeft()) this.x = this.radius;
                 if (this.collideRight()) this.x = this.game.surfaceWidth - this.radius;
 
@@ -81,7 +81,7 @@ class Meteor {
 
             // collision with top or bottom walls
             if (this.topCollide() || this.collideBottom()) {
-                this.velocity.y = this.velocity.y * -10;
+                this.velocity.y += this.velocity.y * -1000;
                 if (this.topCollide()) this.y = this.radius;
                 if (this.collideBottom()) this.y = this.game.surfaceHeight - this.radius;
             }
@@ -89,8 +89,6 @@ class Meteor {
             // collision with other circles
             for (var i = 0; i < this.game.entities.length; i++) {
                 const ent = this.game.entities[i];
-
-
 
                 if (ent !== this && this.collide(ent)) {
 
@@ -107,10 +105,10 @@ class Meteor {
 
                     // swap velocities
                     const temp = {x: this.velocity.x, y: this.velocity.y};
-                    this.velocity.x = ent.velocity.x * this.friction;
-                    this.velocity.y = ent.velocity.y * this.friction;
-                    ent.velocity.x = temp.x * this.friction;
-                    ent.velocity.y = temp.y * this.friction;
+                    this.velocity.x = ent.velocity.x;
+                    this.velocity.y = ent.velocity.y;
+                    ent.velocity.x = temp.x;
+                    ent.velocity.y = temp.y;
                     //
                     // // play tag
                     if (this.it) {
