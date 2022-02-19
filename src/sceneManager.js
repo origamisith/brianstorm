@@ -4,7 +4,7 @@ class SceneManager {
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
-        this.marker = new LevelMarker(this.game, 0, 0, 1);
+        this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
 
         this.debug = debug;
@@ -22,7 +22,6 @@ class SceneManager {
         //Add the initial title screen to the game
         this.game.addEntity(new Title(this.game, 250, 250));
         this.checkStart();
-        // this.loadLevel(600, 400);
 
     };
 
@@ -33,7 +32,7 @@ class SceneManager {
             this.title = false;
             this.loadLevel(600, 400);
             //comment this for music
-            ASSET_MANAGER.pauseBackgroundMusic();
+            // ASSET_MANAGER.pauseBackgroundMusic();
 
         }
     };
@@ -45,20 +44,17 @@ class SceneManager {
         this.clearEntities()
         if (this.level === 1) {this.loadLevelOne(x, y);}
         else if (this.level === 2) {this.loadWater(x, y);}
+        else if (this.level === 3) {this.loadSpaceLevel(x, y);}
         else if (this.level === 4) {this.loadMusicLevel(x, y);}
         else if (this.level === 5) {this.loadEndScreen(x, y);}
 
     }
 
-
-
-
-
     loadLevelOne(x, y) {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9700, 100, 2);
+        this.marker = new LevelMarker(this.game, 9700, 100, 2, 200, 2000);
         this.player = new Player(this.game, "default", x, y, 10, 20, 9000);
         this.player.gravity = 28;
         this.game.addEntity(this.player);
@@ -99,12 +95,12 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+
         this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 10000, 500, 4);
-
+        this.marker = new LevelMarker(this.game, 9000, -250, 3, 1024, 100);
 
         levelWater.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
@@ -136,16 +132,52 @@ class SceneManager {
         /*   levelWater.shark.forEach(s => {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
+
         this.game.addEntity(this.marker);
 
 
     }
 
+
+    loadSpaceLevel(x, y) {
+
+        this.endScreen = false;
+        this.clearEntities();
+        this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
+
+        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
+        this.player.gravity = 0;
+        this.player.falling = false;
+        this.game.addEntity(this.player);
+
+
+        this.levelWidth = 10240;
+        let meteor = new Meteor(gameEngine, this.levelWidth);
+        meteor.setIt();
+        gameEngine.addEntity(meteor);
+        for (let i = 0; i < 40; i++) {
+            meteor = new Meteor(gameEngine, this.levelWidth);
+            gameEngine.addEntity(meteor);
+        }
+
+        this.game.addEntity(this.marker);
+        this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+
+
+    }
+
+
+
     loadMusicLevel(x, y) {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9000, 100, 1);
+        this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
         this.player = new Player(this.game, "default", x, y, 15, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
@@ -183,7 +215,7 @@ class SceneManager {
     loadEndScreen(x, y) {
         this.clearEntities();
         this.endScreen = true;
-        this.marker = new LevelMarker(this.game, -300, 100, 1);
+        this.marker = new LevelMarker(this.game, -300, 100, 1, 200, 2000);
 
         this.player = new Player(this.game, "default", 500, 100, 15, 10, false);
 
@@ -191,9 +223,6 @@ class SceneManager {
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/end_screen/try_again.jpg"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.game.addEntity(this.marker);
         this.game.addEntity(new LevelMarker(this.game, 100, 100, 1));
-
-
-
 
     }
 
@@ -215,7 +244,7 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
         // // console.log(this.player.x);
-        console.log(this.player.y);
+        // console.log(this.player.y);
         if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
@@ -224,8 +253,6 @@ class SceneManager {
             //     this.y = this.player.y - (h - ph)
             // }
         }
-
-
         //If storm is falling and in the upper half of the canvas, track him until he sees the floor
         else if(this.player.falling && this.player.y - this.y > h/2 && this.player.y < h/2) {
             this.y = this.player.y - h/2
@@ -237,16 +264,13 @@ class SceneManager {
 
         if(this.marker.loadNext === true) {
             this.level = this.marker.id
-
             this.loadLevel(600, 450);
-            }
-
+        }
     }
 
     updateAudio() {
         const mute = document.getElementById("mute").checked;
         const volume = document.getElementById("volume").value;
-
         ASSET_MANAGER.muteAudio(mute);
         ASSET_MANAGER.adjustVolume(volume);
 

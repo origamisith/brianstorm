@@ -24,6 +24,7 @@ ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
+ASSET_MANAGER.queueDownload('./assets/backgrounds/space.png');
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
@@ -50,6 +51,13 @@ ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetne
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/smallfish_sheetnew.png");
 
+//space level
+ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
+
+
+
+
+
 //music level
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
@@ -72,6 +80,9 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	new SceneManager(gameEngine);
 	gameEngine.start();
+
+
+
 
 });
 

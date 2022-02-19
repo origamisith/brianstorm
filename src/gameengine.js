@@ -19,6 +19,9 @@ class GameEngine {
         this.lctrl = false;
         this.keys = {};
 
+        this.surfaceWidth = null;
+        this.surfaceHeight = null;
+
         // THE KILL SWITCH
         this.running = false;
 
@@ -34,6 +37,9 @@ class GameEngine {
 
     init(ctx) {
         this.ctx = ctx;
+        this.surfaceWidth = this.ctx.canvas.width;
+        this.surfaceHeight = this.ctx.canvas.height;
+
         this.startInput();
         this.timer = new Timer();
     };

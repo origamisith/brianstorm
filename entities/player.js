@@ -18,7 +18,7 @@ class Player {
         this.x_vel = x_vel;
         this.y_vel =y_vel;
         this.x_cameraLimit = x_cameraLimit;
-
+        this.y_cameraLimit = y_cameraLimit;
         this.scale = 1;
 
         // updates / initializes the bounding box
@@ -136,7 +136,7 @@ class Player {
                         that.onGround = true;
                     }
                 }
-                else if (entity instanceof Miniraser) {
+                else if (entity instanceof Miniraser || entity instanceof Meteor) {
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
@@ -245,11 +245,14 @@ class Player {
 
         //submarine movement mechanics
         if(this.player_type === "submarine") {
-            if(this.game.up && this.y > -10) {
+            if(this.game.up && this.y > -110) {
                 this.y -= this.velocity.y;
             }
-            else if(this.game.down && this.y < 630) {
+            else if(this.game.down && this.y < 720) {
                 this.y += this.velocity.y;
+            }
+            else if(this.game.up && this.x > this.x_cameraLimit) {
+                this.y -= this.velocity.y;
             }
         }
     }
