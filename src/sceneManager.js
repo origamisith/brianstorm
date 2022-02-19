@@ -13,7 +13,8 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 3;
+
 
         //initially set the game in the title screen state
         this.title = true;
@@ -45,14 +46,11 @@ class SceneManager {
         this.clearEntities()
         if (this.level === 1) {this.loadLevelOne(x, y);}
         else if (this.level === 2) {this.loadWater(x, y);}
+        else if (this.level === 3) {this.loadSpaceLevel(x, y);}
         else if (this.level === 4) {this.loadMusicLevel(x, y);}
         else if (this.level === 5) {this.loadEndScreen(x, y);}
 
     }
-
-
-
-
 
     loadLevelOne(x, y) {
 
@@ -99,11 +97,17 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+
+
+
         this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
         this.marker = new LevelMarker(this.game, 10000, 500, 4);
+
+
+
 
 
         levelWater.powerUps.forEach(p => {
@@ -136,10 +140,41 @@ class SceneManager {
         /*   levelWater.shark.forEach(s => {
             this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
+
         this.game.addEntity(this.marker);
 
 
     }
+
+
+    loadSpaceLevel(x, y) {
+
+        this.endScreen = false;
+        this.clearEntities();
+
+        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
+        this.player.gravity = 0;
+        this.player.falling = false;
+        this.game.addEntity(this.player);
+
+        this.levelWidth = 10240;
+        let circle = new Meteor(gameEngine, this.levelWidth);
+        circle.setIt();
+        gameEngine.addEntity(circle);
+        for (let i = 0; i < 12; i++) {
+            circle = new Meteor(gameEngine, this.levelWidth);
+            gameEngine.addEntity(circle);
+        }
+
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+
+    }
+
+
 
     loadMusicLevel(x, y) {
 
@@ -180,6 +215,13 @@ class SceneManager {
 
     }
 
+
+
+
+
+
+
+
     loadEndScreen(x, y) {
         this.clearEntities();
         this.endScreen = true;
@@ -215,7 +257,7 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
         // // console.log(this.player.x);
-        console.log(this.player.y);
+        // console.log(this.player.y);
         if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame

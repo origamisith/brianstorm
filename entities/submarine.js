@@ -26,11 +26,11 @@ class Submarine extends Player {
 
     };
 
-    updateBB() {
+    updateBB(facing) {
         //Bounding box for collision
-        this.BB = new BoundingBox(this.x - 300, this.y + 120, 500, 180)
+        if (facing ==="right") {this.BB = new BoundingBox(this.x - 300, this.y + 120, 500, 180)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y + 120, 500, 180)}
     }
-
 
     //draw method will render this entity to the canvas
     draw(ctx) {
@@ -43,11 +43,12 @@ class Submarine extends Player {
 
     update() {
 
-        this.updateBB();
-
-
-        if(this.player_type === "submarine" && this.facing === 1){this.animation = this.submarineLeftFacing;}
-        else if(this.player_type === "submarine" && this.facing === 0){this.animation = this.submarineRightFacing;}
+        if(this.player_type === "submarine" && this.facing === 1){
+            this.updateBB("left");
+            this.animation = this.submarineLeftFacing;}
+        else if(this.player_type === "submarine" && this.facing === 0){
+            this.updateBB("right");
+            this.animation = this.submarineRightFacing;}
         // Left and right movement
         if(this.player_type === "submarine") {this.leftRightMovement();}
 
@@ -64,11 +65,7 @@ class Submarine extends Player {
             if (entity instanceof LevelMarker){
                 if(that.BB.collide(entity.BB)){entity.loadNext = true;}
             }
-
-
         });
-
-
     }
 
     /** Helper method to update the player type */

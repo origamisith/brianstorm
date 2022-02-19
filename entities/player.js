@@ -245,10 +245,10 @@ class Player {
 
         //submarine movement mechanics
         if(this.player_type === "submarine") {
-            if(this.game.up && this.y > -10) {
+            if(this.game.up && this.y > -110) {
                 this.y -= this.velocity.y;
             }
-            else if(this.game.down && this.y < 630) {
+            else if(this.game.down && this.y < 720) {
                 this.y += this.velocity.y;
             }
         }

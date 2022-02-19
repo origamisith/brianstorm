@@ -6,9 +6,11 @@
     <title>Webgame</title>
 
     <script type="text/javascript" src="./src/assetmanager.js" defer></script>
-    <script type="text/javascript" src="./src/timer.js" defer></script>
     <script type="text/javascript" src="./src/gameengine.js" defer></script>
+    <script type="text/javascript" src="./src/timer.js" defer></script>
+
     <script type="text/javascript" src="./src/util.js" defer></script>
+    <script type="text/javascript" src="./entities/meteor.js" defer></script>
     <script type="text/javascript" src="./src/animator.js" defer></script>
     <script type="text/javascript" src="./entities/terrain.js" defer></script>
     <script type="text/javascript" src="./entities/player.js" defer></script>
@@ -22,6 +24,7 @@
     <script type="text/javascript" src="entities/cloud.js" defer></script>
     <script type="text/javascript" src="./levels/title.js" defer></script>
     <script type="text/javascript" src="./entities/powerUp.js" defer></script>
+
 
     <script type="text/javascript" src="./waterEnemies.js"defer ></script>
     <script type="text/javascript" src="./waterAnimals.js"defer ></script>
@@ -51,7 +54,34 @@
         <input type="checkbox" id="debug"> Debug <input type="checkbox" id="mute"> Mute <input type="range" id="volume" min="0" max="1" value="0.3" step="0.05"> Volume
     </div>
 
+    <div>
+        <input type="range" id="friction" name="friction"
+               min="0" max="1" value="1" step="0.05">
+        <label for="friction">Friction</label>
+    </div>
+    <div>
+        <input type="checkbox" id="visual" name="visual">
+        <label for="visual">Draw Visual Radius</label>
+    </div>
+    <div>
+        It<br />
+        <input type="range" id="itspeed" name="itspeed"
+               min="10" max="250" value="250" step="10">
+        <label for="itspeed">Maximum Speed</label>
+        <input type="range" id="itradius" name="itradius"
+               min="10" max="500" value="500" step="10">
+        <label for="itradius">Visual Radius</label>
+    </div>
+    <div>
+        Not It<br />
+        <input type="range" id="notspeed" name="notspeed"
+               min="10" max="250" value="200" step="10">
+        <label for="notspeed">Maximum Speed</label>
+        <input type="range" id="notradius" name="notradius"
+               min="10" max="500" value="200" step="10">
+        <label for="notradius">Visual Radius</label>
 
+    </div>
 
 </body>
 </html>
