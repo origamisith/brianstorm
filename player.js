@@ -53,6 +53,7 @@ class Player {
         this.bumpedCeiling = false;
         this.onSide = false;
         this.sideDir = 0;
+        this.offSideTime = 0;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
@@ -77,95 +78,92 @@ class Player {
 
     updateCollisions() {
         const that = this;
-        let touchGround = false;
-        let minDist = 1000;
-        let saved = {x:0, y:0};
-        let touchSide = false;
-        let bumpCeiling = false;
+        let defaultSave = {
+            change: {x: 0, y: 0},
+            sideDir: null,
+            minDist: 1000,
+            changeVelocity: false,
+            velocity: {x: 0, y: 0}
+        }
+        let save = {...defaultSave}
+        /*
+        if(this.game.onSide) {
+            this.x += this.sideDir === 0? 1: -1;
+        }
+         */
 
-
+        let onGround = false;
+        let onCeiling = false;
+        let bumpedCeiling = false;
+        let onSide = false;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
                     const {x: ox, y: oy, dist} = that.BB.overlapDist(entity.BB);
-                    if(dist >= minDist) return;
-                    else minDist = dist;
+                    if(dist >= save.minDist) return;
+                    else {
+                        save = {...defaultSave};
+                        save.minDist = dist;
+                    }
                     let d = Math.sqrt(ox*ox + oy*oy)
                     const {x: vx, y: vy} = that.velocity;
                     let speed = vx*ox/d + vy*oy/d;
                     if(oy !== 0) {
-                        // touchGround = true;
                         if(oy > 0) {
                             if(that.game.sticking && !that.onCeiling) {
-                                that.velocity.y = 0;
-                                that.velocity.x = 0;
-                                that.onCeiling = true;
-                                console.log('hey there')
+                                save.changeVelocity = true;
+                                save.velocity.y = 0;
+                                onCeiling = true;
                             }
                             else if(!that.onCeiling && !that.bumpedCeiling) {
-                                console.log('hi')
-                                that.velocity.y *=-.5;
-                                that.bumpedCeiling = true;
+                                save.changeVelocity = true;
+                                save.velocity.y = that.velocity.y * -0.5
+                                bumpedCeiling = true;
                             }
                         }
                         else if(oy < 0){
-                            console.log('why')
-                            touchGround = true;
-                            that.bumpedCeiling = false;
-                            that.onCeiling = false;
+                            onGround = true;
+                            bumpedCeiling = false;
+                            onCeiling = false;
                         }
-
-                        /*
-                        if (that.BB.top > entity.BB.top) {
-                            touchGround = false;
-                            touchCeiling = true;
-                        } else {
-                            touchCeiling = false;
-                            touchGround = true;
-                        }
-
-                         */
                     }
                     if(ox !== 0) {
-                        touchSide = true;
+                        save.changeVelocity = true;
+                        save.velocity.x = 0;
+                        onSide = true;
+                        // save.sideDir = this.facing;
                         //Something to detect when on side to prevent x-axis jitter?
                     }
                     if(speed <= 0) {
-                        saved = {x:ox, y:oy}
-                        // that.x += ox;
-                        // that.y += oy;
-                        // that.updateBB();
+                        save.change = {x: ox, y: oy}
                     }
                 }
             }
         });
-        if(true || !this.game.sticking || !this.onCeiling) {
-            that.x += saved.x;
-            // that.y += saved.y;
+
+        console.log(defaultSave.change)
+
+        if(save.change.x !== 0) {
+            this.onSide = onSide;
         }
-        that.y += saved.y;
-        if(saved.x !== 0) {
-            this.onSide = true;
-            this.onGround = false;
-            this.sideDir = this.facing;
+        if(save.change.y !== 0){
+            this.onGround = onGround;
+            this.bumpedCeiling = bumpedCeiling;
+            this.onCeiling = onCeiling;
         }
-        // this.onGround = touchGround
-        this.onSide = touchSide;
-        if(saved.y !== 0) {
-            if(touchGround) this.onGround = true;
-            // if(touchCeiling) this.onCeiling = true;
-            this.onSide = false;
+        // console.log(save.change)
+        // if(this.onGround) this.onCeiling = false;
+        // if(this.onCeiling) this.onGround = false;
+
+        if(false && this.onCeiling) {
+            this.y -= 1;
         }
-        if(saved.y === 0 && saved.x === 0) {
-            this.onSide = false;
-            this.onGround = false;
-            if(true || !this.game.sticking) this.onCeiling = false;
-        }
-        // if(this.onCeiling) this.onSide = false;
-        // console.log(count++ + ", " + this.onGround + ", " + this.onSide + ", " + this.onCeiling)
-        // console.log(saved)
+
+        that.x += save.change.x;
+        that.y += save.change.y;
+        console.log(this.onGround + ", " + this.onSide)
         that.updateBB();
     }
 
@@ -186,12 +184,12 @@ class Player {
         else if (this.game.right) {
             this.facing = 0;
         }
-        if(this.onGround) this.onCeiling = false;
-        if(this.onCeiling) this.onGround = false;
         // console.log("ground " + this.onGround)
+        //hmm
         if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) this.velocity.x = 0;
+        // if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
         if(this.onGround && !this.onCeiling) {
-            if(this.game.space && this.airTime < 2) {
+            if(this.game.space) {
                 this.velocity.y = -10;
                 this.onGround = false;
             }
@@ -202,10 +200,9 @@ class Player {
                 this.velocity.x = 3;
             }
         }
-        if(this.onGround) this.airTime = 0;
         if(this.onGround) this.velocity.y = 0;
         if(this.onSide && this.facing !== this.sideDir) this.onSide = false;
-        if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
+        // if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
         else if(true || !this.onSide) {
             if(this.game.left) this.x -= params.blockSize * TICK;
             else if(this.game.right) this.x += params.blockSize * TICK;
