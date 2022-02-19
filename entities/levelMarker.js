@@ -6,6 +6,7 @@ class LevelMarker {
         this.game = game;
         this.id = id;
         this.loadNext = false;
+        this.BB = new BoundingBox(this.x, this.y, 200, 2000);
 
     }
 

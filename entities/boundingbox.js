@@ -10,8 +10,8 @@ class BoundingBox {
     };
 
     collide(oth) {
-        if (this.right > oth.left && this.left < oth.right && this.top < oth.bottom && this.bottom > oth.top) return true;
-        return false;
+        return this.right > oth.left && this.left < oth.right && this.top < oth.bottom && this.bottom > oth.top;
+
       
     };
 
@@ -23,9 +23,7 @@ class BoundingBox {
         if (lg) {
             console.log(this.midx + ' ' + oth.midx);
         }
-        if (Math.abs(this.midx - oth.midx) < dist) {
-            return true;
-        }
-        return false;
+        return Math.abs(this.midx - oth.midx) < dist;
+
     };
-};
+}

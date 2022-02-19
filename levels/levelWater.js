@@ -34,13 +34,19 @@ class levelWaterGenerator {
 
  
 }
+
+
+
 const levelWater = {
   shark: levelWaterGenerator.sharkGenerate(5),
   fish: levelWaterGenerator.fishes(10),
   seahorse:[{x: 100, y: 100}, {x: 200, y: 80}],
   //doubleSeahorses:[{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
   //doubleSeahorses: levelWaterGenerator.double_seahorses(2),
-  music: "./assets/music/FreedomM.mp3"
-  
+  doubleSeahorses: levelWaterGenerator.double_seahorses(2),
+  music: "./assets/music/FreedomM.mp3",
+  powerUps: [{x: 100, y: 250}, {x: 7500, y: 700}],
+  signPost: [{x: 9000, y: 865, choice: 2, scale: 0.4}]
+
 };
   
