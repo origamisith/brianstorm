@@ -4,7 +4,7 @@ class SceneManager {
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
-        this.marker = new LevelMarker(this.game, 0, 0, 1);
+        this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
 
         this.debug = debug;
@@ -13,7 +13,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 3;
+        this.level = 2;
 
 
         //initially set the game in the title screen state
@@ -56,7 +56,7 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9700, 100, 2);
+        this.marker = new LevelMarker(this.game, 9700, 100, 2, 200, 2000);
         this.player = new Player(this.game, "default", x, y, 10, 20, 9000);
         this.player.gravity = 28;
         this.game.addEntity(this.player);
@@ -100,15 +100,11 @@ class SceneManager {
 
 
 
-        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
+        this.player = new Submarine(this.game, "submarine", 8000, y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 10000, 500, 4);
-
-
-
-
+        this.marker = new LevelMarker(this.game, 9000, -250, 3, 1024, 100);
 
         levelWater.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
@@ -151,26 +147,34 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+        this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
 
         this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
 
+
         this.levelWidth = 10240;
-        let circle = new Meteor(gameEngine, this.levelWidth);
-        circle.setIt();
-        gameEngine.addEntity(circle);
-        for (let i = 0; i < 12; i++) {
-            circle = new Meteor(gameEngine, this.levelWidth);
-            gameEngine.addEntity(circle);
+        let meteor = new Meteor(gameEngine, this.levelWidth);
+        meteor.setIt();
+        gameEngine.addEntity(meteor);
+        for (let i = 0; i < 20; i++) {
+            meteor = new Meteor(gameEngine, this.levelWidth);
+            gameEngine.addEntity(meteor);
         }
 
+        this.game.addEntity(this.marker);
+        this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+
+
+
+
 
     }
 
@@ -180,7 +184,7 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9000, 100, 1);
+        this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
         this.player = new Player(this.game, "default", x, y, 15, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
@@ -225,7 +229,7 @@ class SceneManager {
     loadEndScreen(x, y) {
         this.clearEntities();
         this.endScreen = true;
-        this.marker = new LevelMarker(this.game, -300, 100, 1);
+        this.marker = new LevelMarker(this.game, -300, 100, 1, 200, 2000);
 
         this.player = new Player(this.game, "default", 500, 100, 15, 10, false);
 
@@ -281,7 +285,15 @@ class SceneManager {
             this.level = this.marker.id
 
             this.loadLevel(600, 450);
-            }
+        }
+
+        if(this.level === 2 && this.player.x > this.player.x_cameraLimit) {
+
+
+
+        }
+
+
 
     }
 

@@ -51,10 +51,10 @@ window.requestAnimFrame = (() => {
 })();
 // computes pythagoras' theorem
 function distance(a, b) {
-    var dx = a.x - b.x;
-    var dy = a.y - b.y;
+    const dx = a.x - b.x;
+    const dy = a.y - b.y;
     return Math.sqrt(dx * dx + dy * dy);
-};
+}
 /**
  * Returns distance from two points
  * @param {Number} p1, p2 Two objects with x and y coordinates

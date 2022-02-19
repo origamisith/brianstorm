@@ -42,7 +42,7 @@ const levelWater = {
   doubleSeahorses: levelWaterGenerator.double_seahorses(2),
   music: "./assets/music/FreedomM.mp3",
   powerUps: [{x: 100, y: 250}, {x: 7500, y: 700}],
-  signPost: [{x: 9000, y: 865, choice: 2, scale: 0.4}],
+  signPost: [{x: 9000, y: 865, choice: 1, scale: 0.4}],
 
 };
   

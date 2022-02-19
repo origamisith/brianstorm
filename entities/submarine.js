@@ -22,6 +22,9 @@ class Submarine extends Player {
         this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
         this.x_cameraLimit = x_cameraLimit;
 
+        this.hp = 60;
+        this.dead = false;
+        this.elapsedTime = 0;
         this.loadAnimations();
 
     };
@@ -43,6 +46,10 @@ class Submarine extends Player {
 
     update() {
 
+        // console.log(this.x);
+        const TICK = this.game.clockTick;
+        this.elapsedTime += TICK;
+
         if(this.player_type === "submarine" && this.facing === 1){
             this.updateBB("left");
             this.animation = this.submarineLeftFacing;}
@@ -61,11 +68,21 @@ class Submarine extends Player {
                     console.log("+ 20 HP!!");
                 }
             }
-
+            if(entity instanceof Meteor) {
+                if (that.BB.collide(entity.BB)) {
+                    if (that.elapsedTime > 0.8) {
+                        that.hp -= 5;
+                        console.log("storm HP: " + that.hp);
+                        that.elapsedTime = 0;
+                    }
+                }
+            }
             if (entity instanceof LevelMarker){
                 if(that.BB.collide(entity.BB)){entity.loadNext = true;}
             }
         });
+
+        if (this.hp===0) {this.dead = true;}
     }
 
     /** Helper method to update the player type */
