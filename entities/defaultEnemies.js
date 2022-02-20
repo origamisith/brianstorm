@@ -89,20 +89,17 @@ class Miniraser {
             if (entity !== that && entity.BB && that.BB.inRange(entity.BB, that.jumpDistance, false)) {
                 // only jumping if terrain is a level higher.
                 //console.log('entity bottom: ' + entity.BB.bottom + ', enemy bottom: ' + (that.BB.bottom));
-                if (entity.BB.bottom < (that.BB.bottom)) {
-                    // console.log('top and bottom distance flagged');
+                if (entity.BB.bottom < that.BB.bottom && Math.abs(entity.BB.bottom - (that.BB.bottom)) > params.blockSize) {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
                        if (that.facing == 1 && entity.BB.left > that.BB.left) {
-                           console.log('jumping left');
                            that.facing = 1;
                             that.jumpflag = true;
                             that.leftJump = true;
                        }
                        // If facing left, jump left
                        else if (that.facing == 0 && entity.BB.left < that.BB.left) {
-                           console.log('jumping right');
                            that.facing = 0;
                             that.jumpflag = true;
                             that.rightJump = true;
@@ -110,7 +107,7 @@ class Miniraser {
                     } else if (entity instanceof Player) {
                         if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8) {
                             that.hp -= 5;
-                            console.log("miniraser HP: " + that.hp);
+                            // console.log("miniraser HP: " + that.hp);
                             that.elapsedTime = 0;
                         }
                     }
@@ -118,7 +115,7 @@ class Miniraser {
             }
         });
 
-        if (this.hp == 0) {
+        if (this.hp === 0) {
             this.removeFromWorld = true;
         }
         /** BECOME AGGRO'D */
@@ -148,13 +145,7 @@ class Miniraser {
 
         /** FALLING */
         // console.log('ground: ' + this.onGround + ', left jump: ' + this.leftJump + ', right jump: ' + this.rightJump);
-        if (!this.onGround && !this.leftJump && !this.rightJump) {
-            this.falling = true;
-            console.log('falling is true');
-        }
-        else {
-            this.falling = false;
-        }
+        this.falling = !this.onGround && !this.leftJump && !this.rightJump;
         if (this.falling &! this.onGround) {
 
         }
@@ -216,4 +207,4 @@ class Miniraser {
         this.x += this.velocity.x * TICK;
         this.y += this.velocity.y * TICK;
     };
-};
+}

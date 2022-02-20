@@ -14,7 +14,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        this.level = 2;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -98,30 +98,28 @@ class SceneManager {
 
 
         levelWater.fish.forEach(f => {
-            this.game.addEntity(new Fishes(this.game, f.x , f.y));
-        }); 
+            this.game.addEntity(new Fishes(this.game, f.x , f.y + 450));
+        });  
        
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
       
        /*  levelWater.doubleSeahorses.forEach(s => {
           this.game.addEntity(new Seahorses(this.game, s.x, s.y));
-        });  */ 
-        /*   levelWater.shark.forEach(s => {
-            this.game.addEntity(new Shark(this.game, s.x, s.y));
         });   */
 
-        //this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, -2800 - this.game.camera.x/5, -800-this.game.camera.y/5, 3200, 1600), update: () => null})
+        levelWater.shark.forEach(sh => {
+            this.game.addEntity(new Shark(this.game, sh.x, sh.y));
+        });  
 
+        levelWater.seahorse.forEach(s => {
+            this.game.addEntity(new Seahorse(this.game, s.x, s.y));
+        });   
 
-        //this.game.addEntity = new Seahorses(ASSET_MANAGER.getAsset("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png"), this.player.x, this.player.y -100, 700, 700, 7, 0.12, false, true);
         //this.game.addEntity(new Seahorses(this.game, x, y- 400));
         
-       // this.game.addEntity(new Fishes(this.game, this.player.x, y));
-
-        levelWater.doubleSeahorses.forEach(e => {
+      /*   levelWater.doubleSeahorses.forEach(e => {
           let seahorse = new Seahorses(this.game, e.x, e.y);
           this.game.addEntity(seahorse);
-        });
+        });*/
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2400, 1200, 0 - this.game.camera.x/5, 0-this.game.camera.y/5, 3200, 1600), update: () => null})
     }

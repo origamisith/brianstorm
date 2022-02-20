@@ -6,7 +6,7 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, show_bb) {
+    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_cameraLimit, show_bb) {
         Object.assign(this, { game, player_type, x, y });
 
         //assign the game engine to this object
@@ -17,6 +17,11 @@ class Player {
 
         this.x_vel = x_vel;
         this.y_vel =y_vel;
+        this.x_cameraLimit = x_cameraLimit;
+        this.y_cameraLimit = y_cameraLimit;
+        this.scale = 1;
+
+        
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
@@ -33,10 +38,15 @@ class Player {
         this.removeFromWorld = false;
         this.leftCol = false;
         this.rightCol = false;
-        this.hp = 60;
+        this.hp = 20;
+
+        //sets size of submarine and its BB
+        this.scale = 0.5;
 
         this.dead = false;
 
+        // assign hearts to storm's hp
+        this.hearts = new Hearts(this.game, this, 50, 50);
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -70,8 +80,8 @@ class Player {
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
-        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
-        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 600, 300, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1200, 0, 600, 300, 2, 0.1, false, true);
 
     };
 
@@ -125,22 +135,12 @@ class Player {
                     if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
                         that.side = true;
                     }
-
-                    // Case 3: Falling onto flat ground
-
-
-//                         // music note case, plays sound upon player contact
-//                     else if(entity instanceof ChordBar) {
-//                         if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
-//                             entity.game.removeFromWorld = true;
-//                         }
-//                     }
+                        // Case 3: Falling onto flat ground
                     else {
                         that.onGround = true;
-                        that.y = entity.BB.top - 200; // 200 = player height
                     }
                 }
-                else if (entity instanceof Miniraser) {
+                else if (entity instanceof Miniraser || entity instanceof Meteor) {
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
@@ -154,10 +154,18 @@ class Player {
                 else if (entity instanceof LevelMarker){
                     if(that.BB.collide(entity.BB)){entity.loadNext = true;}
                 }
+
+                if (entity instanceof powerUp) {
+                    if (that.BB.collide(entity.BB)) {
+                        entity.removeFromWorld = true;
+                        that.hp += 20;
+                        console.log("+ 20 HP!!");
+                    }
+                }
             }
         });
 
-        if (this.hp==0) {this.dead = true;}
+        if (this.hp===0) {this.dead = true;}
 
 
 
@@ -238,16 +246,32 @@ class Player {
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
         }
+
+        //submarine movement mechanics
+        if(this.player_type === "submarine") {
+            if(this.game.up && this.y > -110) {
+                this.y -= this.velocity.y;
+            }
+            else if(this.game.down && this.y < 720) {
+                this.y += this.velocity.y;
+            }
+            else if(this.game.up && this.x > this.x_cameraLimit) {
+                this.y -= this.velocity.y;
+            }
+        }
     }
 
 //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);
+
+
+        this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
 
         if(this.bb_enable) {
             ctx.strokeStyle = 'red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
+        this.hearts.draw(ctx);
 
     };
 
