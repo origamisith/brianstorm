@@ -5,6 +5,7 @@ class Hearts {
         this.x = x;
         this.y = y;
         this.game = game;
+        this.player = player;
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/hearts.png"); 
         this.loadAnimations(); // 0 = full, 1 = half, 2 = low
     };
@@ -21,11 +22,11 @@ class Hearts {
 
     draw(ctx) {
             if (this.player.hp > 14) {
-                this.fullAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 0.6);
+                this.fullAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x), this.y - this.game.camera.y, 0.6);
             } else if (this.player.hp > 6) {
-                this.halfAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 0.6);
+                this.halfAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x), this.y - this.game.camera.y, 0.6);
             } else {
-                this.lowAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 0.6);
+                this.lowAnim.drawFrame(this.game.clockTick, ctx, Math.floor(this.x), this.y - this.game.camera.y, 0.6);
             }
     };
 };
