@@ -17,30 +17,47 @@ class Miniraser {
         this.elapsedTime = 0;
         this.hp = 50;
 
+        this.state = 0;
+        this.facing = 1; // 0=right, 1=left
+
         this.velocity = { x: 0, y: 0 }
 
+        this.animations = [ // [state, facing]
+           [0,0],
+           [0,1] 
+        ];
+        this.loadAnimations();
+
         // spritesheet
-        this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/dino/idle_1.png"), 200, 0, 200, 200, 1, 0.12, false, true);
+        this.spritesheet = ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png");
         this.updateBB();
-        this.facing = 1;
 
     };
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, 200, 200);
+        this.BB = new BoundingBox(this.x, this.y, 200*0.7, 360*0.7);
+    };
 
+    loadAnimations() {
+        this.animations[0][0] = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_right.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+        this.animations[0][1] = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png")), 0, 0, 200, 360, 2, 0.10, false, true);
     };
 
 
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
+        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.7);
         ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
     update() {
-        // console.log('FIRST: jumpflag: ' + this.jumpflag + ', onGround:' + this.onGround);
+
+        if (this.facing == 1) {
+            this.animation = this.leftIdle;
+        }
+        else if (this.facing == 0) {
+            this.animation = this.rightIdle;
+        }
         this.onGround = false;
 
         this.updateBB();
@@ -72,19 +89,18 @@ class Miniraser {
             if (entity !== that && entity.BB && that.BB.inRange(entity.BB, that.jumpDistance, false)) {
                 // only jumping if terrain is a level higher.
                 //console.log('entity bottom: ' + entity.BB.bottom + ', enemy bottom: ' + (that.BB.bottom));
-                if (entity.BB.bottom < (that.BB.bottom)) {
-                    // console.log('top and bottom distance flagged');
+                if (entity.BB.bottom < that.BB.bottom && Math.abs(entity.BB.bottom - (that.BB.bottom)) > params.blockSize) {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
-                        if (that.facing === 1 && entity.BB.left > that.BB.left) {
-                            // console.log('jumping left');
+                       if (that.facing == 1 && entity.BB.left > that.BB.left) {
+                           that.facing = 1;
                             that.jumpflag = true;
                             that.leftJump = true;
-                        }
-                        // If facing left, jump left
-                        else if (that.facing === 0 && entity.BB.left < that.BB.left) {
-                            // console.log('jumping right');
+                       }
+                       // If facing left, jump left
+                       else if (that.facing == 0 && entity.BB.left < that.BB.left) {
+                           that.facing = 0;
                             that.jumpflag = true;
                             that.rightJump = true;
                         }
@@ -98,7 +114,6 @@ class Miniraser {
                 }
             }
         });
-        //console.log('from Miniraser: Player.x' + this.game.player.x + 'Player.y' + this.game.player.y);
 
         if (this.hp === 0) {
             this.removeFromWorld = true;

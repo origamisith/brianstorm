@@ -83,6 +83,8 @@ class SceneManager {
             this.game.addEntity(pUp);
         });
 
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/graphics/paper_bg.png'), 0, 0, 1024 , 1024, 0- this.game.camera.x/5, 0 -this.game.camera.y/5, 13824, 1024), update: () => null})
+    
         this.game.addEntity(this.marker);
 
 

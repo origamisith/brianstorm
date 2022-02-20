@@ -24,13 +24,20 @@ ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
-ASSET_MANAGER.queueDownload('./assets/backgrounds/space.png');
+ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
+ASSET_MANAGER.queueDownload("./assets/hearts.png");
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
-ASSET_MANAGER.queueDownload("./assets/characters/dino/idle_1.png")
+ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
+ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
+ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");

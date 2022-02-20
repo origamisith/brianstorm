@@ -21,6 +21,8 @@ class Player {
         this.y_cameraLimit = y_cameraLimit;
         this.scale = 1;
 
+        
+
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
 
@@ -43,6 +45,8 @@ class Player {
 
         this.dead = false;
 
+        // assign hearts to storm's hp
+        this.hearts = new Hearts(this.game, this, 50, 50);
 
         // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
         this.state = 0;
@@ -267,6 +271,7 @@ class Player {
             ctx.strokeStyle = 'red';
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
+        this.hearts.draw(ctx);
 
     };
 
