@@ -205,7 +205,7 @@ class SceneManager {
         if(this.marker.loadNext === true) {
             this.level = this.marker.id
             this.marker.loadNext = false;
-            this.loadLevel()
+            this.loadLevel();
             }
     }
 
