@@ -192,12 +192,14 @@ class Player {
     update() {
         if(this.velocity.y > 0) this.falling = true;
         this.updateAnimations()
+        this.updateBB();
 
         //GENERAL PLAYER STATE ANIMATIONS
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
-        this.updateBB();
+        // this.updateBB();
+        // if(!this.onSide)
 
         if (this.game.left) {
             this.facing = 1;
@@ -250,6 +252,7 @@ class Player {
         let dy = this.velocity.y * params.blockSize * TICK;
         this.x += dx
         this.y += dy
+        this.updateBB();
         this.updateCollisions();
     };
 
