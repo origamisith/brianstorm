@@ -194,7 +194,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 10, 10, 9000,0,false)
+        this.player = new Player(this.game, "default", x, y, 12, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
 
