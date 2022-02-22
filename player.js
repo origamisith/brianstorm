@@ -51,8 +51,10 @@ class Player {
         this.onGround = false;
         this.onCeiling = false;
         this.bumpedCeiling = false;
+        this.bumpedY = -12341243
         this.onSide = false;
         this.sideDir = 0;
+        this.changeDir = true;
         this.offSideTime = 0;
     };
 
@@ -82,7 +84,6 @@ class Player {
             change: {x: 0, y: 0},
             sideDir: null,
             minDist: 1000,
-            changeVelocity: false,
             velocity: {x: 0, y: 0}
         }
         let save = {...defaultSave}
@@ -96,11 +97,13 @@ class Player {
         let onCeiling = false;
         let bumpedCeiling = false;
         let onSide = false;
+        let i = 0;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
+                    i++;
                     const {x: ox, y: oy, dist} = that.BB.overlapDist(entity.BB);
                     if(dist >= save.minDist) return;
                     else {
@@ -112,14 +115,19 @@ class Player {
                     let speed = vx*ox/d + vy*oy/d;
                     if(oy !== 0) {
                         if(oy > 0) {
+                            //Should this be checked only on initial ceiling contact or every time
                             if(that.game.sticking && !that.onCeiling) {
-                                save.changeVelocity = true;
-                                save.velocity.y = 0;
+                                //Should be done even if secondary collision?
+                                // console.log('stick')
+                                that.velocity.y = 0;
                                 onCeiling = true;
                             }
+                            //Def only initial contact
                             else if(!that.onCeiling && !that.bumpedCeiling) {
-                                save.changeVelocity = true;
-                                save.velocity.y = that.velocity.y * -0.5
+                                // console.log('bump')
+                                //Should be done even if secondary collision?
+                                that.velocity.y = that.velocity.y * -0.5
+                                that.bumpedY = entity.BB.bottom;
                                 bumpedCeiling = true;
                             }
                         }
@@ -129,11 +137,11 @@ class Player {
                             onCeiling = false;
                         }
                     }
-                    if(ox !== 0) {
-                        save.changeVelocity = true;
-                        save.velocity.x = 0;
+                    if(ox !== 0 && !(that.bumpedCeiling)) {
+                        //Should be done even if secondary collision?
+                        that.velocity.x = 0;
                         onSide = true;
-                        // save.sideDir = this.facing;
+                        save.sideDir = that.facing;
                         //Something to detect when on side to prevent x-axis jitter?
                     }
                     if(speed <= 0) {
@@ -142,28 +150,41 @@ class Player {
                 }
             }
         });
-
-        console.log(defaultSave.change)
-
-        if(save.change.x !== 0) {
-            this.onSide = onSide;
+        if(save.change === {x: 0, y: 0}) {
+            return;
         }
-        if(save.change.y !== 0){
-            this.onGround = onGround;
-            this.bumpedCeiling = bumpedCeiling;
-            this.onCeiling = onCeiling;
+        this.onSide = onSide;
+        this.onGround = onGround;
+        if(bumpedCeiling) this.bumpedCeiling = true;
+        this.onCeiling = onCeiling;
+
+        if(this.onGround) {
+            this.velocity.y = 0;
+            this.bumpedCeiling = false;
         }
+        //This line causes jitter but prevents sinking into the ground
+        // if(this.onSide && this.facing !== this.sideDir) this.onSide = false;
+        /*
+        if(save.change.x === 0 && save.change.y === 0) {
+            this.onGround = false;
+            this.onCeiling = false;
+            this.bumpedCeiling = false;
+            this.onSide = false;
+        }
+         */
+
         // console.log(save.change)
         // if(this.onGround) this.onCeiling = false;
         // if(this.onCeiling) this.onGround = false;
-
-        if(false && this.onCeiling) {
-            this.y -= 1;
-        }
-
+        //
         that.x += save.change.x;
         that.y += save.change.y;
-        console.log(this.onGround + ", " + this.onSide)
+        // if(this.onCeiling) {
+        //     this.y-=5
+        // }
+        // console.log(defaultSave.change)
+        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
+        // console.log(this.sideDir)
         that.updateBB();
     }
 
@@ -193,16 +214,14 @@ class Player {
                 this.velocity.y = -10;
                 this.onGround = false;
             }
-            if(this.game.left) {
+            if(this.game.left && !(this.onSide && this.facing === this.sideDir)) {
                 this.velocity.x = -3;
             }
-            else if(this.game.right) {
+            else if(this.game.right && !(this.onSide && this.facing === this.sideDir)) {
                 this.velocity.x = 3;
             }
         }
-        if(this.onGround) this.velocity.y = 0;
-        if(this.onSide && this.facing !== this.sideDir) this.onSide = false;
-        // if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
+        if(this.onSide/* && this.facing === this.sideDir*/) this.velocity.x = 0;
         else if(true || !this.onSide) {
             if(this.game.left) this.x -= params.blockSize * TICK;
             else if(this.game.right) this.x += params.blockSize * TICK;
@@ -214,8 +233,12 @@ class Player {
         }
 
         // if(!this.onGround || (this.onSide && this.facing !== this.sideDir)) this.onSide = false;
-        if(!this.game.sticking || !this.onCeiling) this.velocity.y += this.gravity;
-        else this.velocity.y = -1;
+        if(!(this.game.sticking && this.onCeiling)) this.velocity.y += this.gravity;
+        else {
+            this.velocity.y = -1;
+            // console.log('should be sticking')
+        }
+        // else this.velocity.y = -1;
         // Maximum speeds
         if(this.velocity.x >= 7) this.velocity.x = 7;
         if(this.velocity.x <= -7) this.velocity.x = -7;
