@@ -15,7 +15,7 @@ class Squid {
         this.BB = new BoundingBox(this.x, this.y, 800, 800);
     };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.25);
     };
 
     update() {
@@ -42,6 +42,10 @@ class Squid_ink {
     };
 
     update() {
+        let place = 0;
+        this.x -= this.speed + this.game.clockTick;
+        if (this.x < -200 ) this.x = place + 1200; 
+        place += 700;
     };
 
 };
@@ -61,10 +65,14 @@ class Shark {
         this.BB = new BoundingBox(this.x, this.y, 500, 500);
     };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.5);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1);
     };
 
     update() {
+        let place = 0;
+        this.x -= this.speed + this.game.clockTick;
+        if (this.x < -200 ) this.x = place + 1200; 
+        place += 700;
     };
 
 };
