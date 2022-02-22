@@ -9,7 +9,7 @@ class Miniraser {
         this.onGround = false;
         this.jumpDistance = 20;
         this.agro = false;
-        this.agroDistance = 400;
+        this.agroDistance = 800;
         this.walkSpeed = 4;
         this.leftJump = false;
         this.leftJump = true;

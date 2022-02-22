@@ -13,7 +13,7 @@ class SceneManager {
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 2;
+        this.level = 1;
 
         //initially set the game in the title screen state
         this.title = true;
@@ -161,7 +161,7 @@ class SceneManager {
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
 
-        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
+        this.player = new Submarine(this.game, "submarine", x, y, 10, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
@@ -194,7 +194,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 15, 10, 9000,0,false)
+        this.player = new Player(this.game, "default", x, y, 12, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
 
