@@ -38,15 +38,14 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
-ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
-ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 
 
 //water level
-ASSET_MANAGER.queueDownload("./assets/characters/seahorse/seahorse_sheetnew.png");
-ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheetnew.png");
+ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheetnew.png");
+ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheet_single.png");
+ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
@@ -54,9 +53,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
-ASSET_MANAGER.queueDownload("./assets/characters/water_level/squid/squid_sheetnew.png");
-ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/seahorse_sheetnew.png");
-ASSET_MANAGER.queueDownload("./assets/characters/water_level/seahorse_fishes/smallfish_sheetnew.png");
+
+
 
 //space level
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
