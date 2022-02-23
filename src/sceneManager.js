@@ -112,14 +112,13 @@ class SceneManager {
             this.game.addEntity(sign);
         });
         
-        
-         levelWater.fish.forEach(f => {
-            let fishes = new Fishes(this.game, f.x , f.y + 500);
+        levelWater.fish.forEach(f => {
+            let fishes = new Fishes(this.game, f.x , f.y - 10);
              this.game.addEntity(fishes);
-         }); 
+        }); 
 
          levelWater.singleSeahorse.forEach(sh => {
-            let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y);
+            let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y-5);
             this.game.addEntity(sea_horse);
           }); 
          
@@ -129,16 +128,20 @@ class SceneManager {
           this.game.addEntity(sea_horse);
         }); */
         
+        levelWater.starfish.forEach(st => {
+            this.game.addEntity(new Starfish(this.game, st.x, st.y + 600));
+        });
+
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
         });  
 
         levelWater.squid.forEach(sq => {
-            this.game.addEntity(new Squid(this.game, sq.x, sq.y + 400));
+            this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));
         });
         
-        levelWater.squid.forEach(sqi => {
-            this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 300));
+        levelWater.squid_ink.forEach(sqi => {
+            this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 200));
         });
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
@@ -150,7 +153,6 @@ class SceneManager {
 
 
         this.game.addEntity(this.marker);
-
 
     }
 
