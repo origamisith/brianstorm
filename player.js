@@ -124,7 +124,7 @@ class Player {
                                 onCeiling = true;
                             }
                             //Def only initial contact
-                            else if(!that.onCeiling && !that.bumpedCeiling) {
+                            else if(!that.onCeiling && !that.bumpedCeiling && that.velocity.y < 0) {
                                 // console.log('bump')
                                 //Should be done even if secondary collision?
                                 that.velocity.y = that.velocity.y * -0.5
@@ -139,11 +139,12 @@ class Player {
                             onCeiling = false;
                         }
                     }
-                    if(ox !== 0 && !(that.bumpedCeiling)) {
+                    if(ox !== 0 && !(that.velocity.x === 0)) {
                         //Should be done even if secondary collision?
                         //Stupid bug where he gets stuck in a side collision while on ground
                         if(!(that.velocity.x === 0 && !that.game.right && !that.game.left)) {
                             that.velocity.x = 0;
+                            // console.log('over here')
                             onSide = true;
                             save.sideDir = that.facing;
                         }
@@ -188,8 +189,10 @@ class Player {
         //     this.y-=5
         // }
         // console.log(defaultSave.change)
-        console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
+        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
         // console.log(this.sideDir)
+        if(this.onSide) console.log('side')
+        if(this.onCeiling) console.log('ceiling')
         that.updateBB();
     }
 
@@ -215,6 +218,7 @@ class Player {
         // console.log("ground " + this.onGround)
         //hmm
         if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
+            // console.log('wrong')
             this.velocity.x = 0;
         // if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
         if(this.onGround && !this.onCeiling) {
@@ -228,11 +232,16 @@ class Player {
             else if(this.game.right) {
                 this.velocity.x = 3;
             }
+            // console.log('correct')
         }
-        if(this.onSide/* && this.facing === this.sideDir*/) this.velocity.x = 0;
         else {
+            // console.log('why')
             if(this.game.left) this.x -= params.blockSize * TICK;
             else if(this.game.right) this.x += params.blockSize * TICK;
+        }
+        if(this.onSide/* && this.facing === this.sideDir*/) {
+            this.velocity.x = 0;
+            // console.log('hiaa')
         }
 
         // Prevents the animation from falling through the window.
@@ -243,7 +252,7 @@ class Player {
         // if(!this.onGround || (this.onSide && this.facing !== this.sideDir)) this.onSide = false;
         if(!(this.game.sticking && this.onCeiling)) this.velocity.y += this.gravity;
         else {
-            this.velocity.y = -2;
+            this.velocity.y = -1;
             // console.log('should be sticking')
         }
         // else this.velocity.y = -1;
