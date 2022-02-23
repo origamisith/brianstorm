@@ -113,6 +113,7 @@ class Player {
                     let d = Math.sqrt(ox*ox + oy*oy)
                     const {x: vx, y: vy} = that.velocity;
                     let speed = vx*ox/d + vy*oy/d;
+                    let nvm = false;
                     if(oy !== 0) {
                         if(oy > 0) {
                             //Should this be checked only on initial ceiling contact or every time
@@ -129,6 +130,7 @@ class Player {
                                 that.velocity.y = that.velocity.y * -0.5
                                 that.bumpedY = entity.BB.bottom;
                                 bumpedCeiling = true;
+                                nvm = true;
                             }
                         }
                         else if(oy < 0){
@@ -139,12 +141,15 @@ class Player {
                     }
                     if(ox !== 0 && !(that.bumpedCeiling)) {
                         //Should be done even if secondary collision?
-                        that.velocity.x = 0;
-                        onSide = true;
-                        save.sideDir = that.facing;
+                        //Stupid bug where he gets stuck in a side collision while on ground
+                        if(!(that.velocity.x === 0 && !that.game.right && !that.game.left)) {
+                            that.velocity.x = 0;
+                            onSide = true;
+                            save.sideDir = that.facing;
+                        }
                         //Something to detect when on side to prevent x-axis jitter?
                     }
-                    if(speed <= 0) {
+                    if(speed <= 0 && !nvm) {
                         save.change = {x: ox, y: oy}
                     }
                 }
@@ -183,7 +188,7 @@ class Player {
         //     this.y-=5
         // }
         // console.log(defaultSave.change)
-        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
+        console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
         // console.log(this.sideDir)
         that.updateBB();
     }
@@ -209,22 +214,23 @@ class Player {
         }
         // console.log("ground " + this.onGround)
         //hmm
-        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) this.velocity.x = 0;
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
+            this.velocity.x = 0;
         // if(this.onSide && this.facing === this.sideDir) this.velocity.x = 0;
         if(this.onGround && !this.onCeiling) {
             if(this.game.space) {
                 this.velocity.y = -10;
                 this.onGround = false;
             }
-            if(this.game.left && !(this.onSide && this.facing === this.sideDir)) {
+            if(this.game.left) {
                 this.velocity.x = -3;
             }
-            else if(this.game.right && !(this.onSide && this.facing === this.sideDir)) {
+            else if(this.game.right) {
                 this.velocity.x = 3;
             }
         }
         if(this.onSide/* && this.facing === this.sideDir*/) this.velocity.x = 0;
-        else if(true || !this.onSide) {
+        else {
             if(this.game.left) this.x -= params.blockSize * TICK;
             else if(this.game.right) this.x += params.blockSize * TICK;
         }
@@ -237,7 +243,7 @@ class Player {
         // if(!this.onGround || (this.onSide && this.facing !== this.sideDir)) this.onSide = false;
         if(!(this.game.sticking && this.onCeiling)) this.velocity.y += this.gravity;
         else {
-            this.velocity.y = -1;
+            this.velocity.y = -2;
             // console.log('should be sticking')
         }
         // else this.velocity.y = -1;
