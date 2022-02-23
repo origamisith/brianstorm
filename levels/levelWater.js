@@ -15,7 +15,7 @@ class levelWaterGenerator {
     let place = 0;
     for (let i = 0; i < count; i++) {
       //place = Math.floor(Math.random());
-      singleSeahorse[i] = {x: 1000 + place, y: 50}
+      singleSeahorse[i] = {x: 100 + place, y: 50}
       place += 700;
     }
     return singleSeahorse;
@@ -36,7 +36,7 @@ class levelWaterGenerator {
     let place = 0;
     for (let i = 0; i < count; i++) {
       //place = Math.floor(Math.random());
-      shark[i] = {x: 600 + place, y: 100}
+      shark[i] = {x: 600 + place, y: 100 + Math.round(50)}
       place += 500;
     }
     return shark;
@@ -48,7 +48,7 @@ class levelWaterGenerator {
     for (let i = 0; i < count; i++) {
       let place_y = Math.floor(Math.random());
       squid[i] = {x: 500 + place, y: 50 + place_y}
-      place += 700;
+      place += 700 + Math.random();
     }
     return squid;
   }
@@ -58,7 +58,7 @@ class levelWaterGenerator {
     let place = 0;
     for (let i = 0; i < count; i++) {
       place = Math.floor(Math.random());
-      squid_ink[i] = {x: 700 + place, y: 50}
+      squid_ink[i] = {x: 1200 + place, y: 50}
       place += 600;
     }
     return squid_ink;
@@ -69,7 +69,7 @@ class levelWaterGenerator {
     let place = 0;
     for (let i = 0; i < count; i++) {
       place = Math.floor(Math.random());
-      starfish[i] = {x: place, y: 50}
+      starfish[i] = {x: 650 + place, y: 50}
     }
     return starfish;
   }
@@ -80,10 +80,9 @@ class levelWaterGenerator {
 const levelWater = {
   starfish: levelWaterGenerator.starfishGenerate(5),
   squid: levelWaterGenerator.squidGenerate(7),
-  squid_ink: levelWaterGenerator.squid_InkGenerate(3),
+  squid_ink: levelWaterGenerator.squid_InkGenerate(5),
   shark: levelWaterGenerator.sharkGenerate(1),
   fish: levelWaterGenerator.fishes(5),
-  seahorse:[{x: 100, y: 100}, {x: 200, y: 80}],
   doubleSeahorses: levelWaterGenerator.doubleseahorsesGenerate(2),
   singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),
   music: "./assets/music/FreedomM.mp3",
