@@ -17,6 +17,7 @@ class GameEngine {
         this.right = false;
         this.space = false;
         this.shift = false;
+        this.shooting = false;
         this.keys = {};
 
         this.surfaceWidth = null;
@@ -134,6 +135,9 @@ class GameEngine {
                 case "ShiftLeft":
                     that.sticking = true;
                     break;
+                case "ShiftRight":
+                    that.shooting = true;
+                    break;
             }
         }, false);
 
@@ -170,6 +174,9 @@ class GameEngine {
                     break;
                 case "ShiftLeft":
                     that.sticking = false;
+                    break;
+                case "ShiftRight":
+                    that.shooting = false;
                     break;
             }
         }, false);

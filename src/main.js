@@ -26,6 +26,7 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
 ASSET_MANAGER.queueDownload("./assets/hearts.png");
+ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");

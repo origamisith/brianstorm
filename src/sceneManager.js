@@ -263,25 +263,26 @@ class SceneManager {
         if(this.endScreen){this. x = 0;}
         // // console.log(this.player.x);
         // console.log(this.player.y);
+        let ph = this.player.BB.height;
         if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
-            // let ph = this.player.BB.height;
-            // if (this.player.y - this.y > h - ph) {
-            //     this.y = this.player.y - (h - ph)
-            // }
+            let ph = this.player.BB.height;
+            if (this.player.y - this.y > h - ph) {
+                this.y = this.player.y - (h - ph)
+            }
         }
         //If storm is falling and in the upper half of the canvas, track him until he sees the floor
-        else if(this.player.falling && this.player.y - this.y > h/2 && this.player.y < h/2) {
+        else if(this.player.y - this.y > h/2 && this.player.y < h/2) {
             this.y = this.player.y - h/2
         }
         // //If storm gets very high, pan the camera up just enough to keep him in frame
-        // else if(this.player.y - this.y < ph / 2) {
-        //     this.y = this.player.y - ph / 2;
-        // }
+        else if(this.player.y - this.y < ph / 2) {
+            this.y = this.player.y - ph / 2;
+        }
 
         if(this.marker.loadNext === true) {
-            this.level = this.marker.id
+            this.level = this.marker.id;
             this.loadLevel(600, 450);
         }
     }
