@@ -23,6 +23,19 @@ class levelOneGenerator {
       terrain[k] = {x: params.blockSize*place, y: params.floor - (2*params.blockSize) + 50}
     }
 
+    for (let l=third; l < third+(size/3); l++) {
+      place = Math.floor(Math.random() * 50);
+      if (place < 4) continue; // don't want to place third-story block at the start.
+      terrain[l] = {x: params.blockSize*place, y: params.floor - (2*params.blockSize)-150}
+    }
+
+    for (let m=third; m < third+(size/3); m++) {
+      place = Math.floor(Math.random() * 50);
+      if (place < 4) continue; // don't want to place third-story block at the start.
+      terrain[m] = {x: params.blockSize*place, y: params.floor - (2*params.blockSize)-250}
+    }
+
+
     return terrain;
 
   };
