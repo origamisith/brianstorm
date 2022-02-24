@@ -55,7 +55,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9700, 100, 2, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 10, 20, 9000);
+        this.player = new Player(this.game, "default", x, y, 10, 20, 9000, 0, true);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
 

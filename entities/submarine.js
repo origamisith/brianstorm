@@ -30,8 +30,8 @@ class Submarine extends Player {
     };
 
     loadAnimations() {
-        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 800, 400, 2, 0.1, false, true);
-        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1600, 0, 800, 400, 2, 0.1, false, true);
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 600, 300, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1200, 0, 600, 300, 2, 0.1, false, true);
     }
 
     updateBB(facing) {
@@ -49,6 +49,34 @@ class Submarine extends Player {
     };
 
 
+    leftRightMovement() {
+        // Left and right movement
+        this.velocity.x = 0;
+        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+            this.facing = 1;
+            this.velocity.x = this.x_vel;
+            this.x -= this.velocity.x;
+        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+            this.facing = 0;
+            this.velocity.x = this.x_vel;
+            this.x += this.velocity.x;
+        }
+
+        //submarine movement mechanics
+        if(this.game.up && this.y > -110) {
+            console.log('im here')
+            console.log(this.velocity.y)
+            this.y -= this.velocity.y;
+        }
+        else if(this.game.down && this.y < 720) {
+            console.log('im 2here')
+            this.y += this.velocity.y;
+        }
+        else if(this.game.up && this.x > this.x_cameraLimit) {
+            console.log('3cim here')
+            this.y -= this.velocity.y;
+        }
+    }
     update() {
 
         // console.log(this.x);
@@ -61,16 +89,9 @@ class Submarine extends Player {
         else if(this.facing === 0){
             this.updateBB("right");
             this.animation = this.submarineRightFacing;}
+
         // Left and right movement
-        if(this.game.up && this.y > -110) {
-            this.y -= this.velocity.y;
-        }
-        else if(this.game.down && this.y < 720) {
-            this.y += this.velocity.y;
-        }
-        else if(this.game.up && this.x > this.x_cameraLimit) {
-            this.y -= this.velocity.y;
-        }
+        this.leftRightMovement()
 
         const that = this;
         this.game.entities.forEach(function (entity) {

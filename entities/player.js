@@ -29,8 +29,6 @@ class Player {
         this.gravity = 2;
         this.onGround = true;
         this.jumping = false;
-        this.jumpingLeft = false;
-        this.jumpingRight = false;
         this.falling = false;
         this.player_type = player_type;
         this.removeFromWorld = false;
@@ -71,6 +69,7 @@ class Player {
         this.onCeiling = false;
         this.bumpedCeiling = false;
         this.onSide = false;
+        this.sideDir = 0;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
@@ -93,6 +92,84 @@ class Player {
         else if(this.player_type === "jumping" && this.facing === 0) this.animation = this.jumpingRightAnimation;
         else if(this.player_type === "jumping" && this.facing === 1) this.animation = this.jumpingLeftAnimation;
     }
+    /** Updates state frame by frame */
+    update() {
+        this.updateAnimations()
+        this.updateBB();
+
+        // a constant TICK to sync with the game's timer
+        const TICK = this.game.clockTick;
+        this.elapsedTime += TICK
+
+        if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
+
+        // If no key pressed and not in air, no horizontal movement
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
+            this.velocity.x = 0;
+
+        // Key inputs
+        // Normal speed on ground
+        if(this.game.left) this.facing = 1;
+        if(this.game.right) this.facing = 0;
+        if(this.onGround && !this.onCeiling) {
+            if(this.game.space) {
+                this.velocity.y = -15;
+                this.onGround = false;
+            }
+            // Disable horizontal controls if side collision detected and going same direction as initial collision
+            if(!(this.onSide && this.facing === this.sideDir)) {
+                if(this.game.left) {
+                    this.velocity.x = -this.x_vel;
+                }
+                else if(this.game.right) {
+                    this.velocity.x = this.x_vel
+                }
+            }
+        }
+        else if(this.onCeiling) { //Slow in air or on ceiling
+            if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
+            else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
+        }
+        else { // in the air
+            //Currently, arrow keys provide more boost against the current velocity.
+            //When pressing left but going right
+            if(this.game.left && this.velocity.x > 0) this.x -= this.x_vel/2 * params.blockSize * TICK;
+            //When pressing left and going left
+            else if(this.game.left && this.velocity.x <= 0) this.x -= this.x_vel/4 * params.blockSize * TICK;
+            //When pressing right and going left
+            else if(this.game.right && this.velocity.x < 0) this.x += this.x_vel/2 * params.blockSize * TICK;
+            //When pressing right and going right
+            else if(this.game.right && this.velocity.x >= 0) this.x += this.x_vel/4 * params.blockSize * TICK;
+        }
+
+        //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
+        if(this.game.sticking && this.onCeiling) {
+            this.velocity.y = -1;
+        }
+        //Otherwise, use normal gravity
+        else this.velocity.y += this.gravity;
+
+        // Maximum speeds
+        if(this.velocity.x >= 7) this.velocity.x = 7;
+        if(this.velocity.x <= -7) this.velocity.x = -7;
+        if(this.velocity.y >= 15) this.velocity.y  = 15;
+        if(this.velocity.y <= -15) this.velocity.y = -15;
+
+        /** UNIVERSAL POSITION UPDATE **/
+        let dx = this.velocity.x *params.blockSize * TICK;
+        let dy = this.velocity.y * params.blockSize * TICK;
+        this.x += dx
+        this.y += dy
+        this.updateBB(); //VERY important, otherwise lots of jitter
+        this.updateCollisions();
+        // if(this.hp === 0) this.dead = true;
+        // Prevents the animation from falling through the window, prob should remove once levels designed?
+        if (this.y >= params.floor - this.BB.height/2) {
+            this.y = params.floor - this.BB.height/2
+            this.onGround = true;
+            this.velocity.y = 0;
+        }
+    };
 
     updateCollisions() {
         const that = this;
@@ -118,7 +195,6 @@ class Player {
                             }
                             else if(!that.onCeiling && !that.bumpedCeiling && that.velocity.y < 0) {
                                 that.velocity.y = that.velocity.y * -0.5; //Can change this factor to make ceiling more bouncy
-                                that.bumpedY = entity.BB.bottom;
                                 bumpedCeiling = true;
                             }
                         }
@@ -129,12 +205,37 @@ class Player {
                         }
                     }
                     if(ox !== 0 && !(that.velocity.x === 0)) {
+                        // if(that.facing === 0) that.velocity.x = 1;
+                        // if(that.facing === 1) that.velocity.x = -1;
                         that.velocity.x = 0;
+                        that.sideDir = that.facing;
                         onSide = true;
                     }
                     if(speed <= 0) { //Only apply changes if actually heading towards the block
                         if(ox !== 0) change.x = ox;
                         if(oy !== 0) change.y = oy
+                    }
+                    // console.log(ox + ", " + oy)
+                }
+                else if (entity instanceof Miniraser || entity instanceof Meteor) {
+                    if (that.BB.topCollide(entity.BB)) {
+                        // take no damage.
+                    } else {
+                        if (that.elapsedTime > 0.8) {
+                            that.hp -= 5;
+                            console.log("storm HP: " + that.hp);
+                            that.elapsedTime = 0;
+                        }
+                    }
+                }
+                else if (entity instanceof LevelMarker){
+                    if(that.BB.collide(entity.BB)){entity.loadNext = true;}
+                }
+                if (entity instanceof powerUp) {
+                    if (that.BB.collide(entity.BB)) {
+                        entity.removeFromWorld = true;
+                        that.hp += 20;
+                        console.log("+ 20 HP!!");
                     }
                 }
             }
@@ -155,99 +256,15 @@ class Player {
         if(this.onSide) {
             this.velocity.x = 0;
         }
+        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
         that.x += change.x;
         that.y += change.y;
-        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
         that.updateBB();
     }
 
-    /** Updates state frame by frame */
-    update() {
-        this.updateAnimations()
-        this.updateBB();
-
-        // a constant TICK to sync with the game's timer
-        const TICK = this.game.clockTick;
-        this.elapsedTime += TICK
-
-        if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
-        if (this.game.left) {
-            this.facing = 1;
-        }
-        else if (this.game.right) {
-            this.facing = 0;
-        }
-
-        // If no key pressed and not in air
-        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
-            this.velocity.x = 0;
-
-        // Key inputs
-        // Normal speed on ground
-        if(this.onGround && !this.onCeiling) {
-            if(this.game.space) {
-                this.velocity.y = -12;
-                this.onGround = false;
-            }
-            if(this.game.left) {
-                this.velocity.x = -this.x_vel;
-            }
-            else if(this.game.right) {
-                this.velocity.x = this.x_vel
-            }
-        }
-        else { //Slow in air or on ceiling
-            if(this.game.left) this.x -= params.blockSize * TICK;
-            else if(this.game.right) this.x += params.blockSize * TICK;
-        }
-
-        //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
-        if(this.game.sticking && this.onCeiling) {
-            this.velocity.y = -1;
-        }
-        //Otherwise, use normal gravity
-        else this.velocity.y += this.gravity;
-
-        // Maximum speeds
-        if(this.velocity.x >= 7) this.velocity.x = 7;
-        if(this.velocity.x <= -7) this.velocity.x = -7;
-        if(this.velocity.y >= 15) this.velocity.y  = 15;
-        if(this.velocity.y <= -15) this.velocity.y = -15;
-
-        /** UNIVERSAL POSITION UPDATE **/
-        let dx = this.velocity.x *params.blockSize * TICK;
-        let dy = this.velocity.y * params.blockSize * TICK;
-        this.x += dx
-        this.y += dy
-        this.updateBB(); //VERY important, otherwise lots of jitter
-        this.updateCollisions();
-        // Prevents the animation from falling through the window, prob should remove once levels designed?
-        if (this.y >= params.floor - this.BB.height/2) {
-            this.y = params.floor - this.BB.height/2
-            this.onGround = true;
-            this.velocity.y = 0;
-        }
-    };
-    /*
-        //submarine movement mechanics
-        if(this.player_type === "submarine") {
-            if(this.game.up && this.y > -110) {
-                this.y -= this.velocity.y;
-            }
-            else if(this.game.down && this.y < 720) {
-                this.y += this.velocity.y;
-            }
-            else if(this.game.up && this.x > this.x_cameraLimit) {
-                this.y -= this.velocity.y;
-            }
-        }
-     */
-    // }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-
-
         this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
 
         if(this.bb_enable) {
