@@ -163,7 +163,8 @@ class SceneManager {
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
 
-        this.player = new Submarine(this.game, "submarine", x, y, 10, 10, 9000);
+        // this.player = new Submarine(this.game, "submarine", x, y, 10, 10, 9000);
+        this.player = new Rocket(this.game, "", x, y, 10, 10, 9000)
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
