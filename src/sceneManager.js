@@ -55,8 +55,8 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 9700, 100, 2, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 10, 20, 9000);
-        this.player.gravity = 28;
+        this.player = new Player(this.game, "default", x, y, 10, 20, 9000, 0, true);
+        this.player.gravity = .4;
         this.game.addEntity(this.player);
 
         //uncomment line below to start music on page click
@@ -90,7 +90,7 @@ class SceneManager {
         });
 
     }
-    
+
     loadWater(x, y) {
 
         this.endScreen = false;
@@ -101,7 +101,7 @@ class SceneManager {
         this.player.falling = false;
         this.game.addEntity(this.player);
         this.marker = new LevelMarker(this.game, 9000, -250, 3, 1024, 100);
-      
+
         levelWater.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
             this.game.addEntity(pUp);
@@ -111,35 +111,35 @@ class SceneManager {
             let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
             this.game.addEntity(sign);
         });
-        
+
         levelWater.fish.forEach(f => {
             let fishes = new Fishes(this.game, f.x , f.y - 10);
              this.game.addEntity(fishes);
-        }); 
+        });
 
          levelWater.singleSeahorse.forEach(sh => {
             let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y-5);
             this.game.addEntity(sea_horse);
-          }); 
-         
+          });
+
         /*
          levelWater.doubleSeahorses.forEach(s => {
           let sea_horse = new Seahorses(this.game, s.x, s.y + 300);
           this.game.addEntity(sea_horse);
         }); */
-        
+
         levelWater.starfish.forEach(st => {
             this.game.addEntity(new Starfish(this.game, st.x, st.y + 600));
         });
 
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
-        });  
+        });
 
         levelWater.squid.forEach(sq => {
             this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));
         });
-        
+
         levelWater.squid_ink.forEach(sqi => {
             this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 200));
         });

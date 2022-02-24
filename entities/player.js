@@ -21,18 +21,14 @@ class Player {
         this.y_cameraLimit = y_cameraLimit;
         this.scale = 1;
 
-        
-
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
 
         // update x and y position, use velocity values passed in from calling function
         this.velocity = { x: x_vel, y: y_vel };
-        this.gravity = 28;
+        this.gravity = 2;
         this.onGround = true;
         this.jumping = false;
-        this.jumpingLeft = false;
-        this.jumpingRight = false;
         this.falling = false;
         this.player_type = player_type;
         this.removeFromWorld = false;
@@ -67,78 +63,159 @@ class Player {
         this.loadAnimations();
         this.elapsedTime = 0;
 
+        this.update();
+        this.updateCollisions();
+        this.onGround = false;
+        this.onCeiling = false;
+        this.bumpedCeiling = false;
+        this.onSide = false;
+        this.sideDir = 0;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
     loadAnimations() {
-        if (this.player_type === "default" && this.facing === 0) {
-            this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
-        }
-
-        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.leftFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 4200, 200, 200, 200, 21, 0.1, false, true);
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
-        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 600, 300, 2, 0.1, false, true);
-        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1200, 0, 600, 300, 2, 0.1, false, true);
-
     };
 
     updateBB() {
         //Bounding box for collision
+        // this.BB = new BoundingBox(this.x+55, this.y+20, 90, 180)
         this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
     }
 
+    updateAnimations() {
+        if(this.player_type === "default" && this.facing === 1) this.animation = this.leftFacingAnimation;
+        else if(this.player_type === "default" && this.facing === 0) this.animation = this.rightFacingAnimation;
+        else if(this.player_type === "jumping" && this.facing === 0) this.animation = this.jumpingRightAnimation;
+        else if(this.player_type === "jumping" && this.facing === 1) this.animation = this.jumpingLeftAnimation;
+    }
     /** Updates state frame by frame */
     update() {
-
-        //GENERAL PLAYER STATE ANIMATIONS
-        if(this.player_type === "default" && this.facing === 1) {this.animation = this.leftFacingAnimation;}
-        else if(this.player_type === "default" && this.facing === 0) {this.animation = this.rightFacingAnimation;}
-        else if(this.player_type === "jumping" && this.facing === 0) {this.animation = this.jumpingRightAnimation;}
-        else if(this.player_type === "jumping" && this.facing === 1) {this.animation = this.jumpingLeftAnimation;}
-
+        this.updateAnimations()
+        this.updateBB();
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
-        this.elapsedTime += TICK;
-        /* Currently, order of operations for collision is:
-            Initialize flags to represent state
-            Iterate through each entity and check if there's a collision
-                If so, set any appropriate flags to determine what kind of collision is occurring
-                This involves checking current velocity and poking more at the bounding boxes
-                In the future, we may want to also store the previous bounding box like in SMB and change the logic
-            Based on all flags that have been set, apply changes to Storm's velocity, position, and controls
-            For the future: Instead of setting velocity to 0 on intersection, manually align Storm's position where he should be like in SMB
-         */
+        this.elapsedTime += TICK
 
-        this.side = false;
-        this.onGround = false;
-        this.updateBB();
-        // Prevents the animation from falling through the window.
-        if (this.y >= params.floor - this.BB.height/2) {
-            this.onGround = true;
+        if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
+
+        // If no key pressed and not in air, no horizontal movement
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
+            this.velocity.x = 0;
+
+        // Key inputs
+        // Normal speed on ground
+        if(this.game.left) this.facing = 1;
+        if(this.game.right) this.facing = 0;
+        if(this.onGround && !this.onCeiling) {
+            if(this.game.space) {
+                this.velocity.y = -15;
+                this.onGround = false;
+            }
+            // Disable horizontal controls if side collision detected and going same direction as initial collision
+            if(!(this.onSide && this.facing === this.sideDir)) {
+                if(this.game.left) {
+                    this.velocity.x = -this.x_vel;
+                }
+                else if(this.game.right) {
+                    this.velocity.x = this.x_vel
+                }
+            }
+        }
+        else if(this.onCeiling) { //Slow in air or on ceiling
+            if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
+            else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
+        }
+        else { // in the air
+            //Currently, arrow keys provide more boost against the current velocity.
+            //When pressing left but going right
+            if(this.game.left && this.velocity.x > 0) this.x -= this.x_vel/2 * params.blockSize * TICK;
+            //When pressing left and going left
+            else if(this.game.left && this.velocity.x <= 0) this.x -= this.x_vel/4 * params.blockSize * TICK;
+            //When pressing right and going left
+            else if(this.game.right && this.velocity.x < 0) this.x += this.x_vel/2 * params.blockSize * TICK;
+            //When pressing right and going right
+            else if(this.game.right && this.velocity.x >= 0) this.x += this.x_vel/4 * params.blockSize * TICK;
         }
 
-        // Collisions
+        //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
+        if(this.game.sticking && this.onCeiling) {
+            this.velocity.y = -1;
+        }
+        //Otherwise, use normal gravity
+        else this.velocity.y += this.gravity;
 
-        //TODO: Detect bumping up into a block by checking whether your upper bound is less than their lower bound
+        // Maximum speeds
+        if(this.velocity.x >= 7) this.velocity.x = 7;
+        if(this.velocity.x <= -7) this.velocity.x = -7;
+        if(this.velocity.y >= 15) this.velocity.y  = 15;
+        if(this.velocity.y <= -15) this.velocity.y = -15;
+
+        /** UNIVERSAL POSITION UPDATE **/
+        let dx = this.velocity.x *params.blockSize * TICK;
+        let dy = this.velocity.y * params.blockSize * TICK;
+        this.x += dx
+        this.y += dy
+        this.updateBB(); //VERY important, otherwise lots of jitter
+        this.updateCollisions();
+        if(this.hp === 0) this.dead = true;
+        // Prevents the animation from falling through the window, prob should remove once levels designed?
+        if (this.y >= params.floor - this.BB.height/2) {
+            this.y = params.floor - this.BB.height/2
+            this.onGround = true;
+            this.velocity.y = 0;
+        }
+    };
+
+    updateCollisions() {
         const that = this;
+        let change = {x: 0, y: 0}
+        let onGround = false;
+        let onCeiling = false;
+        let bumpedCeiling = false;
+        let onSide = false;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
-                    // Case 1: Jumping up while hitting the side
-                    // Case 2: Walking into the side while on the ground
-                    if((!that.onGround && that.velocity.y < 0) || (that.BB.bottom >= entity.BB.bottom)) {
-                        that.side = true;
+                    const {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
+                    let d = Math.sqrt(ox*ox + oy*oy)
+                    const {x: vx, y: vy} = that.velocity;
+                    let speed = vx*ox/d + vy*oy/d;
+                    if(oy !== 0) {
+                        if(oy > 0) {
+                            if(that.game.sticking && !that.onCeiling) {
+                                that.velocity.y = 0;
+                                onCeiling = true;
+                            }
+                            else if(!that.onCeiling && !that.bumpedCeiling && that.velocity.y < 0) {
+                                that.velocity.y = that.velocity.y * -0.5; //Can change this factor to make ceiling more bouncy
+                                bumpedCeiling = true;
+                            }
+                        }
+                        else if(oy < 0){
+                            onGround = true;
+                            bumpedCeiling = false;
+                            onCeiling = false;
+                        }
                     }
-                        // Case 3: Falling onto flat ground
-                    else {
-                        that.onGround = true;
+                    if(ox !== 0 && !(that.velocity.x === 0)) {
+                        // if(that.facing === 0) that.velocity.x = 1;
+                        // if(that.facing === 1) that.velocity.x = -1;
+                        that.velocity.x = 0;
+                        that.sideDir = that.facing;
+                        onSide = true;
                     }
+                    if(speed <= 0) { //Only apply changes if actually heading towards the block
+                        if(ox !== 0) change.x = ox;
+                        if(oy !== 0) change.y = oy
+                    }
+                    // console.log(ox + ", " + oy)
                 }
                 else if (entity instanceof Miniraser || entity instanceof Meteor) {
                     if (that.BB.topCollide(entity.BB)) {
@@ -154,7 +231,6 @@ class Player {
                 else if (entity instanceof LevelMarker){
                     if(that.BB.collide(entity.BB)){entity.loadNext = true;}
                 }
-
                 if (entity instanceof powerUp) {
                     if (that.BB.collide(entity.BB)) {
                         entity.removeFromWorld = true;
@@ -165,106 +241,30 @@ class Player {
             }
         });
 
-        if (this.hp===0) {this.dead = true;}
-
-
-
-        /** JUMP MECHANIC **/
-        // Prevent changing trajectory in the air
-        //Update jumping  / onGround status, handle space
-        if ((this.game.space  || !this.onGround)&& !this.jumping && !this.falling && this.player_type !== "submarine") {
-            this.updatePlayerType("jumping");
-            if (this.game.left) {
-                this.facing = 1;
-                this.jumpingLeft = true;
-            }
-            else if (this.game.right && this.player_type !== "submarine") {
-                this.facing = 0;
-                this.jumpingRight = true;
-            }
-
-            this.jumping = true;
-            this.onGround = false;
-
-            // decrease velocity to increase initial jump power if not just falling off ledge.
-            if(this.game.space) this.velocity.y = -1000;
-        }
-        //If not on ground but haven't pressed space, falling off ledge
-        // Edit this.gravity to change gravitational force.
-        // ** NOTE: potentially make gravity a constant rather than a field,
-        // ** also consider moving gravity to scene manager once implemented
-        if(!this.onGround) {
-            this.velocity.y += this.gravity;
+        this.onSide = onSide;
+        this.onGround = onGround;
+        this.bumpedCeiling = bumpedCeiling
+        this.onCeiling = onCeiling;
+        if(this.onCeiling) {
+            this.velocity.x = 0;
         }
 
-        //Update falling status
-        if(this.velocity.y > 0) this.falling = true;
-
-
-        // The jump & fall action
-        // Note: will Storm be able to have variable speed? As it is, he will always have same horizontal speed after jumping
-        if(this.side) this.velocity.x= 0;
-        else if (this.jumping || !this.onGround && this.player_type !== "submarine" ) {
-            this.updatePlayerType("jumping");
-            if (this.jumpingLeft) {
-                this.velocity.x = 6;
-                this.x -= this.velocity.x;
-            } else if (this.jumpingRight) {
-                this.velocity.x = 6;
-                this.x += this.velocity.x;
-            }
-            if (this.onGround) {
-                this.jumping = false;
-            }
-        }
-
-        // Stops the jump once player hits the ground.
-        if (this.onGround && this.player_type !== "submarine") {
-            this.updatePlayerType("default");
-            this.falling = false;
+        if(this.onGround) {
             this.velocity.y = 0;
-            this.jumpingLeft = false;
-            this.jumpingRight = false;
+            this.bumpedCeiling = false;
         }
-        this.leftRightMovement();
-
-        /** UNIVERSAL POSITION UPDATE **/
-        this.x += this.velocity.x * TICK;
-        this.y += this.velocity.y * TICK;
-
-    };
-
-    leftRightMovement() {
-        // Left and right movement
-        this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
-            this.facing = 1;
-            this.velocity.x = this.x_vel;
-            this.x -= this.velocity.x;
-        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
-            this.facing = 0;
-            this.velocity.x = this.x_vel;
-            this.x += this.velocity.x;
+        if(this.onSide) {
+            this.velocity.x = 0;
         }
-
-        //submarine movement mechanics
-        if(this.player_type === "submarine") {
-            if(this.game.up && this.y > -110) {
-                this.y -= this.velocity.y;
-            }
-            else if(this.game.down && this.y < 720) {
-                this.y += this.velocity.y;
-            }
-            else if(this.game.up && this.x > this.x_cameraLimit) {
-                this.y -= this.velocity.y;
-            }
-        }
+        // console.log(this.onGround + ", " + this.onCeiling + ", " + this.onSide)
+        that.x += change.x;
+        that.y += change.y;
+        that.updateBB();
     }
 
-//draw method will render this entity to the canvas
+
+    //draw method will render this entity to the canvas
     draw(ctx) {
-
-
         this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
 
         if(this.bb_enable) {

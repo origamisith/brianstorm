@@ -29,6 +29,11 @@ class Submarine extends Player {
 
     };
 
+    loadAnimations() {
+        this.submarineRightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 0, 0, 600, 300, 2, 0.1, false, true);
+        this.submarineLeftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/submarine/sprite_sheet.png"), 1200, 0, 600, 300, 2, 0.1, false, true);
+    }
+
     updateBB(facing) {
         //Bounding box for collision
         if (facing ==="right") {this.BB = new BoundingBox(this.x - 300, this.y + 120, 500, 180)}
@@ -44,20 +49,46 @@ class Submarine extends Player {
     };
 
 
+    leftRightMovement() {
+        // Left and right movement
+        this.velocity.x = 0;
+        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+            this.facing = 1;
+            this.velocity.x = this.x_vel;
+            this.x -= this.velocity.x;
+        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+            this.facing = 0;
+            this.velocity.x = this.x_vel;
+            this.x += this.velocity.x;
+        }
+
+        //submarine movement mechanics
+        if(this.game.up && this.y > -110) {
+            console.log(this.velocity.y)
+            this.y -= this.y_vel;
+        }
+        else if(this.game.down && this.y < 720) {
+            this.y += this.y_vel
+        }
+        else if(this.game.up && this.x > this.x_cameraLimit) {
+            this.y -= this.y_vel
+        }
+    }
     update() {
 
         // console.log(this.x);
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
-        if(this.player_type === "submarine" && this.facing === 1){
+        if(this.facing === 1){
             this.updateBB("left");
             this.animation = this.submarineLeftFacing;}
-        else if(this.player_type === "submarine" && this.facing === 0){
+        else if(this.facing === 0){
             this.updateBB("right");
             this.animation = this.submarineRightFacing;}
+
         // Left and right movement
-        if(this.player_type === "submarine") {this.leftRightMovement();}
+        this.leftRightMovement()
 
         const that = this;
         this.game.entities.forEach(function (entity) {
