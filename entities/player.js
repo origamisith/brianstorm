@@ -83,7 +83,8 @@ class Player {
 
     updateBB() {
         //Bounding box for collision
-        this.BB = new BoundingBox(this.x+55, this.y+20, 90, 180)
+        // this.BB = new BoundingBox(this.x+55, this.y+20, 90, 180)
+        this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
     }
 
     updateAnimations() {
@@ -167,6 +168,7 @@ class Player {
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
+        this.elapsedTime += TICK
 
         if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
         if (this.game.left) {
@@ -240,7 +242,7 @@ class Player {
             }
         }
      */
-    }
+    // }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
