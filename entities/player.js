@@ -30,6 +30,7 @@ class Player {
         this.onGround = true;
         this.jumping = false;
         this.falling = false;
+        this.canFire = true;
         this.player_type = player_type;
         this.removeFromWorld = false;
         this.leftCol = false;
@@ -87,10 +88,10 @@ class Player {
     }
 
     updateAnimations() {
-        if(this.player_type === "default" && this.facing === 1) this.animation = this.leftFacingAnimation;
-        else if(this.player_type === "default" && this.facing === 0) this.animation = this.rightFacingAnimation;
-        else if(this.player_type === "jumping" && this.facing === 0) this.animation = this.jumpingRightAnimation;
-        else if(this.player_type === "jumping" && this.facing === 1) this.animation = this.jumpingLeftAnimation;
+        if(this.state === 0 && this.facing === 1) this.animation = this.leftFacingAnimation;
+        else if(this.state === 0 && this.facing === 0) this.animation = this.rightFacingAnimation;
+        else if(this.state === 3 && this.facing === 0) this.animation = this.jumpingRightAnimation;
+        else if(this.state === 3 && this.facing === 1) this.animation = this.jumpingLeftAnimation;
     }
     /** Updates state frame by frame */
     update() {
@@ -104,8 +105,10 @@ class Player {
         if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
 
         // If no key pressed and not in air, no horizontal movement
-        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling))
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) {
             this.velocity.x = 0;
+            this.updateState(0);
+        }
 
         // Key inputs
         // Normal speed on ground
@@ -113,6 +116,7 @@ class Player {
         if(this.game.right) this.facing = 0;
         if(this.onGround && !this.onCeiling) {
             if(this.game.space) {
+                this.updateState(3);
                 this.velocity.y = -15;
                 this.onGround = false;
             }
@@ -169,6 +173,16 @@ class Player {
             this.onGround = true;
             this.velocity.y = 0;
         }
+
+        /** SPAWN SCRIBBLE ON FIRE **/
+        if (this.game.shooting && this.canFire) {
+            this.game.addEntity(new Scribble(this.game, this.x + this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
+            this.canFire = false;
+        }
+        else if (!this.game.shooting) {
+            this.canFire = true;
+        }
+
     };
 
     updateCollisions() {
@@ -276,9 +290,9 @@ class Player {
     };
 
     /** Helper method to update the player type */
-    updatePlayerType(player_type) {
-        if (this.player_type !== player_type) {
-            this.player_type = player_type;
+    updateState(state) {
+        if (this.state !== state) {
+            this.state = state;
             this.loadAnimations();
         }
     }
