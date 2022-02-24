@@ -118,7 +118,7 @@ class SceneManager {
         });
 
          levelWater.singleSeahorse.forEach(sh => {
-            let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y-5);
+            let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y + 50);
             this.game.addEntity(sea_horse);
           });
 
@@ -127,10 +127,6 @@ class SceneManager {
           let sea_horse = new Seahorses(this.game, s.x, s.y + 300);
           this.game.addEntity(sea_horse);
         }); */
-
-        levelWater.starfish.forEach(st => {
-            this.game.addEntity(new Starfish(this.game, st.x, st.y + 600));
-        });
 
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
@@ -142,6 +138,10 @@ class SceneManager {
 
         levelWater.squid_ink.forEach(sqi => {
             this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 200));
+        });
+
+        levelWater.starfish.forEach(st => {
+            this.game.addEntity(new Starfish(this.game, st.x, st.y + 600));
         });
 
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
@@ -264,25 +264,26 @@ class SceneManager {
         if(this.endScreen){this. x = 0;}
         // // console.log(this.player.x);
         // console.log(this.player.y);
+        let ph = this.player.BB.height;
         if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
-            // let ph = this.player.BB.height;
-            // if (this.player.y - this.y > h - ph) {
-            //     this.y = this.player.y - (h - ph)
-            // }
+            let ph = this.player.BB.height;
+            if (this.player.y - this.y > h - ph) {
+                this.y = this.player.y - (h - ph)
+            }
         }
         //If storm is falling and in the upper half of the canvas, track him until he sees the floor
-        else if(this.player.falling && this.player.y - this.y > h/2 && this.player.y < h/2) {
+        else if(this.player.y - this.y > h/2 && this.player.y < h/2) {
             this.y = this.player.y - h/2
         }
         // //If storm gets very high, pan the camera up just enough to keep him in frame
-        // else if(this.player.y - this.y < ph / 2) {
-        //     this.y = this.player.y - ph / 2;
-        // }
+        else if(this.player.y - this.y < ph / 2) {
+            this.y = this.player.y - ph / 2;
+        }
 
         if(this.marker.loadNext === true) {
-            this.level = this.marker.id
+            this.level = this.marker.id;
             this.loadLevel(600, 450);
         }
     }

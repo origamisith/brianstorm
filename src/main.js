@@ -26,6 +26,7 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
 ASSET_MANAGER.queueDownload("./assets/hearts.png");
+ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
@@ -48,7 +49,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheet_single
 ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
-ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet1.png");
+ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet2.png");

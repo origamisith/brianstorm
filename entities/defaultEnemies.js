@@ -16,6 +16,7 @@ class Miniraser {
         this.jumpflag = false;
         this.elapsedTime = 0;
         this.hp = 50;
+        this.stunned = false;
 
         this.state = 0;
         this.facing = 1; // 0=right, 1=left
@@ -46,7 +47,7 @@ class Miniraser {
 
     draw(ctx) {
         this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.7);
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
@@ -60,10 +61,20 @@ class Miniraser {
         }
         this.onGround = false;
 
+        
+
         this.updateBB();
         const TICK = this.game.clockTick;
         const midx = (this.x + this.BB.width/2);
         this.elapsedTime += TICK;
+
+        if (this.stunned) {
+            this.stunTimer -= 10*TICK;
+            if (this.stunTimer <= 0) {
+                this.stunned = false;
+            }
+        }
+
 
         const that = this;
         this.game.entities.forEach(function (entity) {
@@ -82,6 +93,10 @@ class Miniraser {
                         that.onGround = true;
                         that.y = entity.BB.top - that.BB.height;
                     }
+                }
+                else if (entity instanceof Scribble) {
+                    that.stunned = true;
+                    that.stunTimer = 10;
                 }
             }
 
@@ -121,7 +136,7 @@ class Miniraser {
         /** BECOME AGGRO'D */
         let {x, y} = this.game.camera.player;
 
-        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false)) {
+        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned) {
 
             if (!this.leftJump && !this.rightJump) {
                 // player is on the left
@@ -165,12 +180,12 @@ class Miniraser {
             this.jumpflag = false;
         }
 
-        if (this.rightJump) {
+        if (this.rightJump &! this.stunned) {
             this.onGround = false;
             this.velocity.x = 6;
             this.x += this.velocity.x;
         }
-        else if (this.leftJump) {
+        else if (this.leftJump &! this.stunned) {
             this.onGround = false;
             this.velocity.x = 6;
             this.x -= this.velocity.x;
