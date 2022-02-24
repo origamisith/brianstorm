@@ -64,17 +64,14 @@ class Submarine extends Player {
 
         //submarine movement mechanics
         if(this.game.up && this.y > -110) {
-            console.log('im here')
             console.log(this.velocity.y)
-            this.y -= this.velocity.y;
+            this.y -= this.y_vel;
         }
         else if(this.game.down && this.y < 720) {
-            console.log('im 2here')
-            this.y += this.velocity.y;
+            this.y += this.y_vel
         }
         else if(this.game.up && this.x > this.x_cameraLimit) {
-            console.log('3cim here')
-            this.y -= this.velocity.y;
+            this.y -= this.y_vel
         }
     }
     update() {
