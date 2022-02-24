@@ -4,7 +4,6 @@
 //game is the game engine that the player will be placed into
 //player is a string representing the player type
 //x and y are positional coordinates in pixels, can be used for various purposes.
-var count = 0;
 class Player {
 
     constructor(game, player_type, x, y) {
@@ -76,19 +75,16 @@ class Player {
 
     updateCollisions() {
         const that = this;
-
         let change = {x: 0, y: 0}
         let onGround = false;
         let onCeiling = false;
         let bumpedCeiling = false;
         let onSide = false;
-        let i = 0;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
-                    i++;
                     const {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
                     let d = Math.sqrt(ox*ox + oy*oy)
                     const {x: vx, y: vy} = that.velocity;
@@ -112,26 +108,20 @@ class Player {
                         }
                     }
                     if(ox !== 0 && !(that.velocity.x === 0)) {
-                        //Stupid bug where he gets stuck in a side collision while on ground
-
-                        //if(!(that.velocity.x === 0 && !that.game.right && !that.game.left)) {
-                            that.velocity.x = 0;
-                            onSide = true;
-                        //}
+                        that.velocity.x = 0;
+                        onSide = true;
                     }
-                    if(speed <= 0) {
+                    if(speed <= 0) { //Only apply changes if actually heading towards the block
                         if(ox !== 0) change.x = ox;
                         if(oy !== 0) change.y = oy
                     }
                 }
             }
         });
-        if(change === {x: 0, y: 0}) {
-            return;
-        }
+
         this.onSide = onSide;
         this.onGround = onGround;
-        if(bumpedCeiling) this.bumpedCeiling = true;
+        this.bumpedCeiling = bumpedCeiling
         this.onCeiling = onCeiling;
         if(this.onCeiling) {
             this.velocity.x = 0;
