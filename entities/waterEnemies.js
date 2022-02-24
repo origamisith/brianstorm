@@ -38,7 +38,7 @@ class Squid_ink {
     };
     draw(ctx) {
         this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.5);
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        //ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         
     };
 
@@ -88,7 +88,7 @@ class Starfish {
         this.game = game;
         this.speed = 3;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.12, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);
         this.updateBB();
     };
 
