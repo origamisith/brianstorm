@@ -24,7 +24,7 @@ class Squid_ink {
         this.updateBB()
         this.x -= this.speed + this.game.clockTick;
         if (this.x < - 200 ) { 
-            this.x = this.game.camera.x + 1400;
+            this.x = this.game.camera.x + 1200;
             this.y = this.y + 10;
         };
     }

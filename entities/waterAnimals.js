@@ -5,7 +5,7 @@ class Seahorses {
         this.game = game;
         this.speed = 3;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse.png"), 0, 0, 355, 360, 7, 0.7, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse.png"), 0, 0, 355, 360, 6, 0.7, false, true);
         
     };
 
@@ -15,7 +15,7 @@ class Seahorses {
     };
 
     update() {
-       
+        
     };
 };
 
@@ -35,8 +35,8 @@ class SingleSeahorse {
     };
 
     update() {
-       
     };
+    
 };
 
 class Fishes {

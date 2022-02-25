@@ -2,10 +2,8 @@ class levelWaterGenerator {
 
   static seahorsesGenerate(count) {
     const seahorses = [];
-    let place = 0;
       for (let i=0; i < count; i++) {
-        seahorses[i] = {x: 100, y: 50};
-        place += 500;
+        seahorses[i] = {x: 500, y: 50};
       }
       return seahorses;
   } 
@@ -65,7 +63,7 @@ const levelWater = {
   squid_ink: levelWaterGenerator.squid_InkGenerate(7),
   shark: levelWaterGenerator.sharkGenerate(1),
   fish: levelWaterGenerator.fishes(25),
-  seahorses: levelWaterGenerator.seahorsesGenerate(5),
+  seahorses: levelWaterGenerator.seahorsesGenerate(1),
   //singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),
   music: "./assets/music/FreedomM.mp3",
   powerUps: [{x: 100, y: 250}, {x: 7500, y: 700}],

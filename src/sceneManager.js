@@ -93,6 +93,7 @@ class SceneManager {
             this.game.addEntity(new Bush(this.game, b.x, b.y))
         });
 
+
     }
 
     loadWater(x, y) {
@@ -122,12 +123,10 @@ class SceneManager {
         });
 
         levelWater.seahorses.forEach(f => {
-            let seahorse = new Seahorses(this.game, f.x , f.y);
-             this.game.addEntity(seahorse);
+             this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
         });
 
-       
-
+        
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
         });
@@ -144,6 +143,7 @@ class SceneManager {
             this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
         });
 
+     
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
