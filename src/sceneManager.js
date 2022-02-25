@@ -93,6 +93,7 @@ class SceneManager {
             this.game.addEntity(new Bush(this.game, b.x, b.y))
         });
 
+
     }
 
     loadWater(x, y) {
@@ -100,7 +101,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player = new Submarine(this.game, "submarine", x, y, 15, 10, 9000);
+        this.player = new Submarine(this.game, "submarine", x , y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
@@ -121,17 +122,11 @@ class SceneManager {
              this.game.addEntity(fishes);
         });
 
-         levelWater.singleSeahorse.forEach(sh => {
-            let sea_horse = new SingleSeahorse(this.game, sh.x, sh.y + 50);
-            this.game.addEntity(sea_horse);
-          });
+        levelWater.seahorses.forEach(f => {
+             this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
+        });
 
-        /*
-         levelWater.doubleSeahorses.forEach(s => {
-          let sea_horse = new Seahorses(this.game, s.x, s.y + 300);
-          this.game.addEntity(sea_horse);
-        }); */
-
+        
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
         });
@@ -145,9 +140,10 @@ class SceneManager {
         });
 
         levelWater.starfish.forEach(st => {
-            this.game.addEntity(new Starfish(this.game, st.x, st.y + 600));
+            this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
         });
 
+     
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})

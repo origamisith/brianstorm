@@ -5,7 +5,7 @@ class Seahorses {
         this.game = game;
         this.speed = 3;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse_sheetnew.png"), 0, 0, 700, 700, 7, 0.7, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/seahorses/seahorse.png"), 0, 0, 355, 360, 6, 0.7, false, true);
         
     };
 
@@ -15,13 +15,13 @@ class Seahorses {
     };
 
     update() {
-       
+        
     };
 };
 
 class SingleSeahorse {
     constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
+        Object.assign(this, {game, x, y });
 
         this.game = game;
         this.speed = 3;
@@ -30,13 +30,13 @@ class SingleSeahorse {
     };
 
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.y, 0.2);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.y, 0.5);
         
     };
 
     update() {
-       
     };
+    
 };
 
 class Fishes {
@@ -65,7 +65,7 @@ class Squid {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 2;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset();
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/squid/squid_sheetnew.png"), 0, 0, 800, 800, 5, 0.4, false, true);
@@ -92,7 +92,7 @@ class Starfish {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);
         
