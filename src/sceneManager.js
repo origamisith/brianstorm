@@ -54,8 +54,8 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 9700, 100, 2, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 10, 20, 9000, 0, true);
+        this.marker = new LevelMarker(this.game, 15800, 100, 2, 200, 1500*params.blockSize);
+        this.player = new Player(this.game, "default", x, y, 10, 20, 15000, 0, true);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
 
@@ -87,6 +87,10 @@ class SceneManager {
         levelOne.SignPost.forEach(s => {
             let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
             this.game.addEntity(sign);
+        });
+
+        levelOne.bushes.forEach(b => {
+            this.game.addEntity(new Bush(this.game, b.x, b.y))
         });
 
     }
@@ -273,13 +277,13 @@ class SceneManager {
             }
         }
         //If storm is falling and in the upper half of the canvas, track him until he sees the floor
-        else if(this.player.y - this.y > h/2 && this.player.y < h/2) {
-            this.y = this.player.y - h/2
-        }
-        // //If storm gets very high, pan the camera up just enough to keep him in frame
-        else if(this.player.y - this.y < ph / 2) {
-            this.y = this.player.y - ph / 2;
-        }
+        // else if(this.player.y - this.y > h/2 && this.player.y < h/2) {
+        //     this.y = this.player.y - h/2
+        // }
+        // // //If storm gets very high, pan the camera up just enough to keep him in frame
+        // else if(this.player.y - this.y < ph / 2) {
+        //     this.y = this.player.y - ph / 2;
+        // }
 
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;
