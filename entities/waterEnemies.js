@@ -4,7 +4,7 @@ class Squid_ink {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 5;
         // spritesheet
         this.spritesheet = ASSET_MANAGER.getAsset();
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/squid_ink/squid_ink_sheet2.png"), 0, 0, 300, 165, 16, 0.5, false, true);
@@ -23,8 +23,8 @@ class Squid_ink {
     update() {
         this.updateBB()
         this.x -= this.speed + this.game.clockTick;
-        if (this.x < this.game.camera.x - 300 ) { 
-            this.x = this.game.camera.x + 1800;
+        if (this.x < - 200 ) { 
+            this.x = this.game.camera.x + 1400;
             this.y = this.y + 10;
         };
     }
@@ -35,7 +35,7 @@ class Shark {
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
+        this.speed = 5;
         this.spritesheet = ASSET_MANAGER.getAsset();
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/shark/shark_sheet2.png"), 0, 0, 360, 235, 8, 0.2, false, true);
         this.updateBB();
@@ -53,8 +53,8 @@ class Shark {
     update() {
         this.updateBB()
         this.x -= this.speed + this.game.clockTick;
-        if (this.x < this.game.camera.x - 300 ) { 
-            this.x = this.game.camera.x + 1500;
+        if (this.x < - 200 ) { 
+            this.x = this.game.camera.x + 1200;
             this.y = this.y + 20;
         }
     };

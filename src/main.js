@@ -44,7 +44,7 @@ ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 
 //water level
-ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheetnew.png");
+ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse.png");
 ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheet_single.png");
 ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_background.png");
