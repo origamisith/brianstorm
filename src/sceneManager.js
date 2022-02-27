@@ -9,19 +9,21 @@ class SceneManager {
 
         this.debug = debug;
 
+        //0 = start menu
         //1 = intro level
         //2 = water level
         //3 = space level
         //4 = music level
-        this.level = 1;
+        //
+        this.level = 0;
 
         //initially set the game in the title screen state
-        this.title = true;
+
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
-        this.game.addEntity(new Title(this.game, 250, 250));
-        this.checkStart();
+        this.loadLevel(0,0);
+
 
     };
 
@@ -30,6 +32,7 @@ class SceneManager {
     checkStart() {
         if (this.game.click && this.title) {
             this.title = false;
+            this.level = 6;
             this.loadLevel(600, 400);
             //comment this for music
             // ASSET_MANAGER.pauseBackgroundMusic();
@@ -41,14 +44,54 @@ class SceneManager {
     loadLevel(x, y) {
 
         this.marker.loadNext = false;
-        this.clearEntities()
-        if (this.level === 1) {this.loadLevelOne(x, y);}
+        this.clearEntities();
+        if(this.level === 0) {this.loadStartMenu(x, y);}
+        else if (this.level === 1) {this.loadLevelOne(x, y);}
         else if (this.level === 2) {this.loadWater(x, y);}
         else if (this.level === 3) {this.loadSpaceLevel(x, y);}
         else if (this.level === 4) {this.loadMusicLevel(x, y);}
         else if (this.level === 5) {this.loadEndScreen(x, y);}
+        else if (this.level === 6) {this.loadTutorialLevel(x, y);}
 
     }
+
+    loadStartMenu(x, y) {
+
+        this.clearEntities();
+        this.title = true;
+
+        this.game.addEntity(new start(this.game, 400, 270));
+        this.game.addEntity(new how_to_play(this.game, 400, 485));
+        this.game.addEntity(new credits(this.game, 400, 675));
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+
+        this.checkStart();
+    }
+
+    loadTutorialLevel(x, y){
+
+        this.endScreen = false;
+        this.clearEntities();
+
+        this.player = new Player(this.game, "default", 400, 400, 10, 20, 15000, 0, true);
+        this.player.gravity = .4;
+        this.game.shooting = true;
+        this.game.addEntity(this.player);
+
+
+        this.game.addEntity(new movement_keys(this.game, 400, 78));
+        this.game.addEntity(new spacebar(this.game, 1600, 85));
+        this.game.addEntity(new fire_scribble_ball(this.game, 2800, 290));
+        this.game.addEntity(new shift_to_hold(this.game, 4000, 110));
+
+
+
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+
+
+    }
+
 
     loadLevelOne(x, y) {
 
