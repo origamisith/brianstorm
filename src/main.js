@@ -56,6 +56,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
