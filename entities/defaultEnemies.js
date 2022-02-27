@@ -9,7 +9,7 @@ class Miniraser {
         this.onGround = false;
         this.jumpDistance = 20;
         this.agro = false;
-        this.agroDistance = 800;
+        this.agroDistance = 600;
         this.walkSpeed = 4;
         this.leftJump = false;
         this.leftJump = true;
@@ -104,7 +104,8 @@ class Miniraser {
             if (entity !== that && entity.BB && that.BB.inRange(entity.BB, that.jumpDistance, false)) {
                 // only jumping if terrain is a level higher.
                 //console.log('entity bottom: ' + entity.BB.bottom + ', enemy bottom: ' + (that.BB.bottom));
-                if (entity.BB.bottom < that.BB.bottom && Math.abs(entity.BB.bottom - (that.BB.bottom)) > params.blockSize) {
+                if (entity.BB.bottom < that.BB.bottom && Math.abs(entity.BB.bottom - that.BB.bottom) > params.blockSize 
+                    && Math.abs(entity.BB.bottom - that.BB.bottom) < 2*params.blockSize) {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
@@ -140,12 +141,12 @@ class Miniraser {
 
             if (!this.leftJump && !this.rightJump) {
                 // player is on the left
-                if (x < midx) {
+                if (x < midx && Math.abs(x-midx > 10)) {
                     this.x -= this.walkSpeed;
                     this.facing = 1;
                 }
                 // player is on the right
-                else if (x > midx) {
+                else if (x > midx && Math.abs(x-midx > 10)) {
                     this.x += this.walkSpeed;
                     this.facing = 0;
                 }
