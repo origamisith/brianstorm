@@ -94,6 +94,10 @@ class SceneManager {
         });
 
 
+        levelOne.blobs.forEach(cblob => {
+            this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));
+        });
+
     }
 
     loadWater(x, y) {

@@ -31,6 +31,7 @@ ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 ASSET_MANAGER.queueDownload("./assets/environment/bushes.png");
+ASSET_MANAGER.queueDownload("./assets/characters/blobs/blobs.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
