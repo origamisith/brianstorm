@@ -21,6 +21,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 //misc
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
@@ -53,6 +54,9 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png"
 ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 

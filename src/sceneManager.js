@@ -60,7 +60,7 @@ class SceneManager {
         this.clearEntities();
         this.title = true;
 
-        this.game.addEntity(new start(this.game, 400, 270));
+        this.game.addEntity(new start(this.game, 400, 300));
         this.game.addEntity(new how_to_play(this.game, 400, 485));
         this.game.addEntity(new credits(this.game, 400, 675));
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
