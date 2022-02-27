@@ -1,5 +1,5 @@
 /** Global Parameters Object */
-const params = { floor: 780, blockSize: 100};
+const params = { floor: 924, blockSize: 100};
 
 
 /**

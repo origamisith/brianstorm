@@ -231,7 +231,7 @@ class Player {
                     }
                     // console.log(ox + ", " + oy)
                 }
-                else if (entity instanceof Miniraser || entity instanceof Meteor) {
+                else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob) {
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {

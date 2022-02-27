@@ -1,6 +1,6 @@
 class Scribble {
     constructor(game, x, y, direction, variation) {
-        console.log('scribble spawned');
+        // console.log('scribble spawned');
         Object.assign(this, {game, x, y, direction, variation});
         this.maxSpeed = 200;
         this.direction = direction; // 0 = right, 1 = left
