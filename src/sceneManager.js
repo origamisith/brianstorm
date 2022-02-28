@@ -32,11 +32,12 @@ class SceneManager {
     checkStart() {
         if (this.game.click && this.title) {
             this.title = false;
+
+            //change this to select the level to load after clicking the start screen
             this.level = 6;
             this.loadLevel(600, 400);
             //comment this for music
             // ASSET_MANAGER.pauseBackgroundMusic();
-
         }
     };
 
@@ -74,7 +75,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player = new Player(this.game, "default", 2000, 400, 10, 20, 15000, 0, true);
+        this.player = new Player(this.game, "default", 4000, 400, 10, 20, 15000, 0, true);
         this.player.gravity = 0.4;
         this.game.addEntity(this.player);
 
@@ -112,7 +113,7 @@ class SceneManager {
         this.game.addEntity(this.player);
 
         //uncomment line below to start music on page click
-        // ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.playAsset(levelOne.music);
 
         levelOne.enemies.forEach(e => {
             let enemy = new Miniraser(this.game, e.x, e.y);
@@ -289,10 +290,11 @@ class SceneManager {
 
     loadEndScreen(x, y) {
         this.clearEntities();
+        this.level = 0;
         this.endScreen = true;
         this.marker = new LevelMarker(this.game, -300, 100, 1, 200, 2000);
 
-        this.player = new Player(this.game, "default", 500, 100, 15, 10, false);
+        this.player = new Player(this.game, "default", 500, 100, 15, 10, 0);
 
         this.game.addEntity(this.player);
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/end_screen/try_again.jpg"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
@@ -318,10 +320,8 @@ class SceneManager {
         this.updateAudio();
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
-        // // console.log(this.player.x);
-        // console.log(this.player.y);
-        let ph = this.player.BB.height;
-        if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600)){
+
+        if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600) && (this.player.y < 1024)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             let ph = this.player.BB.height;
@@ -329,14 +329,8 @@ class SceneManager {
                 this.y = this.player.y - (h - ph)
             }
         }
-        //If storm is falling and in the upper half of the canvas, track him until he sees the floor
-        // else if(this.player.y - this.y > h/2 && this.player.y < h/2) {
-        //     this.y = this.player.y - h/2
-        // }
-        // // //If storm gets very high, pan the camera up just enough to keep him in frame
-        // else if(this.player.y - this.y < ph / 2) {
-        //     this.y = this.player.y - ph / 2;
-        // }
+
+        if(this.player.y > 1024 && (this.level === 1 || this.level === 6)) {this.player.dead = true;}
 
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;

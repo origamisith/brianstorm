@@ -213,6 +213,21 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
+
+        let backgroundCount = this.backgrounds.length;
+        for (let i = 0; i < backgroundCount; i++) {
+            let bg = this.backgrounds[i];
+
+            if (!bg.removeFromWorld) {
+                bg.update();
+            }
+        }
+
+        for (let i = this.backgrounds.length - 1; i >= 0; --i) {
+            if (this.backgrounds[i].removeFromWorld) {
+                this.backgrounds.splice(i, 1);
+            }
+        }
         this.camera.update();
     };
 

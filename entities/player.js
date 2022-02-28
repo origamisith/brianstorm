@@ -129,13 +129,8 @@ class Player {
         //stop jump animation after landing on tile
         if(this.onGround && !this.game.space && !this.onCeiling &&(this.game.right || this.game.left)){this.updateState(0);}
 
-
-
-
         else if(this.onCeiling) {
             //Slow in air or on ceiling
-
-
             if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
             else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
         }
@@ -177,11 +172,11 @@ class Player {
         this.updateCollisions();
         if(this.hp === 0) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
-        if (this.y >= params.floor - this.BB.height/2) {
-            this.y = params.floor - this.BB.height/2
-            this.onGround = true;
-            this.velocity.y = 0;
-        }
+        // if (this.y >= params.floor - this.BB.height/2) {
+        //     this.y = params.floor - this.BB.height/2
+        //     this.onGround = true;
+        //     this.velocity.y = 0;
+        // }
 
         /** SPAWN SCRIBBLE ON FIRE **/
         if (this.game.shooting && this.canFire) {
@@ -298,14 +293,8 @@ class Player {
     draw(ctx) {
 
 
-        if(this.state === 4) {
-            this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y, 1);
-        }
+        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y, 1);}
         else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65, 1);}
-        // if(this.bb_enable) {
-        //     ctx.strokeStyle = 'red';
-        //     ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
-        // }
         this.hearts.draw(ctx);
 
     };
