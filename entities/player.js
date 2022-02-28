@@ -102,7 +102,8 @@ class Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK
 
-        if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
+        if(this.velocity.y > 0) {
+            this.falling = true;} //Convenience variable for other classes
 
         // If no key pressed and not in air, no horizontal movement
         if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) {
@@ -128,8 +129,10 @@ class Player {
                 else if(this.game.right) {
                     this.velocity.x = this.x_vel
                 }
+
             }
         }
+        if(this.onGround && !this.game.space && (this.game.right || this.game.left)){this.updateState(0);}
         else if(this.onCeiling) { //Slow in air or on ceiling
             if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
             else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
@@ -152,6 +155,7 @@ class Player {
         }
         //Otherwise, use normal gravity
         else this.velocity.y += this.gravity;
+
 
         // Maximum speeds
         if(this.velocity.x >= 7) this.velocity.x = 7;
@@ -176,8 +180,15 @@ class Player {
 
         /** SPAWN SCRIBBLE ON FIRE **/
         if (this.game.shooting && this.canFire) {
-            this.game.addEntity(new Scribble(this.game, this.x + this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
-            this.canFire = false;
+
+            if(this.facing === 0) {
+                this.game.addEntity(new Scribble(this.game, this.x + this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+            else if(this.facing === 1){
+                this.game.addEntity(new Scribble(this.game, this.x - this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+
+
         }
         else if (!this.game.shooting) {
             this.canFire = true;
@@ -279,12 +290,12 @@ class Player {
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y - this.game.camera.y, 1);
 
-        if(this.bb_enable) {
-            ctx.strokeStyle = 'red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
-        }
+        // if(this.bb_enable) {
+        //     ctx.strokeStyle = 'red';
+        //     ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // }
         this.hearts.draw(ctx);
 
     };

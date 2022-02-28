@@ -65,6 +65,7 @@ class SceneManager {
         this.game.addEntity(new credits(this.game, 400, 675));
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
 
+
         this.checkStart();
     }
 
@@ -73,21 +74,22 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player = new Player(this.game, "default", 400, 400, 10, 20, 15000, 0, true);
+        this.player = new Player(this.game, "default", 4000, 400, 10, 20, 15000, 0, true);
         this.player.gravity = .4;
-        this.game.shooting = true;
         this.game.addEntity(this.player);
 
 
-        this.game.addEntity(new movement_keys(this.game, 400, 78));
-        this.game.addEntity(new spacebar(this.game, 1600, 85));
-        this.game.addEntity(new fire_scribble_ball(this.game, 2800, 290));
-        this.game.addEntity(new shift_to_hold(this.game, 4000, 110));
+        this.game.addEntity(new movement_keys(this.game, 400, 110 - params.blockSize));
+        this.game.addEntity(new spacebar(this.game, 1600, 110- params.blockSize));
+        this.game.addEntity(new fire_scribble_ball(this.game, 2800, 390- params.blockSize));
+        this.game.addEntity(new shift_to_hold(this.game, 4000, 138- params.blockSize));
+
+        for(let i = 0; i < 5; i++) {this.game.addEntity(new Terrain(this.game, 4600 + (params.blockSize*i), 400));}
+        for(let i = 0; i < 46; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
+        for(let i = 50; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
 
 
-
-
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
 
 
     }

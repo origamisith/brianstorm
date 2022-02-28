@@ -1,5 +1,7 @@
 // This game shell was happily modified from Googler Seth Ladd's "Bad Aliens" game and his Google IO talk in 2011
 
+
+
 class GameEngine {
     constructor(options) {
         // What you will use to draw
@@ -8,6 +10,7 @@ class GameEngine {
 
         // Everything that will be updated and drawn each frame
         this.entities = [];
+        this.backgrounds = [];
 
         // Information on the input
         this.click = null;
@@ -101,33 +104,23 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keydown", function (e) {
 
             switch (e.code) {
-                case "ArrowLeft":
+
                 case "KeyA":
                     that.left = true;
                     that.right = false;
                     break;
-                case "ArrowRight":
                 case "KeyD":
                     that.right = true;
                     that.left = false;
                     break;
-                case "ArrowUp":
                 case "KeyW":
                     that.up = true;
                     break;
-                case "ArrowDown":
                 case "KeyS":
                     that.down = true;
                     break;
-                case "KeyZ":
-                case "Comma":
-                    that.B = true;
-                    break;
-                case "KeyX":
                 case "Period":
-                    console.log('x pressed');
-                    that.space = true;
-                    that.A = true;
+                    that.shooting = true;
                     break;
                 case "Space":
                     that.space = true;
@@ -135,39 +128,30 @@ class GameEngine {
                 case "ShiftLeft":
                     that.sticking = true;
                     break;
-                case "ShiftRight":
-                    that.shooting = true;
-                    break;
             }
         }, false);
 
         this.ctx.canvas.addEventListener("keyup", function (e) {
 
             switch (e.code) {
-                case "ArrowLeft":
-                case "KeyA":
 
+                case "KeyA":
                     that.left = false;
                     break;
-                case "ArrowRight":
+
                 case "KeyD":
                     that.right = false;
                     break;
-                case "ArrowUp":
+
                 case "KeyW":
                     that.up = false;
                     break;
-                case "ArrowDown":
+
                 case "KeyS":
                     that.down = false;
                     break;
-                case "KeyZ":
-                case "Comma":
-                    that.B = false;
-                    break;
-                case "KeyX":
                 case "Period":
-                    that.A = false;
+                    that.shooting = false;
                     break;
                 case "Space":
                     that.space = false;
@@ -175,24 +159,34 @@ class GameEngine {
                 case "ShiftLeft":
                     that.sticking = false;
                     break;
-                case "ShiftRight":
-                    that.shooting = false;
-                    break;
+
             }
         }, false);
 
 
-        window.addEventListener("keydown", event => this.keys[event.key] = true);
-        window.addEventListener("keyup", event => this.keys[event.key] = false);
+
     };
 
     addEntity(entity) {
         this.entities.push(entity);
     };
 
+
+    addBackground(background) {
+        this.backgrounds.push(background);
+    };
+
+
+
+
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+
+        for (let i = this.backgrounds.length - 1; i >= 0; i--) {
+            this.backgrounds[i].draw(this.ctx, this);
+        }
 
         // Draw latest things first
         for (let i = this.entities.length - 1; i >= 0; i--) {
@@ -216,7 +210,6 @@ class GameEngine {
                 this.entities.splice(i, 1);
             }
         }
-
         this.camera.update();
     };
 
@@ -228,4 +221,4 @@ class GameEngine {
 
 }
 
-// KV Le was here :)
+
