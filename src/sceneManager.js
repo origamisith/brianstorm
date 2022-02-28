@@ -6,25 +6,11 @@ class SceneManager {
         this.y = 0;
         this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
-
-        this.debug = debug;
-
-        //0 = start menu
-        //1 = intro level
-        //2 = water level
-        //3 = space level
-        //4 = music level
-        //
         this.level = 0;
-
-        //initially set the game in the title screen state
-
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
         this.loadLevel(0,0);
-
-
     };
 
     //checks to see if game is starting for the first time
@@ -32,8 +18,14 @@ class SceneManager {
     checkStart() {
         if (this.game.click && this.title) {
             this.title = false;
-
             //change this to select the level to load after clicking the start screen
+            //0 = start menu
+            //1 = intro level
+            //2 = water level
+            //3 = space level
+            //4 = music level
+            //5 = end screen
+            //6 = tutorial level
             this.level = 1;
             this.loadLevel(600, 400);
 
@@ -75,7 +67,6 @@ class SceneManager {
         this.player = new Player(this.game, "default", 200, 400, 10, 20, 15000, 0, true);
         this.player.gravity = 0.4;
         this.game.addEntity(this.player);
-
 
         this.game.addEntity(new movement_keys(this.game, 400, 110 - params.blockSize));
         this.game.addEntity(new spacebar(this.game, 1600, 110- params.blockSize));
@@ -269,8 +260,6 @@ class SceneManager {
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
 
-
-
         // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
             let note = new Note(this.game, n.beat_offset, n.note_value, n.type, n.stem_direction, n.clef);
@@ -327,7 +316,7 @@ class SceneManager {
     update() {
 
         if(this.player.dead){this.loadEndScreen(0,0)}
-        const debug = document.getElementById("debug").checked;
+        document.getElementById("debug").checked;
         this.checkStart();
         if(this.game.click) {this.title = false;}
         this.updateAudio();
