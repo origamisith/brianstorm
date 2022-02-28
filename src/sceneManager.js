@@ -34,7 +34,7 @@ class SceneManager {
             this.title = false;
 
             //change this to select the level to load after clicking the start screen
-            this.level = 2;
+            this.level = 1;
             this.loadLevel(600, 400);
             //comment this for music
             // ASSET_MANAGER.pauseBackgroundMusic();
