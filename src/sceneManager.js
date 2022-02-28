@@ -6,25 +6,11 @@ class SceneManager {
         this.y = 0;
         this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
-
-        this.debug = debug;
-
-        //0 = start menu
-        //1 = intro level
-        //2 = water level
-        //3 = space level
-        //4 = music level
-        //
         this.level = 0;
-
-        //initially set the game in the title screen state
-
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
         this.loadLevel(0,0);
-
-
     };
 
     //checks to see if game is starting for the first time
@@ -32,12 +18,17 @@ class SceneManager {
     checkStart() {
         if (this.game.click && this.title) {
             this.title = false;
-
             //change this to select the level to load after clicking the start screen
-            this.level = 6;
+            //0 = start menu
+            //1 = intro level
+            //2 = water level
+            //3 = space level
+            //4 = music level
+            //5 = end screen
+            //6 = tutorial level
+            this.level = 1;
             this.loadLevel(600, 400);
-            //comment this for music
-            // ASSET_MANAGER.pauseBackgroundMusic();
+
         }
     };
 
@@ -77,7 +68,6 @@ class SceneManager {
         this.player.gravity = 0.4;
         this.game.addEntity(this.player);
 
-
         this.game.addEntity(new movement_keys(this.game, 400, 110 - params.blockSize));
         this.game.addEntity(new spacebar(this.game, 1600, 110- params.blockSize));
         this.game.addEntity(new shift_to_hold(this.game, 4000, 138- params.blockSize));
@@ -110,8 +100,10 @@ class SceneManager {
         this.player.gravity = .4;
         this.game.addEntity(this.player);
 
+        ASSET_MANAGER.pauseBackgroundMusic();
         //uncomment line below to start music on page click
-        // ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.autoRepeat(levelOne.music);
 
         levelOne.enemies.forEach(e => {
             let enemy = new Miniraser(this.game, e.x, e.y);
@@ -161,6 +153,10 @@ class SceneManager {
         this.player.falling = false;
         this.game.addEntity(this.player);
         this.marker = new LevelMarker(this.game, 9000, -250, 3, 1024, 100);
+
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+        ASSET_MANAGER.autoRepeat("./assets/music/water_level.mp3");
 
         levelWater.powerUps.forEach(p => {
             let pUp = new powerUp(this.game, p.x, p.y);
@@ -225,6 +221,12 @@ class SceneManager {
         this.game.addEntity(this.player);
 
 
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
+        ASSET_MANAGER.autoRepeat("./assets/music/venemousspaceradish.mp3");
+
+
+
         this.levelWidth = 10240;
         let meteor = new Meteor(gameEngine, this.levelWidth);
         meteor.setIt();
@@ -255,8 +257,8 @@ class SceneManager {
         this.player = new Player(this.game, "default", x, y, 12, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
-
         this.game.addEntity(this.player);
+        ASSET_MANAGER.pauseBackgroundMusic();
 
         // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {
@@ -288,6 +290,8 @@ class SceneManager {
 
     loadEndScreen(x, y) {
         this.clearEntities();
+
+        ASSET_MANAGER.pauseBackgroundMusic();
         this.level = 0;
         this.endScreen = true;
         this.marker = new LevelMarker(this.game, -300, 100, 1, 200, 2000);
@@ -312,7 +316,7 @@ class SceneManager {
     update() {
 
         if(this.player.dead){this.loadEndScreen(0,0)}
-        const debug = document.getElementById("debug").checked;
+        document.getElementById("debug").checked;
         this.checkStart();
         if(this.game.click) {this.title = false;}
         this.updateAudio();
