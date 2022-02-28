@@ -9,9 +9,6 @@ class Submarine extends Player {
     constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit) {
         super(game, player_type, x, y, x_vel, y_vel);
         Object.assign(this, { game, player_type, x, y });
-
-
-
         //assign the game engine to this object
         this.game = game;
 
@@ -93,9 +90,11 @@ class Submarine extends Player {
         if (this.game.shooting && this.canFire) {
 
             if(this.facing === 0) {
+                ASSET_MANAGER.playAsset("./assets/sfx/torpedo_launch1.mp3");
                 this.game.addEntity(new Torpedo(this.game, this.x - 100, this.y + 65 + this.BB.height/2, this.facing, 0));
                 this.canFire = false;}
             else if(this.facing === 1){
+                ASSET_MANAGER.playAsset("./assets/sfx/torpedo_launch1.mp3");
                 this.game.addEntity(new Torpedo(this.game, this.x - 300, this.y + 65 + this.BB.height/2, this.facing, 0));
                 this.canFire = false;}
         }
@@ -132,9 +131,6 @@ class Submarine extends Player {
 
         if (this.hp===0) {this.dead = true;}
     }
-
-
-
 
     /** Helper method to update the player type */
     updatePlayerType(player_type) {

@@ -67,6 +67,11 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
+//music
+ASSET_MANAGER.queueDownload("./assets/sfx/torpedo_launch1.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/venemousspaceradish.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/water_level.mp3");
+
 
 
 //water level
