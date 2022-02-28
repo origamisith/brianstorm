@@ -6,7 +6,7 @@ class SceneManager {
         this.y = 0;
         this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
-        this.level = 0;
+        this.level = 3;
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
@@ -86,7 +86,7 @@ class SceneManager {
 
         //floor tiles after overhang
         for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
-        
+
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
     }
 
@@ -177,7 +177,7 @@ class SceneManager {
              this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
         });
 
-        
+
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
         });
@@ -194,7 +194,7 @@ class SceneManager {
             this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
         });
 
-     
+
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})

@@ -8,30 +8,31 @@ class Rocket extends Player {
 
     constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit) {
         super(game, player_type, x, y, x_vel, y_vel);
-        this.scale = .25;
+        this.scale = .33;
         this.x_cameraLimit = x_cameraLimit
         // Object.assign(this, { game, player_type, x, y });
 
         //1259 x 508 x 9
 
 
-        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        // this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
 
         this.hp = 60;
         this.dead = false;
+        this.facing = "right"
         this.loadAnimations();
 
     };
 
     loadAnimations() {
-        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 1259, 508, 9, 0.1, false, true);
-        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 508, 1259, 508, 9, 0.1, false, true);
+        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 389, 18, 0.1, false, true);
+        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 389, 18, 0.1, false, true);
     }
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x+450*this.scale, this.y, (1259-450)*this.scale, 508*this.scale)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (1259-450)*this.scale, 508*this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale, this.y, (900-380)*this.scale, 389*this.scale)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (900-380)*this.scale, 389*this.scale)}
     }
 
     //draw method will render this entity to the canvas
