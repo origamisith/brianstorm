@@ -31,6 +31,8 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
 ASSET_MANAGER.queueDownload("./assets/hearts.png");
 ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
+ASSET_MANAGER.queueDownload("./assets/poof/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/hazard_sign/spritesheet.png");
 
 //start menu
 ASSET_MANAGER.queueDownload("./assets/start_menu_assets/credits/spritesheet.png");

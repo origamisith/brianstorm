@@ -89,7 +89,7 @@ class Submarine extends Player {
             this.animation = this.submarineRightFacing;}
 
 
-        /** SPAWN SCRIBBLE ON FIRE **/
+        /** SPAWN TORPEDO ON FIRE **/
         if (this.game.shooting && this.canFire) {
 
             if(this.facing === 0) {
@@ -98,8 +98,6 @@ class Submarine extends Player {
             else if(this.facing === 1){
                 this.game.addEntity(new Torpedo(this.game, this.x - 300, this.y + 65 + this.BB.height/2, this.facing, 0));
                 this.canFire = false;}
-
-
         }
         else if (!this.game.shooting) {
             this.canFire = true;
