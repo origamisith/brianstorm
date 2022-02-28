@@ -58,6 +58,7 @@ class Player {
         this.bumpedCeiling = false;
         this.onSide = false;
         this.sideDir = 0;
+        this.lastBB = this.BB;
     };
 
     /** Assigns the correct animation states to each movement. (update with new spritesheets as needed) */
@@ -71,9 +72,11 @@ class Player {
     };
 
     updateBB() {
-
-        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 200, 67)}
-        else{this.BB = new BoundingBox(this.x- 50, this.y, 100, 139)}
+        //offsets: x - 100
+        //         x - 50
+        this.lastBB = this.BB;
+        if(this.state === 4){this.BB = new BoundingBox(this.x, this.y, 200, 67)}
+        else this.BB = new BoundingBox(this.x+50, this.y + (200-139), 100, 139);
     }
 
     updateAnimations() {
@@ -88,7 +91,7 @@ class Player {
     update() {
         // console.log(this.game.shift_left_key);
         this.updateAnimations()
-        this.updateBB();
+        // this.updateBB();
 
 
         // a constant TICK to sync with the game's timer
@@ -99,9 +102,8 @@ class Player {
             this.falling = true;} //Convenience variable for other classes
 
         // If no key pressed and not in air, no horizontal movement
-        if(!this.game.right && !this.game.left && (this.onGround)) {
+        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) {
             this.velocity.x = 0;
-            this.updateState(0);
         }
 
         // Key inputs
@@ -109,7 +111,7 @@ class Player {
         if(this.game.left) this.facing = 1;
         if(this.game.right) this.facing = 0;
         if(this.onGround && !this.onCeiling) {
-            if(this.game.space && !this.onCeiling) {
+            if(this.game.space) {
                 this.updateState(3);
                 this.velocity.y = -15;
                 this.onGround = false;
@@ -122,15 +124,9 @@ class Player {
                 else if(this.game.right) {
                     this.velocity.x = this.x_vel
                 }
-
             }
         }
-
-        //stop jump animation after landing on tile
-        if(this.onGround && !this.game.space && !this.onCeiling &&(this.game.right || this.game.left)){this.updateState(0);}
-
-        else if(this.onCeiling) {
-            //Slow in air or on ceiling
+        else if(this.onCeiling) { //Slow in air or on ceiling
             if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
             else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
         }
@@ -146,16 +142,19 @@ class Player {
             else if(this.game.right && this.velocity.x >= 0) this.x += this.x_vel/4 * params.blockSize * TICK;
         }
 
-        //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
+      //stop jump animation after landing on tile
+      if(this.onGround && !this.game.space && !this.onCeiling &&(this.game.right || this.game.left)){this.updateState(0);}
+
+
+      //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
         if(this.game.sticking && this.onCeiling) {
             this.velocity.y = -1;
             this.updateState(4);
             // console.log(this.onCeiling);
-            console.log(this.state);
+            // console.log(this.state);
         }
         //Otherwise, use normal gravity
-        else {this.velocity.y += this.gravity;}
-
+        else this.velocity.y += this.gravity;
 
         // Maximum speeds
         if(this.velocity.x >= 7) this.velocity.x = 7;
@@ -208,14 +207,29 @@ class Player {
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
-                    const {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
+                    let {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
+                    if(that.BB.x - that.lastBB.x > 0 && ox < 0) oy = 0;
+                    else if(that.BB.x - that.lastBB.x < 0 && ox > 0) oy = 0;
+                    else if(that.BB.y - that.lastBB.y > 0 && oy < 0) ox = 0;
+                    else if(that.BB.y - that.lastBB.y < 0 && oy > 0) ox = 0;
+                    else {
+                        console.log('uh oh')
+                        if (ox < oy) {
+                            if(ox > 0) {
+                                oy = 0;
+                            }
+                        }
+                        else if(oy > 0) {
+                            ox = 0
+                        }
+                    }
+
                     let d = Math.sqrt(ox*ox + oy*oy)
                     const {x: vx, y: vy} = that.velocity;
                     let speed = vx*ox/d + vy*oy/d;
                     if(oy !== 0) {
                         if(oy > 0) {
                             if(that.game.sticking && !that.onCeiling) {
-
                                 that.velocity.y = 0;
                                 onCeiling = true;
                             }
@@ -244,15 +258,12 @@ class Player {
                     // console.log(ox + ", " + oy)
                 }
                 else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob) {
-                    if (that.BB.topCollide(entity.BB)) {
-                        // take no damage.
-                    } else {
-                        if (that.elapsedTime > 0.8) {
-                            that.hp -= 5;
-                            console.log("storm HP: " + that.hp);
-                            that.elapsedTime = 0;
-                        }
-                    }
+                      // take no damage.
+                      if (that.elapsedTime > 0.8) {
+                          that.hp -= 5;
+                          console.log("storm HP: " + that.hp);
+                          that.elapsedTime = 0;
+                      }
                 }
                 else if (entity instanceof LevelMarker){
                     if(that.BB.collide(entity.BB)){entity.loadNext = true;}
@@ -278,6 +289,10 @@ class Player {
         if(this.onGround) {
             this.velocity.y = 0;
             this.bumpedCeiling = false;
+            if(this.state === 4) {
+                this.y -= (139-67)
+                this.state = 0;
+            }
         }
         if(this.onSide) {
             this.velocity.x = 0;
@@ -291,11 +306,17 @@ class Player {
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-
-
-        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y, 1);}
-        else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65, 1);}
+        //The x and y position for drawing should always have the offset of " - this.game.camera.x"
+        //and " - this.game.camera.y", no more, no less. If you want to change how the camera focuses on Storm,
+        //change that in scene manager. Changing that on an entity-by-entity basis may lead to things be drawn
+        //incorrectly. An exception is background entities that scroll more slowly (see cloud.js)
+        //Offsets: x - 100
+        //         x - 100, y-65
+        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);}
+        else{this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1);}
         this.hearts.draw(ctx);
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
 
     };
 

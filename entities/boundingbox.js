@@ -36,6 +36,7 @@ class BoundingBox {
             x: sumHalf.w - Math.abs(centerDist.x),
             y: sumHalf.h - Math.abs(centerDist.y)
         };
+        /*
         if(overlap.x < overlap.y) {
             if(overlap.x > 0) {
                 overlap.y = 0;
@@ -44,6 +45,8 @@ class BoundingBox {
         else if(overlap.y > 0) {
             overlap.x = 0
         }
+
+         */
         if(centerDist.x < 0) {
             overlap.x *= -1;
         }
