@@ -23,7 +23,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 //misc
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
-ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet_left.png");
+ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet_right.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
