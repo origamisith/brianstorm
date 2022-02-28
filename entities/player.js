@@ -18,7 +18,6 @@ class Player {
         this.x_vel = x_vel;
         this.y_vel =y_vel;
         this.x_cameraLimit = x_cameraLimit;
-        this.y_cameraLimit = y_cameraLimit;
         this.scale = 1;
 
         // updates / initializes the bounding box
@@ -33,8 +32,6 @@ class Player {
         this.canFire = true;
         this.player_type = player_type;
         this.removeFromWorld = false;
-        this.leftCol = false;
-        this.rightCol = false;
         this.hp = 20;
 
         //sets size of submarine and its BB
@@ -49,17 +46,7 @@ class Player {
         this.state = 0;
         // Player facing: 0=right. 1=left.
         this.facing = 0;
-        // a 2D array to store all the player's states.
-        this.animations = [
-            [0,0],
-            [0,1],
-            [1,0],
-            [1,1],
-            [2,0],
-            [2,1],
-            [3,0],
-            [3,1]
-        ];
+
 
         this.loadAnimations();
         this.elapsedTime = 0;
@@ -79,12 +66,14 @@ class Player {
         this.rightFacingAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 200, 200, 200, 21, 0.1, false, true);
         this.jumpingRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 0, 0, 200, 200, 18, 0.07, false, true);
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
+        this.ceilingStickRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_right.png"), 0, 0, 200, 67, 6, 0.1, false, true);
+        this.ceilingStickLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_left.png"), 0, 0, 200, 67, 6, 0.1, false, true);
     };
 
     updateBB() {
-        //Bounding box for collision
-        // this.BB = new BoundingBox(this.x+55, this.y+20, 90, 180)
-        this.BB = new BoundingBox(this.x+50, this.y, 100, 200)
+
+        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 200, 67)}
+        else{this.BB = new BoundingBox(this.x- 50, this.y, 100, 139)}
     }
 
     updateAnimations() {
@@ -92,20 +81,25 @@ class Player {
         else if(this.state === 0 && this.facing === 0) this.animation = this.rightFacingAnimation;
         else if(this.state === 3 && this.facing === 0) this.animation = this.jumpingRightAnimation;
         else if(this.state === 3 && this.facing === 1) this.animation = this.jumpingLeftAnimation;
+        else if(this.state === 4 && this.facing === 0) this.animation = this.ceilingStickRightAnimation
+        else if(this.state === 4 && this.facing === 1) this.animation = this.ceilingStickLeftAnimation
     }
     /** Updates state frame by frame */
     update() {
+        // console.log(this.game.shift_left_key);
         this.updateAnimations()
         this.updateBB();
+
 
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK
 
-        if(this.velocity.y > 0) this.falling = true; //Convenience variable for other classes
+        if(this.velocity.y > 0) {
+            this.falling = true;} //Convenience variable for other classes
 
         // If no key pressed and not in air, no horizontal movement
-        if(!this.game.right && !this.game.left && (this.onGround || this.onCeiling)) {
+        if(!this.game.right && !this.game.left && (this.onGround)) {
             this.velocity.x = 0;
             this.updateState(0);
         }
@@ -115,7 +109,7 @@ class Player {
         if(this.game.left) this.facing = 1;
         if(this.game.right) this.facing = 0;
         if(this.onGround && !this.onCeiling) {
-            if(this.game.space) {
+            if(this.game.space && !this.onCeiling) {
                 this.updateState(3);
                 this.velocity.y = -15;
                 this.onGround = false;
@@ -128,9 +122,15 @@ class Player {
                 else if(this.game.right) {
                     this.velocity.x = this.x_vel
                 }
+
             }
         }
-        else if(this.onCeiling) { //Slow in air or on ceiling
+
+        //stop jump animation after landing on tile
+        if(this.onGround && !this.game.space && !this.onCeiling &&(this.game.right || this.game.left)){this.updateState(0);}
+
+        else if(this.onCeiling) {
+            //Slow in air or on ceiling
             if(this.game.left) this.x -= this.x_vel/3 * params.blockSize * TICK;
             else if(this.game.right) this.x += this.x_vel/3 * params.blockSize * TICK;
         }
@@ -149,9 +149,13 @@ class Player {
         //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
         if(this.game.sticking && this.onCeiling) {
             this.velocity.y = -1;
+            this.updateState(4);
+            // console.log(this.onCeiling);
+            console.log(this.state);
         }
         //Otherwise, use normal gravity
-        else this.velocity.y += this.gravity;
+        else {this.velocity.y += this.gravity;}
+
 
         // Maximum speeds
         if(this.velocity.x >= 7) this.velocity.x = 7;
@@ -168,16 +172,23 @@ class Player {
         this.updateCollisions();
         if(this.hp === 0) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
-        if (this.y >= params.floor - this.BB.height/2) {
-            this.y = params.floor - this.BB.height/2
-            this.onGround = true;
-            this.velocity.y = 0;
-        }
+        // if (this.y >= params.floor - this.BB.height/2) {
+        //     this.y = params.floor - this.BB.height/2
+        //     this.onGround = true;
+        //     this.velocity.y = 0;
+        // }
 
         /** SPAWN SCRIBBLE ON FIRE **/
         if (this.game.shooting && this.canFire) {
-            this.game.addEntity(new Scribble(this.game, this.x + this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
-            this.canFire = false;
+
+            if(this.facing === 0) {
+                this.game.addEntity(new Scribble(this.game, this.x + this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+            else if(this.facing === 1){
+                this.game.addEntity(new Scribble(this.game, this.x - this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+
+
         }
         else if (!this.game.shooting) {
             this.canFire = true;
@@ -204,6 +215,7 @@ class Player {
                     if(oy !== 0) {
                         if(oy > 0) {
                             if(that.game.sticking && !that.onCeiling) {
+
                                 that.velocity.y = 0;
                                 onCeiling = true;
                             }
@@ -279,12 +291,10 @@ class Player {
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - this.game.camera.x), this.y - this.game.camera.y, 1);
 
-        if(this.bb_enable) {
-            ctx.strokeStyle = 'red';
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
-        }
+
+        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y, 1);}
+        else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65, 1);}
         this.hearts.draw(ctx);
 
     };

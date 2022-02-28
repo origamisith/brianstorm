@@ -19,12 +19,13 @@ class Submarine extends Player {
         this.state = 0;
         // Player facing: 0=right. 1=left.
         this.facing = 0;
-        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        this.BB = new BoundingBox(this.x - 400, this.y, 600* this.scale, 300* this.scale)
         this.x_cameraLimit = x_cameraLimit;
 
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
+        this.scale = 0.6
         this.loadAnimations();
 
     };
@@ -36,13 +37,13 @@ class Submarine extends Player {
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x - 300, this.y + 120, 500, 180)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y + 120, 500, 180)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x - 330, this.y + 120 * this.scale, 500 * this.scale, 180 * this.scale )}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y + 120* this.scale, 500* this.scale, 180* this.scale)}
     }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, 1);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, this.scale);
         ctx.strokeStyle = 'red';
         // uncomment for bb
         // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
@@ -87,6 +88,24 @@ class Submarine extends Player {
             this.updateBB("right");
             this.animation = this.submarineRightFacing;}
 
+
+        /** SPAWN SCRIBBLE ON FIRE **/
+        if (this.game.shooting && this.canFire) {
+
+            if(this.facing === 0) {
+                this.game.addEntity(new Torpedo(this.game, this.x - 100, this.y + 65 + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+            else if(this.facing === 1){
+                this.game.addEntity(new Torpedo(this.game, this.x - 300, this.y + 65 + this.BB.height/2, this.facing, 0));
+                this.canFire = false;}
+
+
+        }
+        else if (!this.game.shooting) {
+            this.canFire = true;
+        }
+
+
         // Left and right movement
         this.leftRightMovement()
 
@@ -115,6 +134,9 @@ class Submarine extends Player {
 
         if (this.hp===0) {this.dead = true;}
     }
+
+
+
 
     /** Helper method to update the player type */
     updatePlayerType(player_type) {

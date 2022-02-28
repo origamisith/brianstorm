@@ -8,6 +8,8 @@ const ASSET_MANAGER = new AssetManager();
 // they must also be downloaded by the asset mangager here as well. (afik)
 ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
@@ -21,12 +23,27 @@ ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 //misc
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet_left.png");
+ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet_right.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
 ASSET_MANAGER.queueDownload("./assets/hearts.png");
 ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
+
+//start menu
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/credits/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/how_to_play/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/start/spritesheet.png");
+
+
+//tutorial level
+ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/fire_scribble_ball/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/movement_keys/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/shift_to_hold/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/spacebar/spritesheet.png");
+
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
@@ -40,6 +57,11 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png"
 ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 

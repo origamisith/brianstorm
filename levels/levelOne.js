@@ -1,8 +1,8 @@
 class levelOneGenerator {
   static generateFloorTerrain(size, mountains, walls) {
     const terrain = [];
-    let i=0;
-    let place = 0;
+    let i;
+    let place;
     let terrainIndex = 0;
     const totalMountains = [];
     const usedBlocks = [19, 20, 21, 22, 23, 46, 47, 48, 49, 50, 75, 76, 77, 78, 79, 80];
@@ -33,7 +33,7 @@ class levelOneGenerator {
         if (!usedBlocks.includes(mountainStart)) {
           usedBlocks.push(mountainStart);
           for (let mount1 = 1; mount1 <= 5; mount1++) {
-            console.log("MOUNTAIN START " + mountainStart)
+            // console.log("MOUNTAIN START " + mountainStart)
              
               // console.log(params.blockSize*mountainStart + params.blockSize*mount1 + " ");
               terrain[terrainIndex] = {x: params.blockSize*mountainStart + params.blockSize*mount1, y: params.floor-(2*params.blockSize)}
@@ -67,15 +67,15 @@ class levelOneGenerator {
       }
       // Generate ceiling hangs
       wall = Math.round(Math.random() * (148 - 10) + 10);
-      terrain[terrainIndex] = {x: params.blockSize*wall, y: 0 + params.blockSize}
+      terrain[terrainIndex] = {x: params.blockSize*wall, y: params.blockSize}
       terrainIndex++;
-      terrain[terrainIndex] = {x: params.blockSize*wall, y: 0 + params.blockSize*2}
+      terrain[terrainIndex] = {x: params.blockSize*wall, y: params.blockSize * 2}
       terrainIndex++;
     }
 
     usedBlocks.sort();
     usedBlocks.forEach(function(entry) {
-      console.log(entry);
+      // console.log(entry);
     });
     
     // Generate ceiling
@@ -127,7 +127,7 @@ class levelOneGenerator {
     let place = 0;
     for (let i=0; i<count; i++) {
       place = Math.floor(Math.random() * 150);
-      blobs[i] = {x: params.blockSize*place, y: 0 + params.blockSize}
+      blobs[i] = {x: params.blockSize*place, y: params.blockSize}
     }
     return blobs;
   }

@@ -1,4 +1,4 @@
-class Scribble {
+class Torpedo {
     constructor(game, x, y, direction, variation) {
         // console.log('scribble spawned');
         Object.assign(this, {game, x, y, direction, variation});
@@ -10,18 +10,27 @@ class Scribble {
         this.collideOnce = true;
         this.BB = new BoundingBox(0,0,100,100);
 
-        this.spritesheet = new Animator(ASSET_MANAGER.getAsset("./assets/scribbles/scrib1.png"), 0, 0, 100, 100, 1, 1, false, true);
+        this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/torpedo/spritesheet_right.png"), 0, 0, 800, 300, 3, 0.07, false, true);
+        this.spritesheet_right = new Animator(ASSET_MANAGER.getAsset("./assets/torpedo/spritesheet_right.png"), 0, 0, 800, 300, 3, 0.07, false, true);
+        this.spritesheet_left = new Animator(ASSET_MANAGER.getAsset("./assets/torpedo/spritesheet_left.png"), 0, 0, 800, 300, 3, 0.07, false, true);
 
-        this.velocity_x = 1500;
+        this.velocity_x = 1000;
         this.velocity_y = 10;
         
     };
+
+    updateAnimation() {
+        if(this.direction === 1) {this.animation = this.spritesheet_left}
+        if(this.direction === 0) {this.animation = this.spritesheet_right}
+    }
 
     updateBB() {
         this.BB = new BoundingBox(this.x, this.y, 100*0.5, 100*0.5);
     }
 
     update() {
+
+        this.updateAnimation();
 
         this.updateBB();
 
@@ -39,11 +48,7 @@ class Scribble {
             this.lifetime -= 5 * this.game.clockTick;
 
         }
-        else {
-            
-            this.game.removeFromWorld = true;
-
-        }
+        else {this.game.removeFromWorld = true;}
 
         /** COLLIDE WITH ENTITY AND BOUNCE BACK */
         var that = this;
@@ -69,10 +74,6 @@ class Scribble {
                         that.collideOnce = false;
                     }
                 }
-
-                
-                
-                
             }
         });
 
@@ -85,6 +86,6 @@ class Scribble {
     };
 
     draw(ctx) {
-        this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.5);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.2);
     }
 }
