@@ -74,8 +74,8 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player = new Player(this.game, "default", 4000, 400, 10, 20, 15000, 0, true);
-        this.player.gravity = .4;
+        this.player = new Player(this.game, "default", 2000, 400, 10, 20, 15000, 0, true);
+        this.player.gravity = 0.4;
         this.game.addEntity(this.player);
 
 
@@ -84,9 +84,16 @@ class SceneManager {
         this.game.addEntity(new fire_scribble_ball(this.game, 2800, 390- params.blockSize));
         this.game.addEntity(new shift_to_hold(this.game, 4000, 138- params.blockSize));
 
-        for(let i = 0; i < 5; i++) {this.game.addEntity(new Terrain(this.game, 4600 + (params.blockSize*i), 400));}
+        this.game.addEntity(new Miniraser(this.game, 2800, 290));
+
+        //overhang
+        for(let i = 0; i < 10; i++) {this.game.addEntity(new Terrain(this.game, 4600 + (params.blockSize*i), 400));}
+
+        //floor tiles up to overhang
         for(let i = 0; i < 46; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
-        for(let i = 50; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
+
+        //floor tiles after overhang
+        for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
 
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})

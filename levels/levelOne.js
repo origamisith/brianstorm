@@ -33,7 +33,7 @@ class levelOneGenerator {
         if (!usedBlocks.includes(mountainStart)) {
           usedBlocks.push(mountainStart);
           for (let mount1 = 1; mount1 <= 5; mount1++) {
-            console.log("MOUNTAIN START " + mountainStart)
+            // console.log("MOUNTAIN START " + mountainStart)
              
               // console.log(params.blockSize*mountainStart + params.blockSize*mount1 + " ");
               terrain[terrainIndex] = {x: params.blockSize*mountainStart + params.blockSize*mount1, y: params.floor-(2*params.blockSize)}
@@ -75,7 +75,7 @@ class levelOneGenerator {
 
     usedBlocks.sort();
     usedBlocks.forEach(function(entry) {
-      console.log(entry);
+      // console.log(entry);
     });
     
     // Generate ceiling

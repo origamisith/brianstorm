@@ -21,6 +21,7 @@ class GameEngine {
         this.space = false;
         this.shift = false;
         this.shooting = false;
+        this.shift_left_key = false;
         this.keys = {};
 
         this.surfaceWidth = null;
@@ -126,6 +127,7 @@ class GameEngine {
                     that.space = true;
                     break;
                 case "ShiftLeft":
+                    that.shift_left_key = true;
                     that.sticking = true;
                     break;
             }
@@ -157,6 +159,7 @@ class GameEngine {
                     that.space = false;
                     break;
                 case "ShiftLeft":
+                    that.shift_left_key = false;
                     that.sticking = false;
                     break;
 
