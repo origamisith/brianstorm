@@ -135,10 +135,10 @@ class levelOneGenerator {
 
 const levelOne = {
   clouds: [{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
-  terrain: levelOneGenerator.generateFloorTerrain(500, 10, 20),
+  terrain: levelOneGenerator.generateFloorTerrain(800, 10, 20),
   enemies: levelOneGenerator.enemyGenerator(10),
   powerUps: [{x: 100, y: 800}, {x: 20*params.blockSize, y: 700}, {x: 50*params.blockSize, y: 700}, {x : 80*params.blockSize, y: 700}],
-  SignPost: [{x: 14600, y: 600, choice: 0, scale: 0.3}],
+  SignPost: [{x: 80500, y: 700, choice: 0, scale: 0.3}],
   bushes: levelOneGenerator.bushGenerator(40),
   blobs: levelOneGenerator.blobGenerator(10),
   music: "./assets/music/FreedomM.mp3"

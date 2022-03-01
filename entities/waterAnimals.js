@@ -77,7 +77,7 @@ class Squid {
         this.BB = new BoundingBox(this.x, this.y, 800, 800);
     };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.22);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 0.22);
     };
 
     update() {
@@ -104,7 +104,7 @@ class Starfish {
         this.BB = new BoundingBox(this.x, this.y, 800, 300);
     };
     draw(ctx) {
-        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.2);
+        this.animator.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 0.2);
     };
 
     update() {

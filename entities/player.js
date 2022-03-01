@@ -90,7 +90,7 @@ class Player {
         this.updateAnimations()
         this.updateBB();
 
-
+        // console.log(this.x)
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK
@@ -293,8 +293,8 @@ class Player {
     draw(ctx) {
 
 
-        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y, 1);}
-        else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65, 1);}
+        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y - this.game.camera.y, 1);}
+        else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65 - this.game.camera.y, 1);}
         this.hearts.draw(ctx);
 
     };
