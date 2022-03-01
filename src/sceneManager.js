@@ -9,7 +9,6 @@ class SceneManager {
         this.level = 0;
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
-        this.newPlayer = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game
         this.loadLevel(0,0);
     };
@@ -37,7 +36,7 @@ class SceneManager {
     loadLevel(x, y) {
 
         this.marker.loadNext = false;
-        // this.clearEntities();
+        this.clearEntities();
         if(this.level === 0) {this.loadStartMenu(x, y);}
         else if (this.level === 1) {this.loadLevelOne(x, y);}
         else if (this.level === 2) {this.loadWater(x, y);}
@@ -56,7 +55,7 @@ class SceneManager {
         this.game.addEntity(new start(this.game, 400, 300));
         this.game.addEntity(new how_to_play(this.game, 400, 485));
         this.game.addEntity(new credits(this.game, 400, 675));
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
     }
 
@@ -88,6 +87,7 @@ class SceneManager {
         //floor tiles after overhang
         for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
         
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
     }
 
 
@@ -95,8 +95,8 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 81000, params.floor + 200, 2, 1000, 100);
-        this.player = new Player(this.game, "default", 80000, y, 10, 20, 81000, 0, true);
+        this.marker = new LevelMarker(this.game, 15800, 100, 2, 200, 1500*params.blockSize);
+        this.player = new Player(this.game, "default", x, y, 10, 20, 15000, 0, true);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
 
@@ -104,8 +104,6 @@ class SceneManager {
         //uncomment line below to start music on page click
         ASSET_MANAGER.playAsset(levelOne.music);
         ASSET_MANAGER.autoRepeat(levelOne.music);
-
-
 
         levelOne.enemies.forEach(e => {
             let enemy = new Miniraser(this.game, e.x, e.y);
@@ -142,73 +140,67 @@ class SceneManager {
         levelOne.blobs.forEach(cblob => {
             this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));
         });
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 78952 - this.game.camera.x, params.floor - this.game.camera.y, 2048, 1024), update: () => null})
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 81000 - this.game.camera.x, params.floor - this.game.camera.y, 2048, 1024), update: () => null})
+
     }
 
     loadWater(x, y) {
 
-        // this.endScreen = false;
-        // this.clearEntities();
+        this.endScreen = false;
+        this.clearEntities();
 
-        this.player.removeFromWorld = true;
-        this.player = new Submarine(this.game, "submarine", this.player.x + 200 , this.player.y, 15, 10, 900000);
+        this.player = new Submarine(this.game, "submarine", x , y, 15, 10, 9000);
         this.player.gravity = 0;
         this.player.falling = false;
-        this.game.addEntity(new Poof(this.game, 81000, params.floor - 200, 1));
         this.game.addEntity(this.player);
-
         this.marker = new LevelMarker(this.game, 9000, -250, 3, 1024, 100);
 
         ASSET_MANAGER.pauseBackgroundMusic();
-        // ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_level.mp3");
 
-        // levelWater.powerUps.forEach(p => {
-        //     let pUp = new powerUp(this.game, p.x, p.y);
-        //     this.game.addEntity(pUp);
-        // });
-        //
-        // levelWater.signPost.forEach(s => {
-        //     let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
-        //     this.game.addEntity(sign);
-        // });
-        //
-        // levelWater.fish.forEach(f => {
-        //     let fishes = new Fishes(this.game, f.x , f.y - 10);
-        //      this.game.addEntity(fishes);
-        // });
-        //
-        // levelWater.seahorses.forEach(f => {
-        //      this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
-        // });
-        //
-        //
-        // levelWater.shark.forEach(sh => {
-        //     this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
-        // });
-        //
-        // levelWater.squid.forEach(sq => {
-        //     this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));
-        // });
-        //
-        // levelWater.squid_ink.forEach(sqi => {
-        //     this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 200));
-        // });
-        //
-        // levelWater.starfish.forEach(st => {
-        //     this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
-        // });
+        levelWater.powerUps.forEach(p => {
+            let pUp = new powerUp(this.game, p.x, p.y);
+            this.game.addEntity(pUp);
+        });
 
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 78952 - this.game.camera.x, params.floor - this.game.camera.y, 2048, 1024), update: () => null})
-        // this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 81000 - this.game.camera.x, params.floor - this.game.camera.y, 2048, 1024), update: () => null})
+        levelWater.signPost.forEach(s => {
+            let sign = new SignPost(this.game, s.x, s.y, s.choice, s.scale);
+            this.game.addEntity(sign);
+        });
 
-        //this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 6144 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 8192 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 10240 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        levelWater.fish.forEach(f => {
+            let fishes = new Fishes(this.game, f.x , f.y - 10);
+             this.game.addEntity(fishes);
+        });
+
+        levelWater.seahorses.forEach(f => {
+             this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
+        });
+
+        
+        levelWater.shark.forEach(sh => {
+            this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
+        });
+
+        levelWater.squid.forEach(sq => {
+            this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));
+        });
+
+        levelWater.squid_ink.forEach(sqi => {
+            this.game.addEntity(new Squid_ink(this.game, sqi.x, sqi.y + 200));
+        });
+
+        levelWater.starfish.forEach(st => {
+            this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
+        });
+
+     
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 4096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 6144 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 8192 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 1024, 10240 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
 
 
         this.game.addEntity(this.marker);
@@ -223,14 +215,16 @@ class SceneManager {
         this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
 
         // this.player = new Submarine(this.game, "submarine", x, y, 10, 10, 9000);
+        this.x = 0;
         this.player = new Rocket(this.game, "", x, y, 10, 10, 9000)
+        this.y = this.player.y - this.game.ctx.canvas.height / 2 + this.player.BB.height/2;
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
-        // ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/venemousspaceradish.mp3");
 
 
@@ -323,7 +317,6 @@ class SceneManager {
 
     update() {
 
-
         if(this.player.dead){this.loadEndScreen(0,0)}
         document.getElementById("debug").checked;
         this.checkStart();
@@ -332,19 +325,23 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
 
-        if (this.endScreen === false && ( this.player.x < this.player.x_cameraLimit && this.player.x >= 600) /*&& (this.player.y < 1024)*/ ){
-            this.x = (this.player.x - w / 2);  // Keep camera centered on storm at all times
-
-
-            // If storm nears the bottom of the frame, pan the camera to keep him in frame
-            // let ph = this.player.BB.height;
-            // if (this.player.y - this.y > h - ph) {
-            //     this.y = this.player.y - (h - ph)
-            // }
+        if (this.endScreen === false){
+            let playerWidth = this.player?.width ?? this.player.BB.width;
+            if(this.player.x >= 600-playerWidth && this.player.x < this.player.x_cameraLimit) {
+                this.x = (this.player.x+playerWidth - w / 2); // Keep camera centered on storm at all times
+            }
+            if(this.player.y < 1024) {
+                // If storm nears the bottom of the frame, pan the camera to keep him in frame
+                let ph = this.player.BB.height;
+                if(this.level !== 3) {
+                    if (this.player.y - this.y > h - ph) {
+                        this.y = this.player.y - (h - ph)
+                    }
+                }
+            }
         }
-        this.y = (this.player.y - h /2)
 
-        // if(this.player.y > 1024 && (this.level === 1 || this.level === 6)) {this.player.dead = true;}
+        if(this.player.y > 1024 && (this.level === 1 || this.level === 6)) {this.player.dead = true;}
 
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;
