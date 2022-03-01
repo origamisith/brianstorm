@@ -6,7 +6,7 @@ class SceneManager {
         this.y = 0;
         this.marker = new LevelMarker(this.game, 0, 0, 1, 0 ,0);
         this.marker.loadNext = false;
-        this.level = 3;
+        this.level = 0;
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //Add the initial title screen to the game

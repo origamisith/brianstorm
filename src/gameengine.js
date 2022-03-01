@@ -66,7 +66,7 @@ class GameEngine {
         const getXandY = e => ({
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
             y: e.clientY - this.ctx.canvas.getBoundingClientRect().top
-        });
+        })
 
         this.ctx.canvas.addEventListener("mousemove", e => {
             if (this.options.debugging) {

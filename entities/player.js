@@ -202,27 +202,28 @@ class Player {
         let onCeiling = false;
         let bumpedCeiling = false;
         let onSide = false;
+        let greatest
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
             if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                 // Currently only handling map block collisions, no entity collisions yet
                 if (entity instanceof Terrain) {
                     let {x: ox, y: oy} = that.BB.overlapDist(entity.BB);
-                    if(that.BB.x - that.lastBB.x > 0 && ox < 0) oy = 0;
-                    else if(that.BB.x - that.lastBB.x < 0 && ox > 0) oy = 0;
-                    else if(that.BB.y - that.lastBB.y > 0 && oy < 0) ox = 0;
-                    else if(that.BB.y - that.lastBB.y < 0 && oy > 0) ox = 0;
-                    else {
-                        console.log('uh oh')
-                        if (ox < oy) {
-                            if(ox > 0) {
+                    // if(that.BB.x - that.lastBB.x > 0 && ox < 0) oy = 0;
+                    // else if(that.BB.x - that.lastBB.x < 0 && ox > 0) oy = 0;
+                    // else if(that.BB.y - that.lastBB.y > 0 && oy < 0) ox = 0;
+                    // else if(that.BB.y - that.lastBB.y < 0 && oy > 0) ox = 0;
+                    // else {
+                    //     console.log('uh oh')
+                        if (Math.abs(ox) < Math.abs(oy)) {
+                            if(Math.abs(ox) > 0) {
                                 oy = 0;
                             }
                         }
-                        else if(oy > 0) {
+                        else if(Math.abs(oy) > 0) {
                             ox = 0
                         }
-                    }
+                    // }
 
                     let d = Math.sqrt(ox*ox + oy*oy)
                     const {x: vx, y: vy} = that.velocity;
@@ -291,6 +292,7 @@ class Player {
             this.bumpedCeiling = false;
             if(this.state === 4) {
                 this.y -= (139-67)
+                // this.x += 100
                 this.state = 0;
             }
         }
