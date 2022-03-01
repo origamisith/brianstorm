@@ -16,10 +16,10 @@ class Rocket extends Player {
 
 
         // this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        this.width = 900*this.scale;
 
         this.hp = 60;
         this.dead = false;
-        this.facing = "right"
         this.loadAnimations();
 
     };
@@ -75,6 +75,9 @@ class Rocket extends Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
+        // Left and right movement
+        this.leftRightMovement()
+
         if(this.facing === 1){
             this.updateBB("left");
             this.animation = this.leftFacing;}
@@ -82,8 +85,6 @@ class Rocket extends Player {
             this.updateBB("right");
             this.animation = this.rightFacing;}
 
-        // Left and right movement
-        this.leftRightMovement()
 
         const that = this;
         this.game.entities.forEach(function (entity) {

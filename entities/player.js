@@ -171,11 +171,11 @@ class Player {
         this.updateCollisions();
         if(this.hp === 0) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
-        // if (this.y >= params.floor - this.BB.height/2) {
-        //     this.y = params.floor - this.BB.height/2
-        //     this.onGround = true;
-        //     this.velocity.y = 0;
-        // }
+        if (this.y >= params.floor - this.BB.height/2) {
+            this.y = params.floor - this.BB.height/2
+            this.onGround = true;
+            this.velocity.y = 0;
+        }
 
         /** SPAWN SCRIBBLE ON FIRE **/
         if (this.game.shooting && this.canFire) {

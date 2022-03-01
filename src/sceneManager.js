@@ -215,7 +215,9 @@ class SceneManager {
         this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
 
         // this.player = new Submarine(this.game, "submarine", x, y, 10, 10, 9000);
+        this.x = 0;
         this.player = new Rocket(this.game, "", x, y, 10, 10, 9000)
+        this.y = this.player.y - this.game.ctx.canvas.height / 2 + this.player.BB.height/2;
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
@@ -323,12 +325,19 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
 
-        if (this.endScreen === false && (this.player.x < this.player.x_cameraLimit && this.player.x >= 600) && (this.player.y < 1024)){
-            this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
-            // If storm nears the bottom of the frame, pan the camera to keep him in frame
-            let ph = this.player.BB.height;
-            if (this.player.y - this.y > h - ph) {
-                this.y = this.player.y - (h - ph)
+        if (this.endScreen === false){
+            let playerWidth = this.player?.width ?? this.player.BB.width;
+            if(this.player.x >= 600-playerWidth && this.player.x < this.player.x_cameraLimit) {
+                this.x = (this.player.x+playerWidth - w / 2); // Keep camera centered on storm at all times
+            }
+            if(this.player.y < 1024) {
+                // If storm nears the bottom of the frame, pan the camera to keep him in frame
+                let ph = this.player.BB.height;
+                if(this.level !== 3) {
+                    if (this.player.y - this.y > h - ph) {
+                        this.y = this.player.y - (h - ph)
+                    }
+                }
             }
         }
 
