@@ -26,7 +26,7 @@ class SceneManager {
             //4 = music level
             //5 = end screen
             //6 = tutorial level
-            this.level = 0;
+            this.level = 1;
             this.loadLevel(600, 400);
 
         }
