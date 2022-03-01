@@ -309,6 +309,7 @@ class Player {
         that.x += change.x;
         that.y += change.y;
         that.updateBB();
+        //temporary change
     }
 
 
