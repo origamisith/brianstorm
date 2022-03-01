@@ -11,11 +11,8 @@ class Rocket extends Player {
         this.scale = .25;
         this.x_cameraLimit = x_cameraLimit
         // Object.assign(this, { game, player_type, x, y });
-
-        //1259 x 508 x 9
-
-
-        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        // this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        this.width = 900*this.scale;
 
         this.hp = 60;
         this.dead = false;
@@ -24,14 +21,14 @@ class Rocket extends Player {
     };
 
     loadAnimations() {
-        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 1259, 508, 9, 0.1, false, true);
-        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 508, 1259, 508, 9, 0.1, false, true);
+        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 389, 18, 0.1, false, true);
+        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 389, 18, 0.1, false, true);
     }
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x+450*this.scale, this.y, (1259-450)*this.scale, 508*this.scale)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (1259-450)*this.scale, 508*this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale, this.y, (900-380)*this.scale, 389*this.scale)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (900-380)*this.scale, 389*this.scale)}
     }
 
     //draw method will render this entity to the canvas
@@ -74,6 +71,9 @@ class Rocket extends Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
+        // Left and right movement
+        this.leftRightMovement()
+
         if(this.facing === 1){
             this.updateBB("left");
             this.animation = this.leftFacing;}
@@ -81,8 +81,6 @@ class Rocket extends Player {
             this.updateBB("right");
             this.animation = this.rightFacing;}
 
-        // Left and right movement
-        this.leftRightMovement()
 
         const that = this;
         this.game.entities.forEach(function (entity) {
