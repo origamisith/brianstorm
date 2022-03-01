@@ -47,7 +47,11 @@ class Player {
         // Player facing: 0=right. 1=left.
         this.facing = 0;
 
+        if (this.player_type === "submarine"){this.birthPoof = new Poof(this.game, this.x - 400, this.y - 400, 1.2);}
+        else if(this.player_type === "default") {this.birthPoof = new Poof(this.game, this.x - 400, this.y - 400, 0.8);}
 
+
+        this.game.addEntity(this.birthPoof);
         this.loadAnimations();
         this.elapsedTime = 0;
 
@@ -172,11 +176,11 @@ class Player {
         this.updateCollisions();
         if(this.hp === 0) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
-        if (this.y >= params.floor - this.BB.height/2) {
-            this.y = params.floor - this.BB.height/2
-            this.onGround = true;
-            this.velocity.y = 0;
-        }
+        // if (this.y >= params.floor - this.BB.height/2) {
+        //     this.y = params.floor - this.BB.height/2
+        //     this.onGround = true;
+        //     this.velocity.y = 0;
+        // }
 
         /** SPAWN SCRIBBLE ON FIRE **/
         if (this.game.shooting && this.canFire) {
@@ -288,15 +292,21 @@ class Player {
         that.updateBB();
     }
 
+    remove(removeMe) {
 
+        if(removeMe){
+            this.removeFromWorld = true
+            this.birthPoof.removeFromWorld = true;
+        }
+    }
     //draw method will render this entity to the canvas
     draw(ctx) {
 
-
-        if(this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y - this.game.camera.y, 1);}
-        else{this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x- 100 - this.game.camera.x), this.y -65 - this.game.camera.y, 1);}
-        this.hearts.draw(ctx);
-
+        if(this.birthPoof.lifetime <= 2) {
+            if (this.state === 4) {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - 100 - this.game.camera.x), this.y - this.game.camera.y, 1);}
+            else {this.animation.drawFrame(this.game.clockTick, ctx, Math.floor(this.x - 100 - this.game.camera.x), this.y - 65 - this.game.camera.y, 1);}
+            this.hearts.draw(ctx);
+        }
     };
 
     /** Helper method to update the player type */

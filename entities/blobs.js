@@ -48,10 +48,10 @@ class CeilBlob {
     };
 
     draw(ctx) {
-        if (this.state == 1) {
-            this.alertAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.2);
+        if (this.state === 1) {
+            this.alertAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1.2);
         } else {
-            this.idleAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.2);
+            this.idleAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1.2);
         }
     }
-};
+}
