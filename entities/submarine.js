@@ -16,7 +16,8 @@ class Submarine extends Player {
         this.state = 0;
         // Player facing: 0=right. 1=left.
         this.facing = 0;
-        this.BB = new BoundingBox(this.x - 400, this.y, 600* this.scale, 300* this.scale)
+        //offset of -400
+        this.BB = new BoundingBox(this.x, this.y, 600* this.scale, 300* this.scale)
         this.x_cameraLimit = x_cameraLimit;
 
         this.hp = 60;
@@ -34,16 +35,17 @@ class Submarine extends Player {
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x - 330, this.y + 120 * this.scale, 500 * this.scale, 180 * this.scale )}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y + 120* this.scale, 500* this.scale, 180* this.scale)}
+        //offset of -400 + 70
+        if (facing ==="right") {this.BB = new BoundingBox(this.x +60, this.y + 120 * this.scale, 500 * this.scale, 180 * this.scale )}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y + 120* this.scale, 500* this.scale, 180* this.scale)}
     }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
         ctx.strokeStyle = 'red';
         // uncomment for bb
-        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
@@ -78,12 +80,6 @@ class Submarine extends Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
-        if(this.facing === 1){
-            this.updateBB("left");
-            this.animation = this.submarineLeftFacing;}
-        else if(this.facing === 0){
-            this.updateBB("right");
-            this.animation = this.submarineRightFacing;}
 
 
         /** SPAWN TORPEDO ON FIRE **/
@@ -105,6 +101,12 @@ class Submarine extends Player {
 
         // Left and right movement
         this.leftRightMovement()
+        if(this.facing === 1){
+            this.updateBB("left");
+            this.animation = this.submarineLeftFacing;}
+        else if(this.facing === 0){
+            this.updateBB("right");
+            this.animation = this.submarineRightFacing;}
 
         const that = this;
         this.game.entities.forEach(function (entity) {
