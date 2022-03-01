@@ -19,6 +19,7 @@ class Player {
         this.y_vel =y_vel;
         this.x_cameraLimit = x_cameraLimit;
         this.scale = 1;
+        this.width = 200;
 
         // updates / initializes the bounding box
         this.BB = new BoundingBox(this.x, this.y+20, 200, 200);
@@ -285,14 +286,19 @@ class Player {
         this.onCeiling = onCeiling;
         if(this.onCeiling) {
             this.velocity.x = 0;
+            if(this.state === 0) {
+                // this.x+= 50
+                this.state = 4;
+            }
         }
 
         if(this.onGround) {
             this.velocity.y = 0;
             this.bumpedCeiling = false;
             if(this.state === 4) {
-                this.y -= (139-67)
+                this.y -= (200-139)
                 // this.x += 100
+                // this.x -= 50
                 this.state = 0;
             }
         }
