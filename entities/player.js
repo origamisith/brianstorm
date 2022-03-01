@@ -296,9 +296,8 @@ class Player {
             this.velocity.y = 0;
             this.bumpedCeiling = false;
             if(this.state === 4) {
-                this.y -= (200-139)
-                // this.x += 100
-                // this.x -= 50
+                //lmao idk why these numbers work
+                this.y -= (200-139+70)
                 this.state = 0;
             }
         }
