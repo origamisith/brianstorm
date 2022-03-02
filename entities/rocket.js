@@ -11,7 +11,7 @@ class Rocket extends Player {
         this.scale = .25;
         this.x_cameraLimit = x_cameraLimit
         // Object.assign(this, { game, player_type, x, y });
-        // this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
         this.width = 900*this.scale;
 
         this.hp = 60;
