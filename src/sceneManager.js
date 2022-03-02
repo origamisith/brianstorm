@@ -147,8 +147,11 @@ class SceneManager {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
                     (this.endOfLevel - 2048 + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})}
 
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
-        //         (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
+
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
 
 
 
@@ -181,8 +184,10 @@ class SceneManager {
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
-        // ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/water_ambience.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_level.mp3");
+        ASSET_MANAGER.autoRepeat("./assets/music/water_ambience.mp3");
 
         levelWater.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
         levelWater.signPost.forEach(s => {this.game.addEntity(new SignPost(this.game, s.x, s.y, s.choice, s.scale));});
@@ -194,7 +199,6 @@ class SceneManager {
         levelWater.starfish.forEach(st => {this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));});
         this.game.addEntity(this.marker);
 
-
     }
 
 
@@ -202,7 +206,6 @@ class SceneManager {
 
         this.endScreen = false;
         // this.clearEntities();
-
 
         this.level_X_Right_Boundary = 161325;
         this.level_X_Left_Boundary = 119325;
@@ -215,16 +218,21 @@ class SceneManager {
         // this.player = new Rocket(this.game, "", x, y, 10, 10, 9000)
         // this.y = this.player.y - this.game.ctx.canvas.height / 2 + this.player.BB.height/2;
 
+
+
         this.player.remove(true);
         //initiate the player
         this.player = new Submarine(this.game, "submarine", this.player.x, this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
         this.clearBackgrounds();
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 2048,
-                (this.endOfLevel + 38000) - this.x, 0 - 2960 - this.y, 2048, 2048), update: () => null})
+
+
 
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
+
+        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})
 
         ASSET_MANAGER.pauseBackgroundMusic();
         // ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
