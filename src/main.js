@@ -19,7 +19,6 @@ ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheetnew.png
 ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse.png");
 ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 
-
 //misc
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/powerUp/spritesheet.png");
@@ -45,7 +44,6 @@ ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/fire_scribble_ball/s
 ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/movement_keys/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/shift_to_hold/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/spacebar/spritesheet.png");
-
 
 //level 1
 ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
@@ -91,10 +89,6 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.pn
 //space level
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
-
-
-
-
 
 //music level
 ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")

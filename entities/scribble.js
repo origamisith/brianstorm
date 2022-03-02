@@ -85,6 +85,6 @@ class Scribble {
     };
 
     draw(ctx) {
-        this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.5);
+        this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 0.5);
     }
 }
