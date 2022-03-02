@@ -20,7 +20,7 @@ class SceneManager {
         //water level = 80000
         //space level tbd
         //music level tbd
-        this.player_start = 600;
+        this.player_start = 38000;
 
         //Add the initial title screen to the game
         this.loadLevel();
@@ -69,7 +69,7 @@ class SceneManager {
         this.clearEntities();
 
         //start level initiation by setting the camera limits
-        this.level_X_Right_Boundary = 81000;
+        this.level_X_Right_Boundary = 40000;
         this.level_X_Left_Boundary = 600;
         this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
@@ -83,7 +83,7 @@ class SceneManager {
                         this.player_start,
                         params.floor - params.blockSize * 5,
                         10, 20,
-                        81000,
+                        40000,
                         this.level_Y_Lower_Boundary,
                         this.level_Y_Upper_Boundary,
                         0, false);
@@ -115,12 +115,12 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 81000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", this.player_start, 400, 10, 20, 81000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
+        this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
+        this.player = new Player(this.game, "default", this.player_start, 400, 10, 20, 40000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
-        this.endOfLevel = 81000;
-        this.level_X_Right_Boundary = 81000;
+        this.endOfLevel = 40000;
+        this.level_X_Right_Boundary = 40000;
         this.level_X_Left_Boundary = 484;
         this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
@@ -141,8 +141,6 @@ class SceneManager {
 
 
         //load the backgrounds for the next level prior to loading it
-
-
         for(let i = 0; i < 21; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
                     (this.endOfLevel - 2048 + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})}
@@ -150,10 +148,8 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
                 (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
 
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
-                (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
-
-
+        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
+        //         (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
 
     }
 
@@ -162,29 +158,26 @@ class SceneManager {
         this.endScreen = false;
         // this.clearEntities();
         this.level_X_Right_Boundary += 38912;
-        this.level_X_Left_Boundary = 80800;
+        this.level_X_Left_Boundary = 39800;
         this.level_Y_Lower_Boundary = 2454;
         this.level_Y_Upper_Boundary = 2454;
-
-        //sets player starting location
-        this.player_start = 120000;
-
         this.player.remove(true);
 
         //use this line to load the submarine at the end of the water level for space level development purposes
-        this.player = new Submarine(this.game, "submarine", 120000, -2000, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        // this.player = new Submarine(this.game, "submarine", 120000, -2000, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        // this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 118000, -2470, 3, 10000, 100);
+        this.marker = new LevelMarker(this.game, 78000, -2470, 3, 10000, 100);
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
-        ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+
+        // ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
         ASSET_MANAGER.playAsset("./assets/music/water_ambience.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_level.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_ambience.mp3");
@@ -202,53 +195,60 @@ class SceneManager {
     }
 
 
-    loadSpaceLevel(x, y) {
-
+    loadSpaceLevel() {
+        this.clearEntities();
         this.endScreen = false;
-        // this.clearEntities();
-
-        this.level_X_Right_Boundary = 161325;
-        this.level_X_Left_Boundary = 119325;
+        this.level_X_Right_Boundary = 121325;
+        this.level_X_Left_Boundary = 79325;
         this.level_Y_Lower_Boundary = -2470;
         this.level_Y_Upper_Boundary = -2470;
 
         this.marker = new LevelMarker(this.game, 10000, 100, 4, 200, 2000);
-
-        // this.x = 0;
-        // this.player = new Rocket(this.game, "", x, y, 10, 10, 9000)
-        // this.y = this.player.y - this.game.ctx.canvas.height / 2 + this.player.BB.height/2;
-
-
 
         this.player.remove(true);
         //initiate the player
         this.player = new Submarine(this.game, "submarine", this.player.x, this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
         this.clearBackgrounds();
 
-
-
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
 
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 2048,
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
                 (this.endOfLevel + 38000) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})
+
+
+        for(let i = 0; i < 21; i++) {
+            this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
+                    (this.endOfLevel + 38000 +  2048 * i) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})}
+
+
 
         ASSET_MANAGER.pauseBackgroundMusic();
         // ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/venemousspaceradish.mp3");
 
-        this.levelWidth = 10240;
-        let meteor = new Meteor(gameEngine, this.levelWidth);
-        meteor.setIt();
-        gameEngine.addEntity(meteor);
-        for (let i = 0; i < 40; i++) {gameEngine.addEntity(new Meteor(gameEngine, this.levelWidth));}
+        // meteor.setIt();
+        let meteor = new Meteor(gameEngine,
+                                        this.player.x,
+                                        this.player.y,
+                                        this.level_X_Left_Boundary,
+                                        this.level_X_Right_Boundary,
+                                        this.level_Y_Upper_Boundary,
+                                        this.level_Y_Lower_Boundary);
+        meteor.setIt()
+        gameEngine.addEntity(meteor)
+
+        for (let i = 0; i < 100; i++) {
+            gameEngine.addEntity(new Meteor(gameEngine,
+                this.player.x,
+                this.player.y,
+                this.level_X_Left_Boundary,
+                this.level_X_Right_Boundary,
+                this.level_Y_Upper_Boundary,
+                this.level_Y_Lower_Boundary));}
 
         this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity(this.marker);
     }
 
@@ -319,8 +319,8 @@ class SceneManager {
 
         //level specific camera mechanics
         if(this.level === 6 && this.player.y > 1400){this.player.y = - 400;}
-        if(this.level === 1 && this.player.x > 81000){this.level_Y_Lower_Boundary = 2454;}
-        if(this.level === 2 && this.player.x > 81000 + 38000){
+        if(this.level === 1 && this.player.x > 38000){this.level_Y_Lower_Boundary = 2454;}
+        if(this.level === 2 && this.player.x > 41000 + 38000){
             this.player.y_upper_cameraLimit = -2454;
             this.level_Y_Upper_Boundary = -2454;}
     }

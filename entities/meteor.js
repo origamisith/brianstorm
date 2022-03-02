@@ -1,17 +1,24 @@
 //this code is happily borrowed from https://github.com/algorithm0r/RobotTag/blob/master/circle.js
 
 class Meteor {
-    constructor(game, levelWidth) {
+    constructor(game, x, y, left_boundary, right_boundary, top_boundary, bottom_boundary) {
         this.game = game;
         this.radius = 30;
-        this.levelWidth = levelWidth;
-        this.x = this.radius + Math.random() * (this.levelWidth - this.radius * 2);
-        this.y = this.radius + Math.random() * (this.game.surfaceHeight - this.radius * 2);
+
+        this.x = x + Math.random() * 10000
+        this.y = y + Math.random() * 1000
         this.friction = 1;
-        this.acceleration = 10000000;
+        this.acceleration = 1000000;
         this.maxSpeed = 0;
         this.visualRadius = 0;
         this.colors = ["White", "White"];
+
+        this.left_boundary = left_boundary;
+        this.right_boundary = right_boundary;
+        this.top_boundary = top_boundary - 500;
+        this.bottom_boundary = bottom_boundary + 500;
+
+
 
         this.setNotIt();
 
@@ -45,14 +52,16 @@ class Meteor {
     };
 
     collide(other) {return distance(this, other) < this.radius + other.radius;};
-    collideLeft() {return (this.x - this.radius) < 0;};
-    collideRight() {return (this.x + this.radius) > this.levelWidth;};
-    topCollide() {return (this.y - this.radius) < 0;};
-    collideBottom() {return (this.y + this.radius) > this.game.surfaceHeight;};
+    collideLeft() {return (this.x - this.radius) < this.left_boundary;};
+    collideRight() {return (this.x + this.radius) > this.right_boundary;};
+    topCollide() {return (this.y - this.radius)  < this.top_boundary;};
+    collideBottom() {return (this.y + this.radius) > this.bottom_boundary;};
     updateBB() {this.BB = new BoundingBox(this.x, this.y, 1200 * this.scale , 1200 * this.scale);};
 
 
     update() {
+
+        // console.log(this.y)
         this.updateBB();
 
         const TICK = this.game.clockTick;
@@ -74,20 +83,20 @@ class Meteor {
             // collision with left or right walls
             if (this.collideLeft() || this.collideRight()) {
                 this.velocity.x += this.velocity.x * -1000;
-                if (this.collideLeft()) this.x = this.radius;
-                if (this.collideRight()) this.x = this.game.surfaceWidth - this.radius;
+                if (this.collideLeft()) this.x = this.left_boundary + this.radius;
+                if (this.collideRight()) this.x = this.right_boundary - this.radius;
 
             }
-
-            // collision with top or bottom walls
+            //
+            // // collision with top or bottom walls
             if (this.topCollide() || this.collideBottom()) {
                 this.velocity.y += this.velocity.y * -1000;
-                if (this.topCollide()) this.y = this.radius;
-                if (this.collideBottom()) this.y = this.game.surfaceHeight - this.radius;
+                if (this.topCollide()) this.y = this.top_boundary + this.radius;
+                if (this.collideBottom()) this.y = this.bottom_boundary - this.radius;
             }
-
-            // collision with other circles
-            for (var i = 0; i < this.game.entities.length; i++) {
+            //
+            // // collision with other circles
+            for (let i = 0; i < this.game.entities.length; i++) {
                 const ent = this.game.entities[i];
 
                 if (ent !== this && this.collide(ent)) {
