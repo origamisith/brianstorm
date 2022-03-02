@@ -25,7 +25,7 @@ class Torpedo {
     }
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, 100*0.5, 100*0.5);
+        this.BB = new BoundingBox(this.x, this.y, 800*0.2, 300*0.2);
     }
 
     update() {
@@ -59,7 +59,7 @@ class Torpedo {
             
             if (entity !== that && entity.BB && that.BB.collide(entity.BB) && that.collideOnce) {
 
-                if (entity instanceof Miniraser) {
+                if (entity instanceof Shark || entity instanceof Squid_ink) {
                     that.game.addEntity(new Poof(that.game, that.x, that.y, 0.3))
                     that.removeFromWorld = true;
                 }
