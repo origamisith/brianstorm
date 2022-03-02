@@ -10,7 +10,8 @@ class SceneManager {
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
 
-        this.level_X_Boundary = 0;
+        this.level_X_Right_Boundary = 0;
+        this.level_X_Left_Boundary = 0;
         this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
 
@@ -107,10 +108,10 @@ class SceneManager {
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.endOfLevel = 81000;
-        this.level_X_Boundary = 81000;
+        this.level_X_Right_Boundary = 81000;
+        this.level_X_Left_Boundary = 0;
         this.level_Y_Lower_Boundary = 2454;
         this.level_Y_Upper_Boundary = 0;
-
 
         ASSET_MANAGER.pauseBackgroundMusic();
         //uncomment line below to start music on page click
@@ -121,7 +122,6 @@ class SceneManager {
             let enemy = new Miniraser(this.game, e.x, e.y);
             this.game.addEntity(enemy);
         });
-
 
         levelOne.terrain.forEach(t => {
             let terrain = new Terrain(this.game, t.x, t.y);
@@ -155,23 +155,20 @@ class SceneManager {
 
         for(let i = 0; i < 20; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
-                    (this.endOfLevel + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})
+                    (this.endOfLevel - 2048 + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})
         }
-
-
     }
 
     loadWater(x, y) {
 
         this.endScreen = false;
         // this.clearEntities();
-        this.level_X_Boundary += 38912;
+        this.level_X_Right_Boundary += 38912;
+        this.level_X_Left_Boundary = 80800;
         this.level_Y_Lower_Boundary = 2454;
         this.level_Y_Upper_Boundary = 2454;
         this.player.remove(true);
-        this.player = new Submarine(this.game, "submarine", this.level_X_Boundary , this.player.y, 15, 10, 81000 + 38912, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
-
-
+        this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -202,7 +199,6 @@ class SceneManager {
 
         });
 
-        
         levelWater.shark.forEach(sh => {
             this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));
         });
@@ -219,10 +215,7 @@ class SceneManager {
             this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
             console.log("generated starfish")
         });
-
-
         this.game.addEntity(this.marker);
-
     }
 
 
@@ -256,15 +249,11 @@ class SceneManager {
 
         this.game.addEntity(this.marker);
         this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
-
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 0 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-
     }
-
-
 
     loadMusicLevel(x, y) {
 
@@ -343,7 +332,7 @@ class SceneManager {
         let playerWidth = this.player?.width ?? this.player.BB.width;
 
 
-        if(this.player.x <= this.level_X_Boundary) this.x = (this.player.x + playerWidth - w / 2);
+        if(this.player.x <= this.level_X_Right_Boundary && this.player.x >= this.level_X_Left_Boundary) this.x = (this.player.x + playerWidth - w / 2);
         if(this.player.y <= this.level_Y_Lower_Boundary && this.player.y >= this.level_Y_Upper_Boundary) this.y = this.player.y - h / 2;
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;
