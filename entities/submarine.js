@@ -53,8 +53,6 @@ class Submarine extends Player {
 
         if (this.birthPoof.lifetime <= 2) {
 
-
-            // if(this.x < this.x_cameraLimit && this.y < this.y_cameraLimit)
             this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
             ctx.strokeStyle = 'red';
             // uncomment for bb
@@ -88,7 +86,8 @@ class Submarine extends Player {
     }
     update() {
 
-            console.log(this.x);
+            // console.log("current x position: " + this.x);
+            // console.log("current y position: " + this.y);
             const TICK = this.game.clockTick;
             this.elapsedTime += TICK;
 
