@@ -6,9 +6,9 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Submarine extends Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
-        super(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb);
-        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb });
+    constructor(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        super(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb);
+        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb });
         //assign the game engine to this object
         this.game = game;
 
@@ -18,7 +18,8 @@ class Submarine extends Player {
         this.facing = 0;
         //offset of -400
         this.BB = new BoundingBox(this.x, this.y, 600* this.scale, 300* this.scale)
-        this.x_cameraLimit = x_cameraLimit;
+        this.x_left_cameraLimit = x_left_camera_limit;
+        this.x_right_cameraLimit = x_right_cameraLimit;
         this.y_lower_cameraLimit = y_lower_cameraLimit;
         this.y_upper_cameraLimit = y_upper_cameraLimit;
         this.x = x;
@@ -66,11 +67,11 @@ class Submarine extends Player {
     leftRightMovement() {
         // Left and right movement
         this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+        if (this.game.left && this.x > this.x_left_cameraLimit - 294) {
             this.facing = 1;
             this.velocity.x = this.x_vel;
             this.x -= this.velocity.x;
-        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+        } else if (this.game.right && this.x < this.x_right_cameraLimit + 520) {
             this.facing = 0;
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
@@ -78,7 +79,6 @@ class Submarine extends Player {
 
         //submarine movement mechanics
         if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
-            console.log(this.y_upper_cameraLimit)
             this.y -= this.y_vel;
         }
         else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
@@ -88,7 +88,7 @@ class Submarine extends Player {
     }
     update() {
 
-            console.log(this.y);
+            console.log(this.x);
             const TICK = this.game.clockTick;
             this.elapsedTime += TICK;
 
