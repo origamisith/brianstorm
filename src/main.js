@@ -69,6 +69,7 @@ ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 ASSET_MANAGER.queueDownload("./assets/sfx/torpedo_launch1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/venemousspaceradish.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/water_level.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/water_ambience.mp3");
 
 
 
