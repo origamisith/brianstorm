@@ -10,48 +10,44 @@ class SceneManager {
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
 
+        //camera boundaries for a given level
         this.level_X_Right_Boundary = 0;
         this.level_X_Left_Boundary = 0;
         this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
 
-
+        //level 1 = 400
+        //water level = 80000
+        //space level tbd
+        //music level tbd
+        this.player_start= 80000;
 
         //Add the initial title screen to the game
-        this.loadLevel(0,0);
+        this.loadLevel();
     };
 
     //checks to see if game is starting for the first time
-    //forced player to click on screen which enables sound
+    //forces player to click on screen which enables sound
     checkStart() {
         if (this.game.click && this.title) {
             this.title = false;
-            //change this to select the level to load after clicking the start screen
-            //0 = start menu
-            //1 = intro level
-            //2 = water level
-            //3 = space level
-            //4 = music level
-            //5 = end screen
-            //6 = tutorial level
             this.level = 1;
-            this.loadLevel(600, 400);
-
+            this.loadLevel();
         }
     };
 
     //called byCheckStart to load the chosen level
-    loadLevel(x, y) {
+    loadLevel() {
 
         this.marker.loadNext = false;
         // this.clearEntities();
-        if(this.level === 0) {this.loadStartMenu(x, y);}
-        else if (this.level === 1) {this.loadLevelOne(x, y);}
-        else if (this.level === 2) {this.loadWater(x, y);}
-        else if (this.level === 3) {this.loadSpaceLevel(x, y);}
-        else if (this.level === 4) {this.loadMusicLevel(x, y);}
-        else if (this.level === 5) {this.loadEndScreen(x, y);}
-        else if (this.level === 6) {this.loadTutorialLevel(x, y);}
+        if(this.level === 0) {this.loadStartMenu();}
+        else if (this.level === 1) {this.loadLevelOne();}
+        else if (this.level === 2) {this.loadWater();}
+        else if (this.level === 3) {this.loadSpaceLevel();}
+        else if (this.level === 4) {this.loadMusicLevel();}
+        else if (this.level === 5) {this.loadEndScreen();}
+        else if (this.level === 6) {this.loadTutorialLevel();}
 
     }
 
@@ -59,7 +55,6 @@ class SceneManager {
 
         this.clearEntities();
         this.title = true;
-
         this.game.addEntity(new start(this.game, 400, 300));
         this.game.addEntity(new how_to_play(this.game, 400, 485));
         this.game.addEntity(new credits(this.game, 400, 675));
@@ -72,15 +67,33 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player = new Player(this.game, "default", 200, 400, 10, 20, 15000, 0, true);
+        //start level initiation by setting the camera limits
+        this.level_X_Right_Boundary = 81000;
+        this.level_X_Left_Boundary = 600;
+        this.level_Y_Lower_Boundary = 0;
+        this.level_Y_Upper_Boundary = 0;
+
+        //sets player starting location
+        this.player_start = 600;
+
+        //initiate the player
+        this.player = new Player(this.game,
+                        "default",
+                        this.player_start,
+                        params.floor - params.blockSize * 5,
+                        10, 20,
+                        81000,
+                        this.level_Y_Lower_Boundary,
+                        this.level_Y_Upper_Boundary,
+                        0, false);
+
+
         this.player.gravity = 0.4;
         this.game.addEntity(this.player);
 
         this.game.addEntity(new movement_keys(this.game, 400, 110 - params.blockSize));
         this.game.addEntity(new spacebar(this.game, 1600, 110- params.blockSize));
         this.game.addEntity(new shift_to_hold(this.game, 4000, 138- params.blockSize));
-
-
         this.game.addEntity(new fire_scribble_ball(this.game, 7000, 390- params.blockSize));
         this.game.addEntity(new Hazard_sign(this.game, 6000, 300, 1))
 
@@ -94,23 +107,24 @@ class SceneManager {
 
         //floor tiles after overhang
         for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
-        
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
     }
 
 
-    loadLevelOne(x, y) {
+    loadLevelOne() {
 
         this.endScreen = false;
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 81000, params.floor + params.blockSize * 16, 2, 2000, params.blockSize);
-        this.player = new Player(this.game, "default", 80000, 400, 10, 20, 81000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, false);
+
+        this.player_start = 79000;
+        this.marker = new LevelMarker(this.game, 81000, params.floor + params.blockSize * 16, 2, 8000, params.blockSize);
+        this.player = new Player(this.game, "default", this.player_start, 400, 10, 20, 81000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.endOfLevel = 81000;
         this.level_X_Right_Boundary = 81000;
-        this.level_X_Left_Boundary = 0;
-        this.level_Y_Lower_Boundary = 2454;
+        this.level_X_Left_Boundary = 484;
+        this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
 
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -153,13 +167,13 @@ class SceneManager {
             this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));
         });
 
-        for(let i = 0; i < 20; i++) {
+        for(let i = 0; i < 21; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
                     (this.endOfLevel - 2048 + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})
         }
     }
 
-    loadWater(x, y) {
+    loadWater() {
 
         this.endScreen = false;
         // this.clearEntities();
@@ -167,6 +181,10 @@ class SceneManager {
         this.level_X_Left_Boundary = 80800;
         this.level_Y_Lower_Boundary = 2454;
         this.level_Y_Upper_Boundary = 2454;
+
+        //sets player starting location
+        this.player_start = 80000;
+
         this.player.remove(true);
         this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
@@ -331,13 +349,17 @@ class SceneManager {
 
         let playerWidth = this.player?.width ?? this.player.BB.width;
 
-
         if(this.player.x <= this.level_X_Right_Boundary && this.player.x >= this.level_X_Left_Boundary) this.x = (this.player.x + playerWidth - w / 2);
         if(this.player.y <= this.level_Y_Lower_Boundary && this.player.y >= this.level_Y_Upper_Boundary) this.y = this.player.y - h / 2;
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;
-            this.loadLevel(600, 450);
+            this.loadLevel();
         }
+
+        //level specific camera mechanics
+        if(this.level === 6 && this.player.y > 1400){this.player.y = - 400;}
+        if(this.level === 1 && this.player.x > 81000){this.level_Y_Lower_Boundary = 2454;}
+
     }
 
     updateAudio() {

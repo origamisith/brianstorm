@@ -6,8 +6,8 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
-        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb});
+    constructor(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb});
 
         //assign the game engine to this object
         this.game = game;
@@ -17,7 +17,13 @@ class Player {
 
         this.x_vel = x_vel;
         this.y_vel =y_vel;
-        this.x_cameraLimit = x_cameraLimit;
+
+        this.x_left_cameraLimit = x_left_camera_limit;
+        this.x_right_cameraLimit = x_right_cameraLimit;
+        this.y_lower_cameraLimit = y_lower_cameraLimit;
+        this.y_upper_cameraLimit = y_upper_cameraLimit;
+
+
         this.scale = 1;
 
         // updates / initializes the bounding box
@@ -48,7 +54,7 @@ class Player {
         this.facing = 0;
 
         if (this.player_type === "submarine"){this.birthPoof = new Poof(this.game, this.x - 400, this.y - 400, 1.2);}
-        else if(this.player_type === "default") {this.birthPoof = new Poof(this.game, this.x - 400, this.y - 400, 0.8);}
+        else if(this.player_type === "default") {this.birthPoof = new Poof(this.game, this.x - 350, this.y + 100, 0.8);}
 
 
         this.game.addEntity(this.birthPoof);
