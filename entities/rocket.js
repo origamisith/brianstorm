@@ -6,16 +6,27 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Rocket extends Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit) {
-        super(game, player_type, x, y, x_vel, y_vel);
-        this.scale = .25;
-        this.x_cameraLimit = x_cameraLimit
-        // Object.assign(this, { game, player_type, x, y });
-        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
-        this.width = 900*this.scale;
+    constructor(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        super(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb);
+        this.game = game;
+
+        // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
+        this.state = 0;
+        // Player facing: 0=right. 1=left.
+        this.facing = 0;
+        //offset of -400
+        this.BB = new BoundingBox(this.x, this.y, 900* this.scale, 339* this.scale)
+        this.x_left_cameraLimit = x_left_camera_limit;
+        this.x_right_cameraLimit = x_right_cameraLimit;
+        this.y_lower_cameraLimit = y_lower_cameraLimit +100;
+        this.y_upper_cameraLimit = y_upper_cameraLimit;
+        this.x = x;
+        this.y = y;
 
         this.hp = 60;
         this.dead = false;
+        this.elapsedTime = 0;
+        this.scale = 0.6
         this.loadAnimations();
 
     };
@@ -34,37 +45,36 @@ class Rocket extends Player {
     //draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
-        ctx.strokeStyle = 'red';
-        // uncomment for bb
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // ctx.strokeStyle = 'red';
+        // // uncomment for bb
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
     leftRightMovement() {
         // Left and right movement
         this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+        if (this.game.left && this.x > this.x_left_cameraLimit - 294) {
             this.facing = 1;
             this.velocity.x = this.x_vel;
             this.x -= this.velocity.x;
-        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+        } else if (this.game.right && this.x < this.x_right_cameraLimit + 520) {
             this.facing = 0;
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > -110) {
-            console.log(this.velocity.y)
+        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < 720) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
             this.y += this.y_vel
         }
-        else if(this.game.up && this.x > this.x_cameraLimit) {
-            this.y -= this.y_vel
-        }
+
     }
+
+
     update() {
 
         // console.log(this.x);

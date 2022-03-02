@@ -25,8 +25,8 @@ class LevelMarker {
     update () {this.updateBB();}
 
     draw(ctx) {
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // ctx.strokeStyle = 'red';
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
 
 

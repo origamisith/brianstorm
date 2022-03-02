@@ -20,7 +20,7 @@ class SceneManager {
         //water level = 80000
         //space level tbd
         //music level tbd
-        this.player_start = 38000;
+        this.player_start = 400;
 
         //Add the initial title screen to the game
         this.loadLevel();
@@ -148,8 +148,8 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
                 (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
 
-        // this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
-        //         (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
 
     }
 
@@ -164,7 +164,7 @@ class SceneManager {
         this.player.remove(true);
 
         //use this line to load the submarine at the end of the water level for space level development purposes
-        // this.player = new Submarine(this.game, "submarine", 120000, -2000, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
         this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
@@ -199,7 +199,7 @@ class SceneManager {
         this.clearEntities();
         this.endScreen = false;
         this.level_X_Right_Boundary = 121325;
-        this.level_X_Left_Boundary = 79325;
+        this.level_X_Left_Boundary = 78900;
         this.level_Y_Lower_Boundary = -2470;
         this.level_Y_Upper_Boundary = -2470;
 
@@ -207,7 +207,7 @@ class SceneManager {
 
         this.player.remove(true);
         //initiate the player
-        this.player = new Submarine(this.game, "submarine", this.player.x, this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        this.player = new Rocket(this.game, "submarine", this.player.x, this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
         this.clearBackgrounds();
 
         this.player.gravity = 0;
@@ -216,7 +216,6 @@ class SceneManager {
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
                 (this.endOfLevel + 38000) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})
-
 
         for(let i = 0; i < 21; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,

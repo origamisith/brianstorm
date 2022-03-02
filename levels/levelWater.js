@@ -67,7 +67,7 @@ const levelWater = {
   //singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),
   music: "./assets/music/FreedomM.mp3",
   powerUps: [{x: 90000 + 100, y: 1900 +250}, {x: 90000 + 7500, y: 1900}],
-  signPost: [{x: 90000 + 9000, y: 1200 +865, choice: 1, scale: 0.4}],
+  signPost: [{x: 79000, y: 2748, choice: 1, scale: 0.4}],
 
 };
   
