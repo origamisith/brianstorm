@@ -20,7 +20,7 @@ class SceneManager {
         //water level = 80000
         //space level tbd
         //music level tbd
-        this.player_start= 80000;
+        this.player_start = 400;
 
         //Add the initial title screen to the game
         this.loadLevel();
@@ -116,7 +116,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.player_start = 79000;
+
         this.marker = new LevelMarker(this.game, 81000, params.floor + params.blockSize * 16, 2, 8000, params.blockSize);
         this.player = new Player(this.game, "default", this.player_start, 400, 10, 20, 81000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
         this.player.gravity = .4;
@@ -359,7 +359,9 @@ class SceneManager {
         //level specific camera mechanics
         if(this.level === 6 && this.player.y > 1400){this.player.y = - 400;}
         if(this.level === 1 && this.player.x > 81000){this.level_Y_Lower_Boundary = 2454;}
-
+        if(this.level === 2 && this.player.x > 81000 + 38000){
+            this.player.y_upper_cameraLimit = -2454;
+            this.level_Y_Upper_Boundary = -2454;}
     }
 
     updateAudio() {
