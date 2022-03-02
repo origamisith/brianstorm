@@ -6,9 +6,9 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Submarine extends Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_cameraLimit, show_bb) {
-        super(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_cameraLimit, show_bb);
-        Object.assign(this, { game, player_type, x, y });
+    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        super(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb);
+        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb });
         //assign the game engine to this object
         this.game = game;
 
@@ -19,6 +19,8 @@ class Submarine extends Player {
         //offset of -400
         this.BB = new BoundingBox(this.x, this.y, 600* this.scale, 300* this.scale)
         this.x_cameraLimit = x_cameraLimit;
+        this.y_lower_cameraLimit = y_lower_cameraLimit;
+        this.y_upper_cameraLimit = y_upper_cameraLimit;
         this.x = x;
         this.y = y;
 
@@ -49,6 +51,9 @@ class Submarine extends Player {
     draw(ctx) {
 
         if (this.birthPoof.lifetime <= 2) {
+
+
+            // if(this.x < this.x_cameraLimit && this.y < this.y_cameraLimit)
             this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
             ctx.strokeStyle = 'red';
             // uncomment for bb
@@ -72,20 +77,18 @@ class Submarine extends Player {
         }
 
         //submarine movement mechanics
-        if(this.game.up /* && this.y > -110 */) {
-            console.log(this.velocity.y)
+        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
+            console.log(this.y_upper_cameraLimit)
             this.y -= this.y_vel;
         }
-        else if(this.game.down /* && this.y < 720 */) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
             this.y += this.y_vel
         }
-        else if(this.game.up /* && this.x > this.x_cameraLimit */) {
-            this.y -= this.y_vel
-        }
+
     }
     update() {
 
-            // console.log(this.x);
+            console.log(this.y);
             const TICK = this.game.clockTick;
             this.elapsedTime += TICK;
 

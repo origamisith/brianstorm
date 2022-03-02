@@ -6,8 +6,8 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_cameraLimit, show_bb) {
-        Object.assign(this, { game, player_type, x, y });
+    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        Object.assign(this, { game, player_type, x, y, x_vel, y_vel, x_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb});
 
         //assign the game engine to this object
         this.game = game;

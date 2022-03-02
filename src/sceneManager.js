@@ -10,6 +10,12 @@ class SceneManager {
         this.endScreen = true;
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
 
+        this.level_X_Boundary = 0;
+        this.level_Y_Lower_Boundary = 0;
+        this.level_Y_Upper_Boundary = 0;
+
+
+
         //Add the initial title screen to the game
         this.loadLevel(0,0);
     };
@@ -97,10 +103,13 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 81000, params.floor + params.blockSize * 16, 2, 2000, params.blockSize);
-        this.player = new Player(this.game, "default", 80000, 400, 10, 20, 81000, 3000, false);
+        this.player = new Player(this.game, "default", 80000, 400, 10, 20, 81000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
-        this.endOfLevel = 81000
+        this.endOfLevel = 81000;
+        this.level_X_Boundary = 81000;
+        this.level_Y_Lower_Boundary = 2454;
+        this.level_Y_Upper_Boundary = 0;
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -146,7 +155,7 @@ class SceneManager {
 
         for(let i = 0; i < 20; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
-                    (this.endOfLevel + 2048 * i) - this.player.x - params.blockSize * 5, params.floor - this.player.y + 585 , 2048, 2048), update: () => null})
+                    (this.endOfLevel + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})
         }
 
 
@@ -156,9 +165,13 @@ class SceneManager {
 
         this.endScreen = false;
         // this.clearEntities();
-
+        this.level_X_Boundary += 38912;
+        this.level_Y_Lower_Boundary = 2454;
+        this.level_Y_Upper_Boundary = 2454;
         this.player.remove(true);
-        this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, 9000, 0);
+        this.player = new Submarine(this.game, "submarine", this.level_X_Boundary , this.player.y, 15, 10, 81000 + 38912, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+
+
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -186,6 +199,7 @@ class SceneManager {
 
         levelWater.seahorses.forEach(f => {
              this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));
+
         });
 
         
@@ -203,8 +217,9 @@ class SceneManager {
 
         levelWater.starfish.forEach(st => {
             this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));
+            console.log("generated starfish")
         });
-        
+
 
         this.game.addEntity(this.marker);
 
@@ -230,8 +245,6 @@ class SceneManager {
         ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/venemousspaceradish.mp3");
 
-
-
         this.levelWidth = 10240;
         let meteor = new Meteor(gameEngine, this.levelWidth);
         meteor.setIt();
@@ -248,7 +261,6 @@ class SceneManager {
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 1024 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 2048 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/space.png'), 0, 0, 2048, 1024, 3096 - this.game.camera.x/5, 0, 2048, 1024), update: () => null})
-
 
     }
 
@@ -330,12 +342,9 @@ class SceneManager {
 
         let playerWidth = this.player?.width ?? this.player.BB.width;
 
-        this.x = (this.player.x + playerWidth - w / 2); // Keep camera centered on storm at all times
-        this.y = this.player.y - h / 2;
 
-
-
-
+        if(this.player.x <= this.level_X_Boundary) this.x = (this.player.x + playerWidth - w / 2);
+        if(this.player.y <= this.level_Y_Lower_Boundary && this.player.y >= this.level_Y_Upper_Boundary) this.y = this.player.y - h / 2;
         if(this.marker.loadNext === true) {
             this.level = this.marker.id;
             this.loadLevel(600, 450);
