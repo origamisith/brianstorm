@@ -122,7 +122,7 @@ class Miniraser {
                             that.rightJump = true;
                         }
                     } else if (entity instanceof Player) {
-                        if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8) {
+                        if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8 && !that.stunned) {
                             that.hp -= 5;
                             // console.log("miniraser HP: " + that.hp);
                             that.elapsedTime = 0;

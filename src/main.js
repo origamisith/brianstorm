@@ -46,7 +46,6 @@ ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/shift_to_hold/sprite
 ASSET_MANAGER.queueDownload("./assets/tutorial_level_assets/spacebar/spritesheet.png");
 
 //level 1
-ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 ASSET_MANAGER.queueDownload("./assets/environment/bushes.png");
 ASSET_MANAGER.queueDownload("./assets/characters/blobs/blobs.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
