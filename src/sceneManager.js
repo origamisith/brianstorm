@@ -17,7 +17,7 @@ class SceneManager {
         this.level_Y_Upper_Boundary = 0;
 
         //level 1 = 400
-        //water level = 80000
+        //water level = 38000
         //space level tbd
         //music level tbd
         this.player_start = 400;
