@@ -253,11 +253,12 @@ class Player {
                     }
                     // console.log(ox + ", " + oy)
                 }
-                else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob) {
+                else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob ) {
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
-                        if (that.elapsedTime > 0.8) {
+                        //only take damage if erasir is not stunned
+                        if (that.elapsedTime > 0.8 && entity.state !== 1 ) {
                             that.hp -= 5;
                             console.log("storm HP: " + that.hp);
                             that.elapsedTime = 0;

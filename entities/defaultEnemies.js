@@ -122,7 +122,7 @@ class Miniraser {
                             that.rightJump = true;
                         }
                     } else if (entity instanceof Player) {
-                        if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8 && !that.stunned) {
+                        if (entity.BB.topCollide(that.BB) && that.elapsedTime > 0.8 ) {
                             that.hp -= 5;
                             // console.log("miniraser HP: " + that.hp);
                             that.elapsedTime = 0;
@@ -138,7 +138,7 @@ class Miniraser {
         /** BECOME AGGRO'D */
         let {x, y} = this.game.camera.player;
 
-        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned) {
+        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &&  !that.stunned) {
 
             if (!this.leftJump && !this.rightJump) {
                 // player is on the left
