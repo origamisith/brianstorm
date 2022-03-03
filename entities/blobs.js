@@ -24,7 +24,7 @@ class CeilBlob {
         } else {
             this.aggroTime -= this.game.clockTick;
         }
-        
+
         const that = this;
         this.game.entities.forEach(function (entity) {
             //Don't collide with self, only check entity's with bounding boxes
@@ -41,17 +41,17 @@ class CeilBlob {
         });
 
         if (this.BB.inRange(this.game.camera.player.BB, 200, false) && this.game.camera.player.y < 200) {
-            console.log('in range!');
+            // console.log('in range!');
             this.state = 1;
             this.aggroTime = 2;
         }
     };
 
     draw(ctx) {
-        if (this.state == 1) {
-            this.alertAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.2);
+        if (this.state === 1) {
+            this.alertAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1.2);
         } else {
-            this.idleAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 1.2);
+            this.idleAnimation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 1.2);
         }
     }
-};
+}

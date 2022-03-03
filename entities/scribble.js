@@ -28,12 +28,12 @@ class Scribble {
         if (this.velocity_x <= 10) this.removeFromWorld = true;
 
         /** FIRE LEFT OR RIGHT */
-        if (this.direction == 0 && this.lifetime > 0) {
+        if (this.direction === 0 && this.lifetime > 0) {
 
             this.velocity_x -= 5;
             this.lifetime -= 5 * this.game.clockTick;
 
-        } else if (this.direction == 1 && this.lifetime > 0) {
+        } else if (this.direction === 1 && this.lifetime > 0) {
 
             this.velocity_x -= 5;
             this.lifetime -= 5 * this.game.clockTick;
@@ -55,14 +55,14 @@ class Scribble {
                 if (entity instanceof Miniraser) { 
                     
                     // right facing collision
-                    if (that.direction == 0) {
+                    if (that.direction === 0) {
                         that.direction = 1;
                         that.velocity_x = 300;
                         that.velocity_y = 50;
                         that.collideOnce = false;
                     }
                     // left facing collision
-                    else if (that.direction == 1) {
+                    else if (that.direction === 1) {
                         that.direction = 0;
                         that.velocity_x = 300;
                         that.velocity_y = 50;
@@ -77,14 +77,14 @@ class Scribble {
         });
 
         /** UNIVERSAL POSITION UPDATE */
-        if (this.direction == 0) this.x += this.velocity_x * this.game.clockTick;
-        else if (this.direction == 1) this.x -= this.velocity_x * this.game.clockTick;
+        if (this.direction === 0) this.x += this.velocity_x * this.game.clockTick;
+        else if (this.direction === 1) this.x -= this.velocity_x * this.game.clockTick;
         
         this.y += this.velocity_y * this.game.clockTick;
 
     };
 
     draw(ctx) {
-        this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.5);
+        this.spritesheet.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 0.5);
     }
 }

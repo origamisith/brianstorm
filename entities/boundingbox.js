@@ -56,7 +56,7 @@ class BoundingBox {
 
     inRange(oth, dist, lg) {
         if (lg) {
-            console.log(this.midx + ' ' + oth.midx);
+            // console.log(this.midx + ' ' + oth.midx);
         }
         return Math.abs(this.midx - oth.midx) < dist;
 

@@ -6,73 +6,83 @@
 //x and y are positional coordinates in pixels, can be used for various purposes.
 class Rocket extends Player {
 
-    constructor(game, player_type, x, y, x_vel, y_vel, x_cameraLimit) {
-        super(game, player_type, x, y, x_vel, y_vel);
-        this.scale = .25;
-        this.x_cameraLimit = x_cameraLimit
-        // Object.assign(this, { game, player_type, x, y });
+    constructor(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb) {
+        super(game, player_type, x, y, x_vel, y_vel, x_left_camera_limit, x_right_cameraLimit, y_lower_cameraLimit, y_upper_cameraLimit, show_bb);
+        this.game = game;
 
-        //1259 x 508 x 9
-
-
-        this.BB = new BoundingBox(this.x - 400, this.y, 600, 300)
+        // Player animation states: 0=idle. 1=moving left/right. 2=duck_slide. 3=jump.
+        this.state = 0;
+        // Player facing: 0=right. 1=left.
+        this.facing = 0;
+        //offset of -400
+        this.BB = new BoundingBox(this.x, this.y, 900* this.scale, 339* this.scale)
+        this.x_left_cameraLimit = x_left_camera_limit;
+        this.x_right_cameraLimit = x_right_cameraLimit;
+        this.y_lower_cameraLimit = y_lower_cameraLimit +100;
+        this.y_upper_cameraLimit = y_upper_cameraLimit;
+        this.x = x;
+        this.y = y;
 
         this.hp = 60;
         this.dead = false;
+        this.elapsedTime = 0;
+        this.scale = 0.6
         this.loadAnimations();
 
     };
 
     loadAnimations() {
-        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 1259, 508, 9, 0.1, false, true);
-        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 508, 1259, 508, 9, 0.1, false, true);
+        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 389, 18, 0.1, false, true);
+        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 389, 18, 0.1, false, true);
     }
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x+450*this.scale, this.y, (1259-450)*this.scale, 508*this.scale)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (1259-450)*this.scale, 508*this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale, this.y, (900-380)*this.scale, 389*this.scale)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (900-380)*this.scale, 389*this.scale)}
     }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
-        ctx.strokeStyle = 'red';
-        // uncomment for bb
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // ctx.strokeStyle = 'red';
+        // // uncomment for bb
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
 
     leftRightMovement() {
         // Left and right movement
         this.velocity.x = 0;
-        if (this.game.left && !this.jumping && !this.falling && !this.side) {
+        if (this.game.left && this.x > this.x_left_cameraLimit - 294) {
             this.facing = 1;
             this.velocity.x = this.x_vel;
             this.x -= this.velocity.x;
-        } else if (this.game.right && !this.jumping && !this.falling && !this.side) {
+        } else if (this.game.right && this.x < this.x_right_cameraLimit + 520) {
             this.facing = 0;
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > -110) {
-            console.log(this.velocity.y)
+        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < 720) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
             this.y += this.y_vel
         }
-        else if(this.game.up && this.x > this.x_cameraLimit) {
-            this.y -= this.y_vel
-        }
+
     }
+
+
     update() {
 
         // console.log(this.x);
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
+
+        // Left and right movement
+        this.leftRightMovement()
 
         if(this.facing === 1){
             this.updateBB("left");
@@ -81,8 +91,6 @@ class Rocket extends Player {
             this.updateBB("right");
             this.animation = this.rightFacing;}
 
-        // Left and right movement
-        this.leftRightMovement()
 
         const that = this;
         this.game.entities.forEach(function (entity) {

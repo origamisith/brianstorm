@@ -21,47 +21,47 @@ class Miniraser {
         this.state = 0;
         this.facing = 1; // 0=right, 1=left
 
+        this.animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+
+        this.scale = 0.7;
         this.velocity = { x: 0, y: 0 }
-
-        this.animations = [ // [state, facing]
-           [0,0],
-           [0,1] 
-        ];
         this.loadAnimations();
-
-        // spritesheet
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png");
+        this.update();
         this.updateBB();
 
     };
 
-    updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, 200*0.7, 360*0.7);
-    };
+
 
     loadAnimations() {
-        this.animations[0][0] = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_right.png")), 0, 0, 200, 360, 2, 0.10, false, true);
-        this.animations[0][1] = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+        this.idle_right_animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_right.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+        this.idle_left_animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/idle_left.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+        this.stun_animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/stun_spritesheet.png")), 0, 0, 200, 360, 2, 0.10, false, true);
+
     };
 
+    updateAnimations() {
+        if(this.state === 0 && this.facing === 0) {this.animation = this.idle_right_animation;}
+        else if(this.state === 0 && this.facing === 1) {this.animation = this.idle_left_animation;}
+        else if(this.state === 1) {this.animation = this.stun_animation;}
+    }
 
     draw(ctx) {
-        this.animations[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, 0.7);
+
+        this.animation.drawFrame(this.game.clockTick, ctx, (this.x) - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+
         // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
+    updateBB() {
+
+        this.BB = new BoundingBox(this.x, this.y, 200*this.scale, 360*this.scale)
+    };
 
     update() {
 
-        if (this.facing == 1) {
-            this.animation = this.leftIdle;
-        }
-        else if (this.facing == 0) {
-            this.animation = this.rightIdle;
-        }
+        this.updateAnimations();
         this.onGround = false;
-
-        
 
         this.updateBB();
         const TICK = this.game.clockTick;
@@ -70,11 +70,11 @@ class Miniraser {
 
         if (this.stunned) {
             this.stunTimer -= 10*TICK;
-            if (this.stunTimer <= 0) {
-                this.stunned = false;
-            }
+            if (this.stunTimer <= 0) {this.stunned = false;}
         }
 
+        //if not stunned
+        else {this.state = 0;}
 
         const that = this;
         this.game.entities.forEach(function (entity) {
@@ -95,8 +95,11 @@ class Miniraser {
                     }
                 }
                 else if (entity instanceof Scribble) {
+                    that.state = 1;
+
                     that.stunned = true;
                     that.stunTimer = 10;
+
                 }
             }
 
@@ -109,13 +112,13 @@ class Miniraser {
                     if (entity instanceof Terrain) {
                         // If facing right, jump right
                         // console.log('entity.BB.left: ' + entity.BB.left + ', that.BB.left' + that.BB.left + "true? " + (entity.BB.left > that.BB.left));
-                       if (that.facing == 1 && entity.BB.left > that.BB.left) {
+                       if (that.facing === 1 && entity.BB.left > that.BB.left) {
                            that.facing = 1;
                             that.jumpflag = true;
                             that.leftJump = true;
                        }
                        // If facing left, jump left
-                       else if (that.facing == 0 && entity.BB.left < that.BB.left) {
+                       else if (that.facing === 0 && entity.BB.left < that.BB.left) {
                            that.facing = 0;
                             that.jumpflag = true;
                             that.rightJump = true;
@@ -162,7 +165,7 @@ class Miniraser {
         /** FALLING */
         // console.log('ground: ' + this.onGround + ', left jump: ' + this.leftJump + ', right jump: ' + this.rightJump);
         this.falling = !this.onGround && !this.leftJump && !this.rightJump;
-        if (this.falling &! this.onGround) {
+        if (this.falling &&! this.onGround) {
 
         }
 
@@ -181,12 +184,12 @@ class Miniraser {
             this.jumpflag = false;
         }
 
-        if (this.rightJump &! this.stunned) {
+        if (this.rightJump &&! this.stunned) {
             this.onGround = false;
             this.velocity.x = 6;
             this.x += this.velocity.x;
         }
-        else if (this.leftJump &! this.stunned) {
+        else if (this.leftJump &&! this.stunned) {
             this.onGround = false;
             this.velocity.x = 6;
             this.x -= this.velocity.x;
