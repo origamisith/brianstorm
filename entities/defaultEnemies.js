@@ -63,7 +63,6 @@ class Miniraser {
 
     update() {
         
-
         this.updateAnimations();
         this.onGround = false;
         this.side = false;
@@ -274,23 +273,30 @@ class Miniraser {
         this.x += this.velocity.x * TICK;
         this.y += this.velocity.y * TICK;
     };
-}
+};
 
 class Spacerasir {
     constructor(game, x, y) {
+        console.log('new spacerasir spawned')
         Object.assign(this, { game, x, y });
 
         this.game = game;
-        this.speed = 3;
-        this.gravity = 28;
-        this.falling = false;
-        this.agro = false;
-        this.agroDistance = 600;
-        this.flySpeed = 12;
-        this.elapsedTime = 0;
-        this.hp = 50;
-        this.stunned = false;
-        this.bounds = { left: this.x - 2000, right: this.x + 2000};
+        // this.speed = 3;
+        // this.gravity = 28;
+        // this.falling = false;
+        // this.agro = false;
+        // this.agroDistance = 600;
+        // this.flySpeed = 12;
+        // this.elapsedTime = 0;
+        // this.hp = 50;
+        // this.stunned = false;
+        // this.bounds = { left: x - 2000, right: x + 2000};
+
+        this.scale = 0.7;
+        this.x = x;
+        this.y = y;
+        console.log(this.x + " " + this.y);
+        this.velocity = { x: 0, y: 0 }
 
 
         this.facing = 1; // 0=right, 1=left
@@ -298,10 +304,12 @@ class Spacerasir {
         this.animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_left.png")), 0, 0, 200, 360, 2, 0.10, false, true);
 
         this.scale = 0.7;
-        this.velocity = { x: 0, y: 0 }
+        this.velocity = { x: 10, y: 10 }
         this.loadAnimations();
         this.update();
         this.updateBB();
+
+        
 
     };
 
@@ -319,7 +327,7 @@ class Spacerasir {
 
         this.animation.drawFrame(this.game.clockTick, ctx, (this.x) - this.game.camera.x, this.y - this.game.camera.y, this.scale);
 
-        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     };
 
     updateBB() {
@@ -328,54 +336,58 @@ class Spacerasir {
     };
 
     update() {
+        
         this.updateAnimations();
-        this.side = false;
+        // this.side = false;
         this.updateBB();
         const TICK = this.game.clockTick;
-        const midx = (this.x + this.BB.width/2);
+        // const midx = (this.x + this.BB.width/2);
 
-        const that = this;
+        // const that = this;
 
-        this.game.entities.forEach(function (entity) {
-            if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
-                if (entity instanceof Sribble) {
-                    this.hp -= 1;
-                }
-            }
-        });
+        // this.game.entities.forEach(function (entity) {
+        //     if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+        //         if (entity instanceof Scribble) {
+        //             this.hp -= 1;
+        //         }
+        //     }
+        // });
 
-         /** DIE */
-         if (this.hp === 0) {
-            this.removeFromWorld = true;
-        }
+        //  /** DIE */
+        //  if (this.hp === 0) {
+        //     this.removeFromWorld = true;
+        // }
+
+        
 
         /** BECOME AGGRO'D */
-        let {x, y} = this.game.camera.player;
+        // let {x, y} = this.game.camera.player;
 
-        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned) {
+        // if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned) {
 
-            if (!this.stunned) {
-                // player is on the left
-                if (x < midx && Math.abs(x-midx < 10) && !(this.side && this.facing === 1) && this.x - this.bounds.left > 0) {
-                    this.x -= this.flySpeed;
-                    this.facing = 1;
-                }
-                // player is on the right
-                else if (x > midx && Math.abs(x-midx > 10) && !(this.side && this.facing === 0) && this.bounds.right - this.x > 0) {
-                    this.x += this.flySpeed;
-                    this.facing = 0;
-                }
-                else {
-                    this.velocity.x = 0;
-                }
-            }
-        }
-        else {
-            this.velocity.x = 0;
-        }
+        //     if (!this.stunned) {
+        //         // player is on the left
+        //         if (x < midx && Math.abs(x-midx < 10) && !(this.side && this.facing === 1) && this.x - this.bounds.left > 0) {
+        //             this.x -= this.flySpeed;
+        //             this.facing = 1;
+        //         }
+        //         // player is on the right
+        //         else if (x > midx && Math.abs(x-midx > 10) && !(this.side && this.facing === 0) && this.bounds.right - this.x > 0) {
+        //             this.x += this.flySpeed;
+        //             this.facing = 0;
+        //         }
+        //         else {
+        //             this.velocity.x = 0;
+        //         }
+        //     }
+        // }
+        // else {
+        //     this.velocity.x = 0;
+        // }
 
          /** UNIVERSAL POSITION UPDATE **/
          this.x += this.velocity.x * TICK;
          this.y += this.velocity.y * TICK;
-    }
-}
+         console.log(this.x + " " + this.y);
+    };
+};

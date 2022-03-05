@@ -87,11 +87,12 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.pn
 
 
 //space level
+
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
-ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
-ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
 
 
 

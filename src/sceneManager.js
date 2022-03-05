@@ -263,8 +263,17 @@ class SceneManager {
                 this.level_Y_Upper_Boundary,
                 this.level_Y_Lower_Boundary));}
 
+        
+
         this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
+        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new Spacerasir(this.game, 80000, -2500));});
+        // let count = 10;
+        // for (let i=0; i<count; i++) {
+        //     let placeX = Math.round(Math.random() * (100000 - 800000) + 20);
+        //     let placeY = Math.round(Math.random() *(-2048 + 4000) - 2048);
+        //     this.game.addEntity(new Spacerasir(this.game, placeX, placeY));
+        // }
     }
 
     loadMusicLevel(x, y) {
