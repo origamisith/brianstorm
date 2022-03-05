@@ -10,7 +10,7 @@ class SceneManager {
         this.endScreen = true;
 
         //uncomment to start at beginning of level one
-        // this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //
         // //camera boundaries for a given level
         // this.level_X_Right_Boundary = 0;
@@ -26,14 +26,14 @@ class SceneManager {
         this.player_start = 400;
 
 
-        //uncomment for space level
-        this.level_X_Right_Boundary = 121325;
-        this.level_X_Left_Boundary = 78900;
-        this.level_Y_Lower_Boundary = -2470;
-        this.level_Y_Upper_Boundary = -2470;
-        this.player_start = 79500;
-        this.level = 3;
-        this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
+        // //uncomment for space level
+        // this.level_X_Right_Boundary = 121325;
+        // this.level_X_Left_Boundary = 78900;
+        // this.level_Y_Lower_Boundary = -2470;
+        // this.level_Y_Upper_Boundary = -2470;
+        // this.player_start = 79500;
+        // this.level = 3;
+        // this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
 
 
         //Add the initial title screen to the game
@@ -147,6 +147,7 @@ class SceneManager {
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
+        this.game.addEntity(spaceErasir(this.game, this.player.x + 100, this.player.y + 100));
         levelOne.enemies.forEach(e => {this.game.addEntity(new Miniraser(this.game, e.x, e.y));});
         levelOne.terrain.forEach(t => {this.game.addEntity(new Terrain(this.game, t.x, t.y));});
         levelOne.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
