@@ -8,8 +8,6 @@ class LevelMarker {
         this.loadNext = false;
         this.width = width;
         this.height = height;
-
-
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height);
 
     }
