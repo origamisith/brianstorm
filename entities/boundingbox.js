@@ -5,6 +5,7 @@ class BoundingBox {
         this.left = x;
         this.top = y;
         this.midx = x + width/2;
+        this.midy = y + width/2;
         this.right = this.left + this.width;
         this.bottom = this.top + this.height;
 
@@ -20,7 +21,7 @@ class BoundingBox {
 
     topCollide(oth) {
         return (Math.abs(this.bottom - oth.top) < 10);
-    }
+    };
 
 
     overlapDist(oth) {
@@ -61,4 +62,6 @@ class BoundingBox {
         return Math.abs(this.midx - oth.midx) < dist;
 
     };
+
+    
 }

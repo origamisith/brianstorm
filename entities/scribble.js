@@ -52,7 +52,7 @@ class Scribble {
             if (entity !== that && entity.BB && that.BB.collide(entity.BB) && that.collideOnce) {
                 
 
-                if (entity instanceof Miniraser) { 
+                if (entity instanceof Miniraser || entity instanceof Terrain) { 
                     
                     // right facing collision
                     if (that.direction === 0) {

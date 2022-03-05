@@ -82,7 +82,7 @@ class Player {
 
     updateBB() {
 
-        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 200, 67)}
+        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 150, 67)}
         else{this.BB = new BoundingBox(this.x- 50, this.y, 100, 139)}
     }
 
@@ -107,6 +107,7 @@ class Player {
 
         if(this.velocity.y > 0) {
             this.falling = true;} //Convenience variable for other classes
+
 
         // If no key pressed and not in air, no horizontal movement
         if(!this.game.right && !this.game.left && (this.onGround)) {
@@ -180,7 +181,7 @@ class Player {
         this.y += dy
         this.updateBB(); //VERY important, otherwise lots of jitter
         this.updateCollisions();
-        if(this.hp === 0) this.dead = true;
+        if(this.hp === 0 || (this.y > 1100 && !(this.game.camera.level == 6 || this.game.camera.level == 0))) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
         // if (this.y >= params.floor - this.BB.height/2) {
         //     this.y = params.floor - this.BB.height/2
@@ -254,10 +255,11 @@ class Player {
                     // console.log(ox + ", " + oy)
                 }
                 else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob) {
+                    
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
-                        if (that.elapsedTime > 0.8) {
+                        if (that.elapsedTime > 0.8 &&!(entity instanceof Miniraser && entity.stunned)) {
                             that.hp -= 5;
                             console.log("storm HP: " + that.hp);
                             that.elapsedTime = 0;
