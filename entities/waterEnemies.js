@@ -61,10 +61,10 @@ class Shark {
         this.hp = 20;
         this.damage = false;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        //this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/shark/shark_sheet2.png"), 0, 0, 360, 235, 8, 0.2, false, true);
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/shark/shark_sheet2.png"), 0, 0, 360, 235, 8, 0.2, false, true);
         this.removeFromWorld = false;
         this.velocity = { x: 0, y: 0 }
-        this.loadAnimations();
+        //this.loadAnimations();
         this.updateBB();
     };
     loadAnimations() {
