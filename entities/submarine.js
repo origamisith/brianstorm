@@ -86,8 +86,8 @@ class Submarine extends Player {
     }
     update() {
 
-            console.log("current x position: " + this.x);
-            console.log("current y position: " + this.y);
+            // console.log("current x position: " + this.x);
+            // console.log("current y position: " + this.y);
             const TICK = this.game.clockTick;
             this.elapsedTime += TICK;
 
