@@ -55,8 +55,8 @@ class Fishes {
     };
 
     update() {
-         this.x -= this.speed + this.game.clockTick;
-        if (this.x < -200 ) this.x = 1200; 
+          this.x -= this.speed + this.game.clockTick;
+         if (this.x < 38000 ) this.x = 50000; 
     };
 };
 
@@ -73,7 +73,6 @@ class Squid {
     };
 
     updateBB() {
-        this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x, this.y, 800, 800);
     };
     draw(ctx) {
@@ -83,7 +82,7 @@ class Squid {
     update() {
         this.updateBB();
         this.x += this.speed + this.game.clockTick;
-        if (this.x > this.game.camera.x + 1250 ) this.x = 100 + this.game.camera.x; 
+        if (this.x > this.game.camera.x + 1200 ) this.x =  this.game.camera.x; 
 
     };
 };
@@ -94,13 +93,11 @@ class Starfish {
         this.game = game;
         this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);
-        
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);      
         this.updateBB();
     };
 
     updateBB() {
-        this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x, this.y, 800, 300);
     };
     draw(ctx) {
@@ -109,7 +106,7 @@ class Starfish {
 
     update() {
         this.x += this.speed + this.game.clockTick;
-        if (this.x > this.game.camera.x + 1250 ) this.x = this.game.camera.x - 100; 
+        if (this.x > this.game.camera.x + 1250 ) this.x = this.game.camera.x - 20; 
     
     };
 

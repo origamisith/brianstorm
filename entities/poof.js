@@ -9,8 +9,7 @@ class Poof {
     };
 
     update() {
-        if(this.lifetime > 0) {
-        this.lifetime -= 5 * this.game.clockTick;}
+        if(this.lifetime > 0) {this.lifetime -= 5 * this.game.clockTick;}
         else{this.removeFromWorld = true;}
     }
     draw(ctx) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);}

@@ -10,13 +10,13 @@ class SceneManager {
         this.endScreen = true;
 
         //uncomment to start at beginning of level one
-        // this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //
         // //camera boundaries for a given level
-        // this.level_X_Right_Boundary = 0;
-        // this.level_X_Left_Boundary = 0;
-        // this.level_Y_Lower_Boundary = 0;
-        // this.level_Y_Upper_Boundary = 0;
+        this.level_X_Right_Boundary = 0;
+        this.level_X_Left_Boundary = 0;
+        this.level_Y_Lower_Boundary = 0;
+        this.level_Y_Upper_Boundary = 0;
 
 
         //level 1 = 400
@@ -26,14 +26,14 @@ class SceneManager {
         this.player_start = 400;
 
 
-        //uncomment for space level
-        this.level_X_Right_Boundary = 121325;
-        this.level_X_Left_Boundary = 78900;
-        this.level_Y_Lower_Boundary = -2470;
-        this.level_Y_Upper_Boundary = -2470;
-        this.player_start = 79500;
-        this.level = 3;
-        this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
+        // //uncomment for space level
+        // this.level_X_Right_Boundary = 121325;
+        // this.level_X_Left_Boundary = 78900;
+        // this.level_Y_Lower_Boundary = -2470;
+        // this.level_Y_Upper_Boundary = -2470;
+        // this.player_start = 79500;
+        // this.level = 3;
+        // this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
 
 
         //Add the initial title screen to the game
@@ -147,6 +147,7 @@ class SceneManager {
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
+        this.game.addEntity(new SpaceErasir(this.game, this.player.x + 100, this.player.y + 100));
         levelOne.enemies.forEach(e => {this.game.addEntity(new Miniraser(this.game, e.x, e.y));});
         levelOne.terrain.forEach(t => {this.game.addEntity(new Terrain(this.game, t.x, t.y));});
         levelOne.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
@@ -183,7 +184,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", 78000 , -2500, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -303,6 +304,11 @@ class SceneManager {
     loadEndScreen(x, y) {
         this.clearEntities();
 
+        this.level_X_Right_Boundary = 0;
+        this.level_X_Left_Boundary = 768;
+        this.level_Y_Lower_Boundary = 2024;
+        this.level_Y_Upper_Boundary = 0;
+
         ASSET_MANAGER.pauseBackgroundMusic();
         this.level = 0;
         this.endScreen = true;
@@ -324,6 +330,9 @@ class SceneManager {
 
     update() {
 
+
+
+
         if(this.player.dead){this.loadEndScreen(0,0)}
         document.getElementById("debug").checked;
         this.checkStart();
@@ -331,6 +340,10 @@ class SceneManager {
         this.updateAudio();
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
+
+
+
+
 
         let playerWidth = this.player?.width ?? this.player.BB.width;
 
@@ -343,10 +356,23 @@ class SceneManager {
 
         //level specific camera mechanics
         if(this.level === 6 && this.player.y > 1400){this.player.y = - 400;}
-        if(this.level === 1 && this.player.x > 38000){this.level_Y_Lower_Boundary = 2454;}
+
         if(this.level === 2 && this.player.x > 41000 + 38000){
             this.player.y_upper_cameraLimit = -2454;
             this.level_Y_Upper_Boundary = -2454;}
+
+        if(this.level === 1) {
+            if(this.player.x > 38000) {this.level_Y_Lower_Boundary = 2454;}
+            if(this.player.x < 38000 && this.player.y > params.floor + 200 && this.level === 1) {
+                this.player.dead = true;}
+        }
+        else if(this.endScreen === true) {
+            if (this.player.y >= params.floor - this.player.BB.height/2) {
+                this.player.y = params.floor - this.player.BB.height/2
+                this.player.onGround = true;
+                this.player.velocity.y = 0;
+            }
+        }
     }
 
     updateAudio() {
