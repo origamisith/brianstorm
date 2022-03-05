@@ -16,11 +16,22 @@ class SceneManager {
         this.level_Y_Lower_Boundary = 0;
         this.level_Y_Upper_Boundary = 0;
 
+        //uncomment for space level
+        this.level_X_Right_Boundary = 121325;
+        this.level_X_Left_Boundary = 78900;
+        this.level_Y_Lower_Boundary = -2470;
+        this.level_Y_Upper_Boundary = -2470;
+        this.player_start = 79500;
+        this.level = 3;
+        this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
+
+
+
         //level 1 = 400
         //water level = 38000
         //space level tbd
         //music level tbd
-        this.player_start = 400;
+        this.player_start = 38000;
 
         //Add the initial title screen to the game
         this.loadLevel();
@@ -41,6 +52,8 @@ class SceneManager {
 
         this.marker.loadNext = false;
         // this.clearEntities();
+        // this.clearBackgrounds();
+
         if(this.level === 0) {this.loadStartMenu();}
         else if (this.level === 1) {this.loadLevelOne();}
         else if (this.level === 2) {this.loadWater();}
@@ -167,7 +180,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", this.player.x , this.player.y, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
+        this.player = new Submarine(this.game, "submarine", 78000 , -2500, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         this.player.gravity = 0;
         this.player.falling = false;
