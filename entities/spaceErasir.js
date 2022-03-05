@@ -19,7 +19,7 @@ class SpaceErasir {
         this.hp = 50;
         this.stunned = false;
         this.bump = false;
-
+        this.canUpdateAnim = 1;
 
         this.state = 0;
         this.facing = 1; // 0=right, 1=left
@@ -44,9 +44,15 @@ class SpaceErasir {
     };
 
     updateAnimations() {
-        if(this.state === 0 && this.facing === 0) {this.animation = this.idle_right_animation;}
-        else if(this.state === 0 && this.facing === 1) {this.animation = this.idle_left_animation;}
-        else if(this.state === 1) {this.animation = this.stun_animation;}
+        if(this.canUpdateAnim > 5) {
+            this.canUpdateAnim = 0;
+            if (this.state === 0 && this.facing === 0) {
+                this.animation = this.idle_right_animation;
+            } else if (this.state === 0 && this.facing === 1) {
+                this.animation = this.idle_left_animation;
+            }
+        }
+
     }
 
     draw(ctx) {
@@ -63,7 +69,7 @@ class SpaceErasir {
 
     update() {
 
-
+        this.canUpdateAnim += 5 * this.game.clockTick;
         this.updateAnimations();
         this.onGround = false;
         this.side = false;
