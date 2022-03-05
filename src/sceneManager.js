@@ -8,13 +8,23 @@ class SceneManager {
         this.marker.loadNext = false;
         this.level = 0;
         this.endScreen = true;
-        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
 
-        //camera boundaries for a given level
-        this.level_X_Right_Boundary = 0;
-        this.level_X_Left_Boundary = 0;
-        this.level_Y_Lower_Boundary = 0;
-        this.level_Y_Upper_Boundary = 0;
+        //uncomment to start at beginning of level one
+        // this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
+        //
+        // //camera boundaries for a given level
+        // this.level_X_Right_Boundary = 0;
+        // this.level_X_Left_Boundary = 0;
+        // this.level_Y_Lower_Boundary = 0;
+        // this.level_Y_Upper_Boundary = 0;
+
+
+        //level 1 = 400
+        //water level = 38000
+        //space level tbd
+        //music level tbd
+        this.player_start = 400;
+
 
         //uncomment for space level
         this.level_X_Right_Boundary = 121325;
@@ -25,13 +35,6 @@ class SceneManager {
         this.level = 3;
         this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
 
-
-
-        //level 1 = 400
-        //water level = 38000
-        //space level tbd
-        //music level tbd
-        this.player_start = 38000;
 
         //Add the initial title screen to the game
         this.loadLevel();
