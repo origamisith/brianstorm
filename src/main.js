@@ -79,9 +79,11 @@ ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_gradient.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
+ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
-ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet2.png");
+//ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet2.png");
+ASSET_MANAGER.queueDownload("./assets/characters/shark/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 
 
