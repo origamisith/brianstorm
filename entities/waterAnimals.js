@@ -73,7 +73,6 @@ class Squid {
     };
 
     updateBB() {
-        this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x, this.y, 800, 800);
     };
     draw(ctx) {
@@ -94,13 +93,11 @@ class Starfish {
         this.game = game;
         this.speed = 2;
         this.spritesheet = ASSET_MANAGER.getAsset();
-        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);
-        
+        this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/starfish/starfish_sheet.png"), 0, 0, 800, 800, 7, 0.3, false, true);      
         this.updateBB();
     };
 
     updateBB() {
-        this.lastBB = this.BB;
         this.BB = new BoundingBox(this.x, this.y, 800, 300);
     };
     draw(ctx) {

@@ -61,7 +61,7 @@ const levelWater = {
   starfish: levelWaterGenerator.starfishGenerate(5, 90000, 1900),
   squid: levelWaterGenerator.squidGenerate(5, 90000, 1900),
   squid_ink: levelWaterGenerator.squid_InkGenerate(7, 90000, 1900),
-  shark: levelWaterGenerator.sharkGenerate(1, 90000, 1900),
+  shark: levelWaterGenerator.sharkGenerate(5, 90000, 1900),
   fish: levelWaterGenerator.fishes(25, 90000, 1900),
   seahorses: levelWaterGenerator.seahorsesGenerate(1, 90000, 1900),
   //singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),

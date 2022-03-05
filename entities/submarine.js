@@ -25,7 +25,7 @@ class Submarine extends Player {
         this.x = x;
         this.y = y;
 
-
+        this.hearts = new Hearts(this.game, this, 50, 50);
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
@@ -55,6 +55,7 @@ class Submarine extends Player {
 
             this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
             ctx.strokeStyle = 'red';
+            this.hearts.draw(ctx);
             // uncomment for bb
             // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
@@ -128,7 +129,7 @@ class Submarine extends Player {
                         console.log("+ 20 HP!!");
                     }
                 }
-                if (entity instanceof Meteor) {
+                if (entity instanceof Shark || entity instanceof Squid_ink) {
                     if (that.BB.collide(entity.BB)) {
                         if (that.elapsedTime > 0.8) {
                             that.hp -= 5;
