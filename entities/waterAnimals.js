@@ -55,8 +55,8 @@ class Fishes {
     };
 
     update() {
-         this.x -= this.speed + this.game.clockTick;
-        if (this.x < -200 ) this.x = 1200; 
+          this.x -= this.speed + this.game.clockTick;
+         if (this.x < 38000 ) this.x = 50000; 
     };
 };
 
@@ -82,7 +82,7 @@ class Squid {
     update() {
         this.updateBB();
         this.x += this.speed + this.game.clockTick;
-        if (this.x > this.game.camera.x + 1250 ) this.x = 100 + this.game.camera.x; 
+        if (this.x > this.game.camera.x + 1200 ) this.x =  this.game.camera.x; 
 
     };
 };
@@ -106,7 +106,7 @@ class Starfish {
 
     update() {
         this.x += this.speed + this.game.clockTick;
-        if (this.x > this.game.camera.x + 1250 ) this.x = this.game.camera.x - 100; 
+        if (this.x > this.game.camera.x + 1250 ) this.x = this.game.camera.x - 20; 
     
     };
 
