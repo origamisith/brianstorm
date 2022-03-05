@@ -181,7 +181,7 @@ class Player {
         this.y += dy
         this.updateBB(); //VERY important, otherwise lots of jitter
         this.updateCollisions();
-        if(this.hp === 0 || (this.y > 1100 && !(this.game.camera.level == 6 || this.game.camera.level == 0))) this.dead = true;
+        if(this.hp === 0 || (this.y > 1100 && !(this.game.camera.level == 6 || this.game.camera.level == 0)) && this.x < 38000) this.dead = true;
         // Prevents the animation from falling through the window, prob should remove once levels designed?
         // if (this.y >= params.floor - this.BB.height/2) {
         //     this.y = params.floor - this.BB.height/2

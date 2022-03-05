@@ -99,9 +99,6 @@ class SceneManager {
         this.game.addEntity(new Hazard_sign(this.game, 6000, 300, 1))
         this.game.addEntity(new Miniraser(this.game, 9000, 290));
 
-        levelOne.blobs.forEach(cblob => {
-            this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));
-        });
         //overhang
         for(let i = 0; i < 10; i++) {this.game.addEntity(new Terrain(this.game, 4600 + (params.blockSize*i), 400));}
 
@@ -119,7 +116,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", this.player_start, 400, 10, 20, 40000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
+        this.player = new Player(this.game, "default", 37000, 400, 10, 20, 40000, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.endOfLevel = 40000;
