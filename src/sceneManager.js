@@ -147,7 +147,7 @@ class SceneManager {
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
-        this.game.addEntity(spaceErasir(this.game, this.player.x + 100, this.player.y + 100));
+        this.game.addEntity(new SpaceErasir(this.game, this.player.x + 100, this.player.y + 100));
         levelOne.enemies.forEach(e => {this.game.addEntity(new Miniraser(this.game, e.x, e.y));});
         levelOne.terrain.forEach(t => {this.game.addEntity(new Terrain(this.game, t.x, t.y));});
         levelOne.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
