@@ -10,9 +10,32 @@ class start {
         this.y = y_pos;
         this.removeFromWorld = false;
 
+        this.BB = new BoundingBox(this.x, this.y, 1200 * this.scale, 300 * this.scale)
+
+        this.midpoint_x = this.x + (this.BB.width + 25)/2;
+        this.midpoint_y = this.y + (this.BB.height + 25)/2;
+        selector.deselect(this);
     }
+
+    select(x, y) {
+        if ((Math.abs(x - this.midpoint_x) < 40) && (Math.abs(y - this.midpoint_y) < 64)) {
+            if (!selector.isSelected(this)) {
+                selector.select(this);
+            }
+        }
+        else {
+            if (selector.isSelected(this)) {
+                selector.deselect(this);
+            }
+        }
+    };
+
+
     update(){};
-    draw(ctx) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);};
+    draw(ctx) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.strokeStyle = 'Red';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+    };
 }
 
 
@@ -26,7 +49,25 @@ class how_to_play {
         this.y = y_pos;
         this.removeFromWorld = false;
 
+        this.BB = new BoundingBox(this.x, this.y, 1200 * this.scale, 300 * this.scale)
+
+        this.midpoint_x = this.x + (this.BB.width + 25)/2;
+        this.midpoint_y = this.y + (this.BB.height + 25)/2;
+
     }
+
+    select(x, y) {
+        if ((Math.abs(x - this.midpoint_x) < 40) && (Math.abs(y - this.midpoint_y) < 64)) {
+            if (!selector.isSelected(this)) {
+                selector.select(this);
+            }
+        }
+        else {
+            if (selector.isSelected(this)) {
+                selector.deselect(this);
+            }
+        }
+    };
     update(){};
     draw(ctx) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);};
 }
@@ -41,7 +82,25 @@ class credits {
         this.y = y_pos;
         this.removeFromWorld = false;
 
+        this.BB = new BoundingBox(this.x, this.y, 1200 * this.scale, 300 * this.scale)
+
+        this.midpoint_x = this.x + (this.BB.width + 25)/2;
+        this.midpoint_y = this.y + (this.BB.height + 25)/2;
+
     }
+
+    select(x, y) {
+        if ((Math.abs(x - this.midpoint_x) < 40) && (Math.abs(y - this.midpoint_y) < 64)) {
+            if (!selector.isSelected(this)) {
+                selector.select(this);
+            }
+        }
+        else {
+            if (selector.isSelected(this)) {
+                selector.deselect(this);
+            }
+        }
+    };
     update(){};
     draw(ctx) {this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);};
 }
