@@ -72,12 +72,8 @@ class Miniraser {
     };
 
     update() {
-<<<<<<< HEAD
-        
-=======
 
         this.canUpdateAnim += 5 * this.game.clockTick;
->>>>>>> origin/main
         this.updateAnimations();
         this.onGround = false;
         this.side = false;

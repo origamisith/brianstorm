@@ -8,6 +8,7 @@ class SceneManager {
         this.marker.loadNext = false;
         this.level = 0;
         this.endScreen = true;
+        this.loadStart = false;
 
         //uncomment to start at beginning of level one
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
@@ -43,9 +44,8 @@ class SceneManager {
     //checks to see if game is starting for the first time
     //forces player to click on screen which enables sound
     checkStart() {
-        if (this.game.click && this.title) {
+        if (this.title && this.loadStart) {
             this.title = false;
-            this.level = 1;
             this.loadLevel();
         }
     };
@@ -65,7 +65,7 @@ class SceneManager {
         else if (this.level === 5) {this.loadEndScreen();}
         else if (this.level === 6) {this.loadTutorialLevel();}
 
-    }
+    };
 
     loadStartMenu(x, y) {
 
