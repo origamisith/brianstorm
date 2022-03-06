@@ -281,8 +281,14 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+
+        this.level_X_Right_Boundary = 32000;
+        this.level_X_Left_Boundary = 0;
+        this.level_Y_Lower_Boundary = 0;
+        this.level_Y_Upper_Boundary = 0;
+
         this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 12, 10, 9000,0,false)
+        this.player = new Player(this.game, "default", 200, 200, 3, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
         this.game.addEntity(this.player);
@@ -291,11 +297,12 @@ class SceneManager {
         // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {this.game.addEntity(new Note(this.game, n.beat_offset, n.note_value, n.type, n.stem_direction, n.clef));});
         musicLevel.barlines.forEach(b => {this.game.addEntity(new Barline(this.game, b.position));});
+        musicLevel.sounds.forEach(s => {this.game.addEntity(new Chord(this.game, s.position, s.sound_path));});
         musicLevel.clefs.forEach(cl => {this.game.addEntity(new Clefs(this.game, cl.x_position, cl.y_position, cl.type));});
         musicLevel.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
 
         // add sheet music background to canvas
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/2, 0 -this.game.camera.y, 13824, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x, 0 -this.game.camera.y, 13824, 1024), update: () => null})
 
         this.game.addEntity(this.marker);
 
@@ -366,7 +373,7 @@ class SceneManager {
             if(this.player.x < 38000 && this.player.y > params.floor + 200 && this.level === 1) {
                 this.player.dead = true;}
         }
-        else if(this.endScreen === true) {
+        else if(this.endScreen === true || this.level === 4) {
             if (this.player.y >= params.floor - this.player.BB.height/2) {
                 this.player.y = params.floor - this.player.BB.height/2
                 this.player.onGround = true;

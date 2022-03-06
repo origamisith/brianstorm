@@ -176,6 +176,19 @@ const musicLevel = {
 
     ],
 
+
+    sounds: [
+
+        {position: 16, sound_path: "./assets/music/song/1.mp3"},
+        {position: 32, sound_path: "./assets/music/song/2.mp3"},
+        {position: 40, sound_path: "./assets/music/song/3.mp3"},
+        {position: 48, sound_path: "./assets/music/song/4.mp3"},
+        {position: 64, sound_path: "./assets/music/song/5.mp3"},
+        {position: 80, sound_path: "./assets/music/song/6.mp3"}
+
+    ],
+
+
     barlines: [
         {position: 44},
         {position: 76},

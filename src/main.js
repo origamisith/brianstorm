@@ -113,6 +113,54 @@ ASSET_MANAGER.queueDownload("./assets/music/treble_clef/treble_clef_spritesheet.
 ASSET_MANAGER.queueDownload("./assets/music/bass_clef/bass_clef_spritesheet.png");
 
 
+//music chords
+ASSET_MANAGER.queueDownload("./assets/music/song/1.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/2.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/3.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/4.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/5.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/6.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/7.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/8.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/9.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/10.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/11.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/12.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/13.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/14.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/15.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/16.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/17.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/18.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/19.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/19.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/20.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/21.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/22.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/23.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/24.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/25.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/26.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/27.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/28.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/29.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/30.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/31.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/32.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/33.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/34.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/35.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/36.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/37.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/38.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/39.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/40.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/41.mp3");
+
+
+
+
+
 //trigger downloads and add an entity to the canvas
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
