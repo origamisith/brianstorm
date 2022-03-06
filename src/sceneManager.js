@@ -24,7 +24,7 @@ class SceneManager {
         //water level = 38000
         //space level tbd
         //music level tbd
-        this.player_start = 400;
+        this.player_start = 38000;
 
 
         // //uncomment for space level
@@ -136,10 +136,11 @@ class SceneManager {
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.endOfLevel = 40000;
+
         this.level_X_Right_Boundary = 40000;
         this.level_X_Left_Boundary = 484;
-        this.level_Y_Lower_Boundary = 0;
-        this.level_Y_Upper_Boundary = 0;
+        this.level_Y_Lower_Boundary = 600;
+        this.level_Y_Upper_Boundary = -600;
 
         ASSET_MANAGER.pauseBackgroundMusic();
         //uncomment line below to start music on page click
@@ -157,30 +158,30 @@ class SceneManager {
         levelOne.blobs.forEach(cblob => {this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));});
 
 
+
+
+
         //load the backgrounds for the next level prior to loading it
         for(let i = 0; i < 21; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 2048, 2048,
                     (this.endOfLevel - 2048 + 2048 * i) - this.x - params.blockSize * 5, params.floor - this.y, 2048, 2048), update: () => null})}
 
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
-                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
-
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
-                (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
+                (0) - this.x, (this.y)/8, 40000, 1200), update: () => null})
 
     }
 
     loadWater() {
 
         this.endScreen = false;
-        // this.clearEntities();
+        this.clearEntities();
         this.level_X_Right_Boundary += 38912;
         this.level_X_Left_Boundary = 39800;
         this.level_Y_Lower_Boundary = 2454;
         this.level_Y_Upper_Boundary = 2454;
         this.player.remove(true);
 
-        //use this line to load the submarine at the end of the water level for space level development purposes
+        // // use this line to load the submarine at the end of the water level for space level development purposes
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
@@ -209,11 +210,18 @@ class SceneManager {
         levelWater.starfish.forEach(st => {this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));});
         this.game.addEntity(this.marker);
 
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_gradient.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 2048), update: () => null})
+
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
+
     }
 
 
     loadSpaceLevel() {
         this.clearEntities();
+        this.clearBackgrounds()
         this.endScreen = false;
         this.level_X_Right_Boundary = 121325;
         this.level_X_Left_Boundary = 78900;
@@ -231,12 +239,14 @@ class SceneManager {
         this.player.falling = false;
         this.game.addEntity(this.player);
 
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
-                (this.endOfLevel + 38000) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})
 
-        for(let i = 0; i < 21; i++) {
-            this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
-                    (this.endOfLevel + 38000 +  2048 * i) - this.x, 0 - 2980 - this.y, 2048, 2048), update: () => null})}
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
+                (0) - this.x, 0 - this.y, 40000, 1024), update: () => null})
+
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/ultrawide-01.png'), 0, 0, 8000, 1055,
+                ((this.endOfLevel + 38000) - this.x)/8, 0 - 2980 - this.y, 8000, 1055), update: () => null})
+
+        console.log((this.endOfLevel + 38000 - this.x)/2)
 
 
 
@@ -268,7 +278,7 @@ class SceneManager {
 
         this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
-        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new Spacerasir(this.game, 80000, -2500));});
+        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, 80000, -2500));});
         // let count = 10;
         // for (let i=0; i<count; i++) {
         //     let placeX = Math.round(Math.random() * (100000 - 800000) + 20);
@@ -281,8 +291,14 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+
+        this.level_X_Right_Boundary = 32000;
+        this.level_X_Left_Boundary = 0;
+        this.level_Y_Lower_Boundary = 0;
+        this.level_Y_Upper_Boundary = 0;
+
         this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", x, y, 12, 10, 9000,0,false)
+        this.player = new Player(this.game, "default", 200, 200, 3, 10, 9000,0,false)
         this.player.gravity = 28;
         this.x = 100;
         this.game.addEntity(this.player);
@@ -291,11 +307,12 @@ class SceneManager {
         // iterate through all chord structures and add them to the game canvas
         musicLevel.chords.forEach(n => {this.game.addEntity(new Note(this.game, n.beat_offset, n.note_value, n.type, n.stem_direction, n.clef));});
         musicLevel.barlines.forEach(b => {this.game.addEntity(new Barline(this.game, b.position));});
+        musicLevel.sounds.forEach(s => {this.game.addEntity(new Chord(this.game, s.position, s.sound_path));});
         musicLevel.clefs.forEach(cl => {this.game.addEntity(new Clefs(this.game, cl.x_position, cl.y_position, cl.type));});
         musicLevel.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
 
         // add sheet music background to canvas
-        this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x/2, 0 -this.game.camera.y, 13824, 1024), update: () => null})
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/blank_sheet_music.png'), 0, 0, 13824 , 1024, 0- this.game.camera.x, 0 -this.game.camera.y, 13824, 1024), update: () => null})
 
         this.game.addEntity(this.marker);
 
@@ -362,11 +379,13 @@ class SceneManager {
             this.level_Y_Upper_Boundary = -2454;}
 
         if(this.level === 1) {
-            if(this.player.x > 38000) {this.level_Y_Lower_Boundary = 2454;}
+            if(this.player.x > 36000) {
+                this.level_Y_Upper_Boundary = 0;
+                this.level_Y_Lower_Boundary = 2454;}
             if(this.player.x < 38000 && this.player.y > params.floor + 200 && this.level === 1) {
                 this.player.dead = true;}
         }
-        else if(this.endScreen === true) {
+        else if(this.endScreen === true || this.level === 4) {
             if (this.player.y >= params.floor - this.player.BB.height/2) {
                 this.player.y = params.floor - this.player.BB.height/2
                 this.player.onGround = true;

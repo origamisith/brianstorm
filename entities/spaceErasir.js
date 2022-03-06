@@ -113,10 +113,10 @@ class SpaceErasir {
                     that.stunTimer = 10;
                 }
                 else if (entity instanceof Player) {
-                    if (that.facing == 0) {
+                    if (that.facing === 0) {
                         that.facing = 1;
                         that.velocity.x *= -1;
-                    } else if (that.facing == 1) {
+                    } else if (that.facing === 1) {
                         that.facing = 0;
                         that.velocity.x *= -1;
                     }
