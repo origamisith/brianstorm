@@ -36,7 +36,7 @@ class Squid_ink {
         this.x -= this.speed + this.game.clockTick;
         if (this.x < this.game.camera.x - 200 ) { 
             this.x = this.game.camera.x + 1350;
-            this.y = this.y + 35;
+            this.y = this.y + 50;
         };
         if (this.y > this.game.camera.y + 850) {
             this.y = 1900;

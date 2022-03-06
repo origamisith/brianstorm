@@ -25,7 +25,7 @@ class Torpedo {
     }
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, 800*0.2, 300*0.2);
+        this.BB = new BoundingBox(this.x, this.y, 800*0.2, 250*0.2);
     }
 
     update() {
@@ -76,5 +76,6 @@ class Torpedo {
 
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, 0.2);
+        //ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
     }
 }
