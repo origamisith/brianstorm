@@ -51,12 +51,12 @@ class how_to_play {
     update(){
         let mousePoint = this.game.mouse ? this.game.mouse : this.game.click; 
         if (this.game.click) {
-            console.log("mousepoint: " + mousePoint.x + " " + mousePoint.y);
-            console.log(" BB: " + this.BB.x + " " + this.BB.y);
-            console.log((this.BB.x + this.BB.width) + " " + (this.BB.y + this.BB.height));
+            // console.log("mousepoint: " + mousePoint.x + " " + mousePoint.y);
+            // console.log(" BB: " + this.BB.x + " " + this.BB.y);
+            // console.log((this.BB.x + this.BB.width) + " " + (this.BB.y + this.BB.height));
             if (mousePoint.x > this.BB.x && mousePoint.x < (this.BB.x + this.BB.width)
                 && mousePoint.y > this.BB.y && mousePoint.y < this.BB.y + this.BB.height) {
-                    console.log("HOW TO PLAY");
+                    // console.log("HOW TO PLAY");
                     this.game.camera.level = 6;
                     this.game.camera.loadStart = true;
                     this.game.camera.loadLevel();
@@ -83,12 +83,12 @@ class credits {
 
     update(){
         let mousePoint = this.game.mouse ? this.game.mouse : this.game.click; 
-        console.log("credit update");
+        // console.log("credit update");
         if (this.game.click) {
             if (mousePoint.x > this.BB.x && mousePoint.x < (this.BB.x + this.BB.width)
                 && mousePoint.y > this.BB.y && mousePoint.y < this.BB.y + this.BB.height) {
-                    console.log("CLICKED CREDITS");
-                    this.game.camera.level = 1;
+                    // console.log("CLICKED CREDITS");
+                    this.game.camera.level = 0;
                     this.game.camera.loadStart = true;
                     this.game.camera.loadLevel();
                     this.game.camera.checkStart();

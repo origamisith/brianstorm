@@ -6,7 +6,8 @@ class Note {
         this.orientation = orientation;
         this.clef = clef;
         this.beat_offset = beat_offset;
-
+        this.y = y_position_offset;
+        this.BB = new BoundingBox(((32 * beat_offset)), 0, params.blockSize / 8, 1024)
 
         this.noteMapTrebleClef = {
             "G5": 0,
@@ -64,13 +65,30 @@ class Note {
 
     }
 
+
+    updateBB() {this.BB = new BoundingBox(this.BB.x, 0, params.blockSize / 8, this.BB.height);};
+
+
     checkClef(noteMapTrebleClef, y_position_offset) {
         this.x = ((32 * this.beat_offset));
         if (this.clef === "treble") {this.y = ((32 * this.noteMapTrebleClef[y_position_offset]) - 4);}
         else if (this.clef === "bass") {this.y = ((32 * this.noteMapBassClef[y_position_offset]) - 4);}
     }
 
-    update(ctx) {
+    update() {
+
+        this.updateBB();
+        const that = this;
+        this.game.entities.forEach(function (entity) {
+            if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Player) {
+                    that.BB.height = 0
+                    that.game.addEntity(new Poof(that.game, that.beat_offset, that.y, 0.45))}
+
+            }
+        });
+
+
 
     }
 
@@ -78,9 +96,11 @@ class Note {
     // returnPosition(x_offset, y_offset) {}
 
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x/2, this.y -this.game.camera.y/2, this.scale);
-        // ctx.strokeStyle = 'red';
-        // ctx.strokeRect(this.x, this.y, 120, 120);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+
+        ctx.strokeStyle = 'blue';
+        ctx.strokeRect(this.BB.x - this.game.camera.x, 0, this.BB.width, this.BB.height);
+
 
     };
 }
