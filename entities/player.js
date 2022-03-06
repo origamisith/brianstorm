@@ -82,7 +82,7 @@ class Player {
 
     updateBB() {
 
-        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 200, 67)}
+        if(this.state === 4){this.BB = new BoundingBox(this.x- 100, this.y, 150, 67)}
         else{this.BB = new BoundingBox(this.x- 50, this.y, 100, 139)}
     }
 

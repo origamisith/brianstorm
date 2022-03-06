@@ -77,7 +77,7 @@ class SceneManager {
         this.game.addEntity(new credits(this.game, 400, 675));
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
-    }
+    };
 
     loadTutorialLevel(x, y){
 
@@ -124,7 +124,7 @@ class SceneManager {
         //floor tiles after overhang
         for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
-    }
+    };
 
 
     loadLevelOne() {
@@ -147,7 +147,6 @@ class SceneManager {
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
-        this.game.addEntity(new SpaceErasir(this.game, this.player.x + 100, this.player.y + 100));
         levelOne.enemies.forEach(e => {this.game.addEntity(new Miniraser(this.game, e.x, e.y));});
         levelOne.terrain.forEach(t => {this.game.addEntity(new Terrain(this.game, t.x, t.y));});
         levelOne.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
@@ -168,7 +167,10 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/black.png'), 0, 0, 2048, 2048,
                 (this.endOfLevel + 38000) - this.x, 0 - 1024 *3 - this.y, 2048, 2048), update: () => null})
 
-    }
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/paper-bg.jpg"), 0, 0, 14000 , 1024, 
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 1024), update: () => null})
+
+    };
 
     loadWater() {
 
@@ -209,7 +211,7 @@ class SceneManager {
         levelWater.starfish.forEach(st => {this.game.addEntity(new Starfish(this.game, st.x, st.y + 750));});
         this.game.addEntity(this.marker);
 
-    }
+    };
 
 
     loadSpaceLevel() {
@@ -275,7 +277,7 @@ class SceneManager {
         //     let placeY = Math.round(Math.random() *(-2048 + 4000) - 2048);
         //     this.game.addEntity(new Spacerasir(this.game, placeX, placeY));
         // }
-    }
+    };
 
     loadMusicLevel(x, y) {
 
@@ -299,7 +301,7 @@ class SceneManager {
 
         this.game.addEntity(this.marker);
 
-    }
+    };
 
     loadEndScreen(x, y) {
         this.clearEntities();
@@ -321,7 +323,7 @@ class SceneManager {
         this.game.addEntity(this.marker);
         this.game.addEntity(new LevelMarker(this.game, 100, 100, 1));
 
-    }
+    };
 
     //removes all entities from the canvas
     clearEntities() {this.game.entities.forEach(function (entity) {entity.removeFromWorld = true;});};
@@ -373,7 +375,7 @@ class SceneManager {
                 this.player.velocity.y = 0;
             }
         }
-    }
+    };
 
     updateAudio() {
         const mute = document.getElementById("mute").checked;
