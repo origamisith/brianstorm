@@ -27,7 +27,11 @@ ASSET_MANAGER.queueDownload("./assets/torpedo/spritesheet_right.png");
 ASSET_MANAGER.queueDownload("./assets/signpost/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
-ASSET_MANAGER.queueDownload("./assets/backgrounds/space.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/paper-bg.jpg");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/ultrawide-01.png");
+
+
+
 ASSET_MANAGER.queueDownload("./assets/hearts.png");
 ASSET_MANAGER.queueDownload("./assets/scribbles/scrib1.png");
 ASSET_MANAGER.queueDownload("./assets/poof/spritesheet.png");
@@ -50,10 +54,7 @@ ASSET_MANAGER.queueDownload("./assets/environment/bushes.png");
 ASSET_MANAGER.queueDownload("./assets/characters/blobs/blobs.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
-ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
-ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png");
-ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
@@ -74,7 +75,6 @@ ASSET_MANAGER.queueDownload("./assets/music/water_ambience.mp3");
 
 //water level
 ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse.png");
-//ASSET_MANAGER.queueDownload("./assets/characters/seahorses/seahorse_sheet_single.png");
 ASSET_MANAGER.queueDownload("./assets/characters/fishes/smallfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_backgroundnew.png");
 ASSET_MANAGER.queueDownload("./assets/water_background/water_gradient.png");
@@ -82,7 +82,6 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png"
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
-//ASSET_MANAGER.queueDownload("./assets/characters/shark/shark_sheet2.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 
@@ -97,13 +96,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
 
 
-
-
 //music level
-ASSET_MANAGER.queueDownload("./assets/graphics/sheet_music_color.jpg")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
-ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music_no_clef.png");
-ASSET_MANAGER.queueDownload("./assets/backgrounds/sheet_music.jpg");
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_down_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_up_sprite_sheet.png");
