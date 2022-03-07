@@ -61,6 +61,15 @@ class Note {
             }
         }
 
+        else if (this.type === "eighth") {
+            if (this.orientation === "up") {
+                this.checkClef(this.noteMapTrebleClef, y_position_offset);
+                this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/music/eighth_notes/eighth_note_stem_up_sprite_sheet.png"), 0, 0, 80, 254, 3, 0.1);
+            } else if (this.orientation === "down") {
+                this.checkClef(this.noteMapTrebleClef, y_position_offset);
+                this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/music/eighth_notes/eighth_note_stem_down_sprite_sheet.png"), 0, 0, 80, 454, 3, 0.1);
+            }
+        }
 
 
     }

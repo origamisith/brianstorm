@@ -33,6 +33,110 @@ class start {
     };
 }
 
+class shopping_list {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        this.scale = 0.28
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/shopping_list.png"), 0, 0, 1702, 1445, this.x, this.y, 1702 * this.scale, 1322* this.scale);
+    };
+}
+
+class game_ideas {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        // this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/start_menu_assets/game_ideas.png"), 0, 0, 1702, 1322, 1, 0.1);
+        this.scale = 0.25
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/game_ideas.png"), 0, 0, 1702, 1322, this.x, this.y, 1702 * this.scale, 1322* this.scale);
+    };
+}
+
+
+class music {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        // this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/start_menu_assets/game_ideas.png"), 0, 0, 1702, 1322, 1, 0.1);
+        this.scale = 0.3
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/music.png"), 0, 0, 2560, 1024, this.x, this.y, 2560 * this.scale, 1024* this.scale);
+    };
+}
+
+
+class title {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        // this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/start_menu_assets/game_ideas.png"), 0, 0, 1702, 1322, 1, 0.1);
+        this.scale = 0.25
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/title.png"), 0, 0, 1376, 1328, this.x, this.y, 1376 * this.scale, 1328* this.scale);
+    };
+}
+
+
+class to_do {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        this.scale = 0.28
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/to_do.png"), 0, 0, 1702, 885, this.x, this.y, 1702 * this.scale, 885* this.scale);
+    };
+}
+
+
+class math {
+    constructor(game, x_pos, y_pos) {
+        this.game = game;
+        // this.animation = new Animator(ASSET_MANAGER.getAsset("./assets/start_menu_assets/game_ideas.png"), 0, 0, 1702, 1322, 1, 0.1);
+        this.scale = 0.32
+        this.x = x_pos;
+        this.y = y_pos;
+        this.removeFromWorld = false;
+
+    }
+    update(){};
+    draw(ctx) {
+        // this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y -this.game.camera.y, this.scale);
+        ctx.drawImage(ASSET_MANAGER.getAsset("./assets/start_menu_assets/math.png"), 0, 0, 1628, 847, this.x, this.y, 1628 * this.scale, 847* this.scale);
+    };
+}
+
 
 
 class how_to_play {

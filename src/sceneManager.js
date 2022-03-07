@@ -46,9 +46,17 @@ class SceneManager {
         this.clearEntities();
         this.clearBackgrounds();
         this.title = true;
-        this.game.addEntity(new start(this.game, 400, 300));
-        this.game.addEntity(new how_to_play(this.game, 400, 485));
-        this.game.addEntity(new credits(this.game, 400, 675));
+        this.game.addEntity(new start(this.game, 400, 110 +200));
+        this.game.addEntity(new how_to_play(this.game, 400, 230 +200));
+        this.game.addEntity(new credits(this.game, 400, 355 +200));
+        this.game.addEntity(new shopping_list(this.game, 0, 400));
+        this.game.addEntity(new game_ideas(this.game, 675, 700));
+        this.game.addEntity(new to_do(this.game, 890, 400));
+        this.game.addEntity(new math(this.game, 0, 750));
+        this.game.addEntity(new title(this.game, 0, 50));
+        this.game.addEntity(new music(this.game, 440, 0));
+
+
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
     };
@@ -240,7 +248,7 @@ class SceneManager {
         this.clearEntities();
 
         this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", 200, 200, 3, 10, 38000,0,false)
+        this.player = new Player(this.game, "default", 4000, 200, 3, 10, 38000,0,false)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
