@@ -117,7 +117,6 @@ class Player {
         // console.log(this.game.shift_left_key);
         this.updateAnimations()
         this.updateBB();
-
         
         // console.log(this.x)
         // a constant TICK to sync with the game's timer
@@ -185,7 +184,8 @@ class Player {
         }
 
         //If sticking to ceiling, use a bit of reverse gravity to prevent falling off
-        if(this.game.sticking && this.onCeiling) {
+        if(this.game.sticking && this.onCeiling && this.y > params.blockSize/2) {
+            console.log("sticking! " + this.y + " " + params.blockSize/2);
             this.velocity.y = -1;
             this.updateState(4);
             // console.log(this.onCeiling);
