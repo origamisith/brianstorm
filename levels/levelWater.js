@@ -4,7 +4,7 @@ class levelWaterGenerator {
     const seahorses = [];
       for (let i=0; i < count; i++) {
         //seahorses[i] = {x: endOfLeve + 500, y: y_offset +50};
-        seahorses[i] = {x: 40000 + 500, y: 2200};
+        seahorses[i] = {x:  500, y: 2200};
       }
       return seahorses;
   } 
@@ -23,7 +23,7 @@ class levelWaterGenerator {
     const fish = [];
     let place = 0;
     for (let i = 0; i < count; i++) {
-      fish[i] = {x: 40000+ place, y: 2000}
+      fish[i] = {x: place, y: 200}
       place += 800;
     }
     return fish;
@@ -33,7 +33,7 @@ class levelWaterGenerator {
     const shark = [];
     for (let i = 0; i < count; i++) {
       //shark[i] = {x: endOfLevel + 1250, y: y_offset +100 }
-      shark[i] = {x: 40000 + 1200, y: 2100 }
+      shark[i] = {x:  1200, y: 210 }
     }
     return shark;
   }
@@ -44,7 +44,7 @@ class levelWaterGenerator {
     for (let i = 0; i < count; i++) {
       let place_y = Math.floor(Math.random());
       //squid[i] = {x: endOfLevel + 500 + place, y: y_offset +50 + place_y}
-      squid[i] = {x: 40000 + 200, y: 1940}
+      squid[i] = {x:  200, y: 194}
 
     }
     return squid;
@@ -54,7 +54,7 @@ class levelWaterGenerator {
     const squid_ink = [];
     for (let i = 0; i < count; i++) {
       //squid_ink[i] = {x: endOfLevel + 1450, y: y_offset +50}
-      squid_ink[i] = {x: 40000 + 1300, y: 1850}
+      squid_ink[i] = {x:  1300, y: 185}
     }
     return squid_ink;
   }
@@ -62,7 +62,7 @@ class levelWaterGenerator {
   static starfishGenerate(count, endOfLevel, y_offset) {
   const starfish = [];
     for (let i = 0; i < count; i++) {
-      starfish[i] = {x: 40000 + 1180, y: 1850}
+      starfish[i] = {x:  1180, y: 185}
     }
     return starfish;
   }
@@ -72,8 +72,8 @@ class levelWaterGenerator {
 
 const levelWater = {
 
-  starfish: levelWaterGenerator.starfishGenerate(5, 90000, 1900),
-  squid: levelWaterGenerator.squidGenerate(5, 90000, 1900),
+  starfish: levelWaterGenerator.starfishGenerate(5),
+  squid: levelWaterGenerator.squidGenerate(5),
   //squid_ink: levelWaterGenerator.squid_InkGenerate(7, 90000, 1900),
   //shark: levelWaterGenerator.sharkGenerate(5, 90000, 1900),
   //fish: levelWaterGenerator.fishes(25, 90000, 1900),
@@ -88,6 +88,6 @@ const levelWater = {
   squid_ink: levelWaterGenerator.squid_InkGenerate(2),
   seahorses: levelWaterGenerator.seahorsesGenerate(2),
   squid: levelWaterGenerator.squidGenerate(1),
-  powerUps: [{x: 40000 + 200, y: 2400}, {x: 60000 , y: 2400}],
+  powerUps: [{x:  200, y: 2400}, {x: 60000 , y: 2400}],
 };
   
