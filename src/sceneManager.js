@@ -10,29 +10,8 @@ class SceneManager {
         this.endScreen = true;
         this.loadStart = false;
 
-        //uncomment to start at beginning of level one
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
-        //
-        // //camera boundaries for a given level
 
-        //level 1 = 400
-        //water level = 38000
-        //space level tbd
-        //music level tbd
-        this.player_start = 36000;
-
-
-        // //uncomment for space level
-        // this.level_X_Right_Boundary = 121325;
-        // this.level_X_Left_Boundary = 78900;
-        // this.level_Y_Lower_Boundary = -2470;
-        // this.level_Y_Upper_Boundary = -2470;
-        // this.player_start = 79500;
-        // this.level = 3;
-        // this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
-
-
-        //Add the initial title screen to the game
         this.loadLevel();
     };
 
@@ -136,7 +115,7 @@ class SceneManager {
 
         ASSET_MANAGER.pauseBackgroundMusic();
         //uncomment line below to start music on page click
-        // ASSET_MANAGER.playAsset(levelOne.music);
+        ASSET_MANAGER.playAsset(levelOne.music);
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
@@ -164,7 +143,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", 400 , 400, 15, 10, 0, 38000, 0, 0);
+        this.player = new Submarine(this.game, "submarine", 600 , 400, 15, 10, 0, 38000, 850, 0);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -174,7 +153,7 @@ class SceneManager {
 
         ASSET_MANAGER.pauseBackgroundMusic();
 
-        // ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/water_level.mp3");
         ASSET_MANAGER.playAsset("./assets/music/water_ambience.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_level.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/water_ambience.mp3");
@@ -209,7 +188,7 @@ class SceneManager {
 
         this.player.remove(true);
         //initiate the player
-        this.player = new Rocket(this.game, "submarine", 400, 400, 15, 10, 0, 38000, 1024, 0);
+        this.player = new Rocket(this.game, "submarine", 600, 400, 15, 10, 0, 38000, 1024, 0);
 
 
         this.player.gravity = 0;
@@ -222,20 +201,18 @@ class SceneManager {
 
         console.log((this.endOfLevel + 38000 - this.x)/2)
 
-
-
         ASSET_MANAGER.pauseBackgroundMusic();
-        // ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
         ASSET_MANAGER.autoRepeat("./assets/music/venemousspaceradish.mp3");
 
         // meteor.setIt();
         let meteor = new Meteor(gameEngine,
                                         this.player.x,
                                         this.player.y,
-                                        this.level_X_Left_Boundary,
-                                        this.level_X_Right_Boundary,
-                                        this.level_Y_Upper_Boundary,
-                                        this.level_Y_Lower_Boundary);
+                                        38000,
+                                       0,
+                                        0,
+                                        102);
         meteor.setIt()
         gameEngine.addEntity(meteor)
 
@@ -248,17 +225,8 @@ class SceneManager {
                 this.level_Y_Upper_Boundary,
                 this.level_Y_Lower_Boundary));}
 
-        
-
-        this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
+        this.game.addEntity(new SignPost(this.game, 37000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
-        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, 80000, -2500));});
-        // let count = 10;
-        // for (let i=0; i<count; i++) {
-        //     let placeX = Math.round(Math.random() * (100000 - 800000) + 20);
-        //     let placeY = Math.round(Math.random() *(-2048 + 4000) - 2048);
-        //     this.game.addEntity(new Spacerasir(this.game, placeX, placeY));
-        // }
     }
 
     loadMusicLevel(x, y) {
@@ -322,8 +290,6 @@ class SceneManager {
     update() {
 
 
-
-
         if(this.player.dead){this.loadEndScreen(0,0)}
         document.getElementById("debug").checked;
         this.checkStart();
@@ -339,7 +305,7 @@ class SceneManager {
         if(this.endScreen){this. x = 0;}
         console.log(this.player.x);
         console.log(this.player.y);
-        if (this.endScreen === false && (this.player.x < 38000 && this.player.x >= 600)){
+        if (this.endScreen === false && (this.player.x < 38000 && this.player.x >= 200)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             // let ph = this.player.BB.height;
@@ -355,6 +321,15 @@ class SceneManager {
         // else if(this.player.y - this.y < ph / 2) {
         //     this.y = this.player.y - ph / 2;
         // }
+
+
+        if(this.endScreen === true || this.level === 4) {
+            if (this.player.y >= params.floor - this.player.BB.height/2) {
+                this.player.y = params.floor - this.player.BB.height/2
+                this.player.onGround = true;
+                this.player.velocity.y = 0;
+            }
+        }
 
 
     }
