@@ -22,8 +22,8 @@ const musicLevel = {
         {beat_offset: 16, note_value: "B3", type: "half", stem_direction: "down", clef: "bass"},
 
 
-        {beat_offset: 24, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
-        {beat_offset: 28, note_value: "D5", type: "quarter", stem_direction: "up", clef: "treble"},
+        {beat_offset: 24, note_value: "F5", type: "eighth", stem_direction: "up", clef: "treble"},
+        {beat_offset: 28, note_value: "D5", type: "eighth", stem_direction: "up", clef: "treble"},
 
 
 
@@ -55,6 +55,9 @@ const musicLevel = {
         {beat_offset: 80, note_value: "A4", type: "quarter", stem_direction: "down", clef: "treble"},
         {beat_offset: 80, note_value: "D4", type: "half", stem_direction: "up", clef: "bass"},
         {beat_offset: 80, note_value: "B3", type: "half", stem_direction: "down", clef: "bass"},
+
+        {beat_offset: 88, note_value: "D5", type: "quarter", stem_direction: "up", clef: "treble"},
+        {beat_offset: 92, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
 
         {beat_offset: 96, note_value: "E5", type: "quarter", stem_direction: "up", clef: "treble"},
         {beat_offset: 96, note_value: "A4", type: "quarter", stem_direction: "down", clef: "treble"},
@@ -89,6 +92,9 @@ const musicLevel = {
         {beat_offset: 144, note_value: "F4", type: "quarter", stem_direction: "down", clef: "treble"},
         {beat_offset: 144, note_value: "D4", type: "half", stem_direction: "up", clef: "bass"},
         {beat_offset: 144, note_value: "B3", type: "half", stem_direction: "down", clef: "bass"},
+
+        {beat_offset: 152, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
+        {beat_offset: 156, note_value: "D5", type: "quarter", stem_direction: "up", clef: "treble"},
 
         {beat_offset: 160, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
         {beat_offset: 160, note_value: "B4", type: "quarter", stem_direction: "down", clef: "treble"},
@@ -186,24 +192,25 @@ const musicLevel = {
     sounds: [
 
         {position: 16, sound_path: "./assets/music/song/1.mp3"},
-        {position: 24, sound_path: "./assets/music/song/2.mp3"},
-        {position: 28, sound_path: "./assets/music/song/3.mp3"},
+        {position: 24, sound_path: "./assets/music/song/17-1.mp3"},
+        {position: 28, sound_path: "./assets/music/song/17-2.mp3"},
         {position: 32, sound_path: "./assets/music/song/4.mp3"},
         {position: 40, sound_path: "./assets/music/song/5.mp3"},
         {position: 48, sound_path: "./assets/music/song/6.mp3"},
         {position: 64, sound_path: "./assets/music/song/7.mp3"},
         {position: 80, sound_path: "./assets/music/song/8.mp3"},
-        {position: 112, sound_path: "./assets/music/song/9.mp3"},
-        {position: 128, sound_path: "./assets/music/song/10.mp3"},
-        {position: 136, sound_path: "./assets/music/song/11.mp3"},
-        {position: 144, sound_path: "./assets/music/song/12.mp3"},
-        {position: 160, sound_path: "./assets/music/song/13.mp3"},
-        {position: 168, sound_path: "./assets/music/song/14.mp3"},
-        {position: 240, sound_path: "./assets/music/song/15.mp3"},
-        {position: 248, sound_path: "./assets/music/song/16.mp3"},
-        {position: 256, sound_path: "./assets/music/song/17.mp3"},
-        {position: 272, sound_path: "./assets/music/song/18.mp3"},
-        {position: 288, sound_path: "./assets/music/song/19.mp3"},
+        {position: 88, sound_path: "./assets/music/song/17-2.mp3"},
+        {position: 92, sound_path: "./assets/music/song/17-1.mp3"},
+        {position: 96, sound_path: "./assets/music/song/11.mp3"},
+        {position: 104, sound_path: "./assets/music/song/12.mp3"},
+        {position: 112, sound_path: "./assets/music/song/13.mp3"},
+        {position: 128, sound_path: "./assets/music/song/14.mp3"},
+        {position: 136, sound_path: "./assets/music/song/15.mp3"},
+        {position: 144, sound_path: "./assets/music/song/16.mp3"},
+        {position: 152, sound_path: "./assets/music/song/17-1.mp3"},
+        {position: 156, sound_path: "./assets/music/song/17-2.mp3"},
+        {position: 160, sound_path: "./assets/music/song/18.mp3"},
+        {position: 168, sound_path: "./assets/music/song/19.mp3"},
         {position: 296, sound_path: "./assets/music/song/20.mp3"},
         {position: 304, sound_path: "./assets/music/song/21.mp3"},
         {position: 320, sound_path: "./assets/music/song/22.mp3"},
