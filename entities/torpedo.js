@@ -60,8 +60,9 @@ class Torpedo {
             if (entity !== that && entity.BB && that.BB.collide(entity.BB) && that.collideOnce) {
 
                 if (entity instanceof Shark || entity instanceof Squid_ink) {
-                    that.game.addEntity(new Poof(that.game, that.x, that.y, 0.3))
                     that.removeFromWorld = true;
+                    that.game.addEntity(new Poof(that.game, that.x, that.y, 0.3))
+
                 }
             }
         });

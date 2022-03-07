@@ -151,13 +151,15 @@ class Meteor {
                 if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
                     
                     if (entity instanceof Laser) {
-                        that.hp -= 1 * TICK;
+                        that.hp -= TICK;
                         console.log(that.hp);
                     }
                     
                 }
             });
-            if (this.hp <= 0) { this.removeFromWorld = true; }
+            if (this.hp <= 0) {
+                this.game.addEntity(new Poof(that.game, that.x - 100, that.y - 100, 0.3))
+                this.removeFromWorld = true; }
 
             this.testSpeed();
 

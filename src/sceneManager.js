@@ -111,7 +111,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", 400, 400, 10, 20, 200, 38000, 0, 0, false);
+        this.player = new Player(this.game, "default", 610, 400, 10, 20, 200, 38000, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.game.addEntity(this.marker);
@@ -147,7 +147,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", 400 , 400, 15, 10, 0, 22000, 850, -400);
+        this.player = new Submarine(this.game, "submarine", 18000 , 400, 15, 10, 400, 22000, 850, -400);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -189,7 +189,7 @@ class SceneManager {
 
         this.player.remove(true);
         //initiate the player
-        this.player = new Rocket(this.game, "submarine", 400, 400, 15, 10, 0, 38000, 850, 0);
+        this.player = new Rocket(this.game, "submarine", 610, 400, 15, 10, 0, 38000, 850, 0);
         this.endOfLevel = 20000
 
         this.player.gravity = 0;
@@ -324,7 +324,7 @@ class SceneManager {
         //     this.y = this.player.y - ph / 2;
         // }
 
-        if(this.level ===1 && this.player.y > 1100){this.player.dead = true}
+        if(this.level ===1 && this.player.y > 1100 && this.player.x < 37000){this.player.dead = true}
         if(this.level === 6 && this.player.y > 1100) {this.player.y = -100}
 
         if(this.endScreen === true || this.level === 4) {
