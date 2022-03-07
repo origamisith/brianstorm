@@ -32,6 +32,12 @@ class levelOneGenerator {
       terrainIndex++;
     }
 
+    // Hidden upper layer tiles
+    for (let up = 0; up < size; up++) {
+      terrain[terrainIndex] = {x: params.blockSize*up, y: 0-params.blockSize}
+      terrainIndex++;
+    }
+
     // Generate Mountains
     for (let n = 0; n < mountains; n++) {
       let mountainStart = Math.round(Math.random() * (size/2 - 20) + 20);
@@ -150,7 +156,7 @@ class levelOneGenerator {
     let placeY = 0;
     for (i=0; i<count; i++) {
       placeX = Math.floor(Math.random() * 300);
-      placeY = params.blockSize;
+      placeY = 2*params.blockSize;
       // place enemies at the top of the map so that gravity will pull them down onto the terrain
       // It's a little hacky but coming up with an algorithm to place them ON generated blocks and not inside wasn't coming to me
       enemies[i] = {x: params.blockSize*2*placeX, y: placeY}
@@ -175,7 +181,7 @@ class levelOneGenerator {
 const levelOne = {
   clouds: [{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
   terrain: levelOneGenerator.generateFloorTerrain(380, 10, 20),
-  enemies: levelOneGenerator.enemyGenerator(25),
+  enemies: levelOneGenerator.enemyGenerator(40),
   powerUps: [{x: 100, y: 800}, {x: 20*params.blockSize, y: 700}, {x: 50*params.blockSize, y: 700}, {x : 80*params.blockSize, y: 700}, {x: 378*params.blockSize, y: 700}],
   SignPost: [{x: 37900, y: 700, choice: 0, scale: 0.3}],
   bushes: levelOneGenerator.bushGenerator(40),
