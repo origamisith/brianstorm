@@ -43,7 +43,6 @@ class Player {
 
         //sets size of submarine and its BB
         this.scale = 0.5;
-
         this.dead = false;
 
         // assign hearts to storm's hp
@@ -56,7 +55,6 @@ class Player {
 
         if (this.player_type === "submarine"){this.birthPoof = new Poof(this.game, this.x - 400, this.y - 400, 1.2);}
         else if(this.player_type === "default") {this.birthPoof = new Poof(this.game, this.x - 350, this.y + 100, 0.8);}
-
 
         this.game.addEntity(this.birthPoof);
         this.loadAnimations();
@@ -224,7 +222,6 @@ class Player {
                 this.game.addEntity(new Scribble(this.game, this.x - this.BB.width/2, this.y + this.BB.height/2, this.facing, 0));
                 this.canFire = false;}
 
-
         }
         else if (!this.game.shooting) {
             this.canFire = true;
@@ -267,8 +264,7 @@ class Player {
                         }
                     }
                     if(ox !== 0 && !(that.velocity.x === 0)) {
-                        // if(that.facing === 0) that.velocity.x = 1;
-                        // if(that.facing === 1) that.velocity.x = -1;
+
                         that.velocity.x = 0;
                         that.sideDir = that.facing;
                         onSide = true;
