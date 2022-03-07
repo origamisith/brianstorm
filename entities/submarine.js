@@ -44,8 +44,8 @@ class Submarine extends Player {
     updateBB(facing) {
         //Bounding box for collision
         //offset of -400 + 70
-        if (facing ==="right") {this.BB = new BoundingBox(this.x +60, this.y + 120 * this.scale, 500 * this.scale, 180 * this.scale )}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y + 120* this.scale, 500* this.scale, 180* this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x +60 - 400, this.y + 120 * this.scale, 500 * this.scale, 180 * this.scale )}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y + 120* this.scale, 500* this.scale, 180* this.scale)}
     }
 
     //draw method will render this entity to the canvas
@@ -53,11 +53,11 @@ class Submarine extends Player {
 
         if (this.birthPoof.lifetime <= 2) {
 
-            this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+            this.animation.drawFrame(this.game.clockTick, ctx, this.x - 400 - this.game.camera.x, this.y - this.game.camera.y, this.scale);
             ctx.strokeStyle = 'red';
             this.hearts.draw(ctx);
             // uncomment for bb
-            // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         }
 
     };
