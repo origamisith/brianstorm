@@ -13,7 +13,7 @@ class SceneManager {
         //uncomment to start at beginning of level one
         this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
         //
-        // //camera boundaries for a given level
+        //camera boundaries for a given level
         this.level_X_Right_Boundary = 0;
         this.level_X_Left_Boundary = 0;
         this.level_Y_Lower_Boundary = 0;
@@ -24,17 +24,17 @@ class SceneManager {
         //water level = 38000
         //space level tbd
         //music level tbd
-        this.player_start = 38000;
+        this.player_start = 400;
 
 
         // //uncomment for space level
-        // this.level_X_Right_Boundary = 121325;
-        // this.level_X_Left_Boundary = 78900;
-        // this.level_Y_Lower_Boundary = -2470;
-        // this.level_Y_Upper_Boundary = -2470;
-        // this.player_start = 79500;
-        // this.level = 3;
-        // this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
+        this.level_X_Right_Boundary = 121325;
+        this.level_X_Left_Boundary = 78900;
+        this.level_Y_Lower_Boundary = -2470;
+        this.level_Y_Upper_Boundary = -2470;
+        this.player_start = 79500;
+        this.level = 3;
+        this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
 
 
         //Add the initial title screen to the game
@@ -156,8 +156,8 @@ class SceneManager {
         levelOne.bushes.forEach(b => {this.game.addEntity(new Bush(this.game, b.x, b.y))});
         levelOne.blobs.forEach(cblob => {this.game.addEntity(new CeilBlob(this.game, cblob.x, cblob.y));});
 
-
-
+    
+        
 
 
         //load the backgrounds for the next level prior to loading it
@@ -250,6 +250,7 @@ class SceneManager {
 
         console.log((this.endOfLevel + 38000 - this.x)/2)
 
+        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, s.x, s.y));});
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -278,9 +279,10 @@ class SceneManager {
 
         
 
+                
         this.game.addEntity(new SignPost(this.game, 9000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
-        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, 80000, -2500));});
+        
         // let count = 10;
         // for (let i=0; i<count; i++) {
         //     let placeX = Math.round(Math.random() * (100000 - 800000) + 20);

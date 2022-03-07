@@ -5,9 +5,9 @@ class spaceGenerator {
         const spacerasirs = [];
 
         for (let i=0; i<count; i++) {
-            // let placeX = Math.round(Math.random() * (size - 20) + 20);
-            // let placeY = Math.round(Math.random() * (800 - 20) + 20);
-            spacerasirs[i] = {x: 80000, y: -2470}
+            let placeX = Math.round(Math.random() * (121000 - 79000) + 79000);
+            let placeY = Math.floor(Math.random() * (-3000 + -2100) - 2100);
+            spacerasirs[i] = {x: placeX, y: -2470}
         }
 
         return spacerasirs;
@@ -15,5 +15,5 @@ class spaceGenerator {
 };
 
 const spaceLevel = {
-    spacerasirs: spaceGenerator.spacerasirGenerator(2, 30000)
+    spacerasirs: spaceGenerator.spacerasirGenerator(50, 30000)
 };

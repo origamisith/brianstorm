@@ -29,6 +29,8 @@ class Rocket extends Player {
         this.scale = 0.6
         this.loadAnimations();
 
+        
+
     };
 
     loadAnimations() {
@@ -71,6 +73,7 @@ class Rocket extends Player {
         else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
             this.y += this.y_vel
         }
+        
 
     }
 
@@ -81,8 +84,11 @@ class Rocket extends Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
+        console.log("ROCKET: " + this.x + " " + this.y);
         // Left and right movement
-        this.leftRightMovement()
+        this.leftRightMovement();
+
+        // console.log(this.x + " " + this.y);
 
         if(this.facing === 1){
             this.updateBB("left");
