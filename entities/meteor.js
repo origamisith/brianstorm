@@ -12,6 +12,7 @@ class Meteor {
         this.maxSpeed = 0;
         this.visualRadius = 0;
         this.colors = ["White", "White"];
+        this.hp = 20;
 
         this.left_boundary = left_boundary;
         this.right_boundary = right_boundary;
@@ -143,6 +144,20 @@ class Meteor {
                     }
                 }
             }
+
+            const that = this;
+            this.game.entities.forEach(function (entity) {
+                //Don't collide with self, only check entity's with bounding boxes
+                if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+                    
+                    if (entity instanceof Laser) {
+                        that.hp -= 1 * TICK;
+                        console.log(that.hp);
+                    }
+                    
+                }
+            });
+            if (this.hp <= 0) { this.removeFromWorld = true; }
 
             this.testSpeed();
 

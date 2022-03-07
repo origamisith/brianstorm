@@ -39,6 +39,7 @@ class Player {
         this.player_type = player_type;
         this.removeFromWorld = false;
         this.hp = 20;
+        this.damage = false;
 
         //sets size of submarine and its BB
         this.scale = 0.5;
@@ -60,6 +61,7 @@ class Player {
         this.game.addEntity(this.birthPoof);
         this.loadAnimations();
         this.elapsedTime = 0;
+        this.damage = false;
 
         this.update();
         this.updateCollisions();
@@ -78,6 +80,14 @@ class Player {
         this.jumpingLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
         this.ceilingStickRightAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_right.png"), 0, 0, 200, 67, 6, 0.1, false, true);
         this.ceilingStickLeftAnimation = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_left.png"), 0, 0, 200, 67, 6, 0.1, false, true);
+
+        // Damage animations
+        this.leftFacingAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet_red.png"), 4200, 200, 200, 200, 21, 0.1, false, true);
+        this.rightFacingAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet_red.png"), 0, 200, 200, 200, 21, 0.1, false, true);
+        this.jumpingRightAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet_red.png"), 0, 0, 200, 200, 18, 0.07, false, true);
+        this.jumpingLeftAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/sprite_sheet_red.png"), 3600, 0, 200, 200, 18, 0.07, false, true);
+        this.ceilingStickRightAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_right_red.png"), 0, 0, 200, 67, 6, 0.1, false, true);
+        this.ceilingStickLeftAnimationDamage = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/ceiling_stick/spritesheet_left_red.png"), 0, 0, 200, 67, 6, 0.1, false, true);
     };
 
     updateBB() {
@@ -87,12 +97,22 @@ class Player {
     }
 
     updateAnimations() {
-        if(this.state === 0 && this.facing === 1) this.animation = this.leftFacingAnimation;
-        else if(this.state === 0 && this.facing === 0) this.animation = this.rightFacingAnimation;
-        else if(this.state === 3 && this.facing === 0) this.animation = this.jumpingRightAnimation;
-        else if(this.state === 3 && this.facing === 1) this.animation = this.jumpingLeftAnimation;
-        else if(this.state === 4 && this.facing === 0) this.animation = this.ceilingStickRightAnimation
-        else if(this.state === 4 && this.facing === 1) this.animation = this.ceilingStickLeftAnimation
+        if (this.damage) {
+            if(this.state === 0 && this.facing === 1) this.animation = this.leftFacingAnimationDamage;
+            else if(this.state === 0 && this.facing === 0) this.animation = this.rightFacingAnimationDamage;
+            else if(this.state === 3 && this.facing === 0) this.animation = this.jumpingRightAnimationDamage;
+            else if(this.state === 3 && this.facing === 1) this.animation = this.jumpingLeftAnimationDamage;
+            else if(this.state === 4 && this.facing === 0) this.animation = this.ceilingStickRightAnimationDamage;
+            else if(this.state === 4 && this.facing === 1) this.animation = this.ceilingStickLeftAnimationDamage;
+        } else {
+            if(this.state === 0 && this.facing === 1) this.animation = this.leftFacingAnimation;
+            else if(this.state === 0 && this.facing === 0) this.animation = this.rightFacingAnimation;
+            else if(this.state === 3 && this.facing === 0) this.animation = this.jumpingRightAnimation;
+            else if(this.state === 3 && this.facing === 1) this.animation = this.jumpingLeftAnimation;
+            else if(this.state === 4 && this.facing === 0) this.animation = this.ceilingStickRightAnimation;
+            else if(this.state === 4 && this.facing === 1) this.animation = this.ceilingStickLeftAnimation;
+        }
+        
     }
     /** Updates state frame by frame */
     update() {
@@ -100,10 +120,20 @@ class Player {
         this.updateAnimations()
         this.updateBB();
 
+        
         // console.log(this.x)
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK
+
+        /** Damage animation cooldown */
+        if (this.damageCountdown > 0) {
+            this.damageCountdown -= 12*TICK;
+            // console.log(this.damageCountdown);
+        } else if (this.damageCountdown <= 0) {
+            this.damage = false;
+        }
+
 
         if(this.velocity.y > 0) {
             this.falling = true;} //Convenience variable for other classes
@@ -161,7 +191,7 @@ class Player {
             this.velocity.y = -1;
             this.updateState(4);
             // console.log(this.onCeiling);
-            console.log(this.state);
+            // console.log(this.state);
         }
         //Otherwise, use normal gravity
         else {this.velocity.y += this.gravity;}
@@ -250,15 +280,19 @@ class Player {
                     // console.log(ox + ", " + oy)
                 }
                 else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob ) {
+                    
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
                         //only take damage if erasir is not stunned
-                        if (that.elapsedTime > 0.8 && entity.state !== 1 ) {
-                            that.hp -= 5;
-                            console.log("storm HP: " + that.hp);
-                            that.elapsedTime = 0;
-                        }
+                        if (that.elapsedTime > 0.8) {
+                            if ((entity instanceof Miniraser && entity.state != 1) || entity instanceof Meteor || entity instanceof CeilBlob) {
+                                that.hp -= 5;
+                                that.damage = true;
+                                that.damageCountdown = 10;
+                                that.elapsedTime = 0;
+                            } 
+                        } 
                     }
                 }
                 else if (entity instanceof LevelMarker){

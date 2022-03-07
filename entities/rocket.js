@@ -84,7 +84,7 @@ class Rocket extends Player {
         const TICK = this.game.clockTick;
         this.elapsedTime += TICK;
 
-        console.log("ROCKET: " + this.x + " " + this.y);
+        // console.log("ROCKET: " + this.x + " " + this.y);
         // Left and right movement
         this.leftRightMovement();
 
@@ -107,7 +107,7 @@ class Rocket extends Player {
                     console.log("+ 20 HP!!");
                 }
             }
-            if(entity instanceof Meteor) {
+            if(entity instanceof Meteor || entity instanceof SpaceErasir) {
                 if (that.BB.collide(entity.BB)) {
                     if (that.elapsedTime > 0.8) {
                         that.hp -= 5;
@@ -121,18 +121,13 @@ class Rocket extends Player {
             }
         });
 
-        if (this.hp===0) {this.dead = true;}
-    }
-
-    /** Helper method to update the player type */
-    updatePlayerType(player_type) {
-        if (this.player_type !== player_type) {
-            this.player_type = player_type;
-            this.loadAnimations();
+        /** SHOOT LASERS */
+        if (this.game.shooting) {
+            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x+10, this.y+this.BB.height/2));
+            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1000, this.y+this.BB.height/2));
         }
-    }
-    toString() {
-        return "I'm a player"
+
+        if (this.hp===0) {this.dead = true;}
     }
 
 }

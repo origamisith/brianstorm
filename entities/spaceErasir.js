@@ -2,12 +2,14 @@ class SpaceErasir {
     constructor(game, x, y) {
         Object.assign(this, { game, x, y });
 
+
+
         this.game = game;
         this.speed = 3;
         this.gravity = 0;
         this.agro = false;
-        this.agroDistance = 600;
-        this.flySpeed = 12;
+        this.agroDistance = 900;
+        this.flySpeed = 5;
         this.elapsedTime = 0;
         this.hp = 50;
         this.stunned = false;
@@ -18,6 +20,7 @@ class SpaceErasir {
         this.facing = 1; // 0=right, 1=left
 
         this.animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_left.png")), 0, 0, 312, 412, 2, 0.10, false, true);
+        this.animation_damage = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_left.png")), 0, 0, 312, 412, 2, 0.10, false, true);
 
         this.x = x;
         this.y = y;
@@ -29,9 +32,8 @@ class SpaceErasir {
         
         this.updateBB();
 
+        this.damage = false;
 
-        
-        console.log(x + " " + y);
 
     };
 
@@ -41,26 +43,35 @@ class SpaceErasir {
         this.idle_right_animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_right.png")), 0, 0, 312, 412, 2, 0.10, false, true);
         this.idle_left_animation = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_left.png")), 0, 0, 312, 412, 2, 0.10, false, true);
 
+        // Damage
+        this.idle_right_animation_red = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_right_red.png")), 0, 0, 312, 412, 2, 0.10, false, true);
+        this.idle_left_animation_red = new Animator((ASSET_MANAGER.getAsset("./assets/characters/erasir/space_left_red.png")), 0, 0, 312, 412, 2, 0.10, false, true);
 
     };
 
     updateAnimations() {
-        if(this.canUpdateAnim > 5) {
+        // if(this.canUpdateAnim > 1 ) {
             this.canUpdateAnim = 0;
             if (this.state === 0 && this.facing === 0) {
                 this.animation = this.idle_right_animation;
+                this.animation_damage = this.idle_right_animation_red;
+                
             } else if (this.state === 0 && this.facing === 1) {
-                this.animation = this.idle_left_animation;
+                this.animation = this.idle_left_animation
+                this.animation_damage = this.idle_left_animation_red;
             }
-        }
-
+        // }
     }
 
+
+
     draw(ctx) {
+        if (this.damage) {
+            this.animation_damage.drawFrame(this.game.clockTick, ctx, (this.x) - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+        }
+        else { this.animation.drawFrame(this.game.clockTick, ctx, (this.x) - this.game.camera.x, this.y - this.game.camera.y, this.scale); }
 
-        this.animation.drawFrame(this.game.clockTick, ctx, (this.x) - this.game.camera.x, this.y - this.game.camera.y, this.scale);
-
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
         // console.log(this.BB.x - this.game.camera.x + " " +  this.BB.y - this.game.camera.y);
     };
 
@@ -82,18 +93,14 @@ class SpaceErasir {
         const midx = (this.x + this.BB.width/2);
         this.elapsedTime += TICK;
 
-        if (this.stunned) {
-            this.stunTimer -= 10*TICK;
-            if (this.stunTimer <= 0) {this.stunned = false;}
+        /** Damage animation cooldown */
+        if (this.damageCountdown > 0) {
+            this.damageCountdown -= 150*TICK;
+        } else if (this.damageCountdown <= 0) {
+            this.damage = false;
         }
-        //if not stunned
-        else {this.state = 0;}
 
-        if (this.bump) {
-            // console.log("bumping");
-            this.velocity.y = 0;
-            this.bump = false;
-        }
+        if (this.hp <= 0) this.removeFromWorld = true;
 
 
 
@@ -105,10 +112,10 @@ class SpaceErasir {
                 if (entity instanceof Terrain) {
                     collided.push(entity);
                 }
-                else if (entity instanceof Scribble) {
-                    that.state = 1;
-                    that.stunned = true;
-                    that.stunTimer = 10;
+                else if (entity instanceof Laser) {
+                    that.hp -= 1 * TICK;
+                    that.damage = true;
+                    that.damageCountdown = 10;
                 }
                 else if (entity instanceof Rocket) {
                     if (that.facing === 0) {
@@ -127,9 +134,6 @@ class SpaceErasir {
                 { x: boundary1.BB.cx, y: boundary1.BB.cy }) -
             distance({ x: this.BB.cx, y: this.BB.cy }, { x: boundary2.BB.cx, y: boundary2.BB.cy }));
 
-        // jumpBlocks.sort((boundary1, boundary2) => distance({ x: this.BB.cx, y: this.BB.cy },
-        //     { x: boundary1.BB.cx, y: boundary1.BB.cy }) -
-        //     distance({ x: this.BB.cx, y: this.BB.cy }, { x: boundary2.BB.cx, y: boundary2.BB.cy }));
 
         /** DIE */
         if (this.hp === 0) {
@@ -139,23 +143,22 @@ class SpaceErasir {
         /** BECOME AGGRO'D */
         let {x, y} = this.game.camera.player;
 
-        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned && this.onGround) {
-
-            if (!this.leftJump && !this.rightJump && !this.stunned && !this.side) {
+        if (this.BB.inRange(this.game.camera.player.BB, this.agroDistance, false) &! this.stunned) {
+            
                 // player is on the left
                 if (x < midx && Math.abs(x-midx < 10) && !(this.side && this.facing === 1)) {
-                    this.x -= this.flySpeed;
+                    this.velocity.x -= this.flySpeed;
                     this.facing = 1;
                 }
                 // player is on the right
                 else if (x > midx && Math.abs(x-midx > 10) && !(this.side && this.facing === 0)) {
-                    this.x += this.flySpeed;
+                    this.velocity.x += this.flySpeed;
                     this.facing = 0;
                 }
                 else {
                     this.velocity.x = 0;
                 }
-            }
+            
         }
         else {
             this.velocity.x = 0;

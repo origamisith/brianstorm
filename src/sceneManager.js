@@ -23,13 +23,13 @@ class SceneManager {
 
 
         // //uncomment for space level
-        this.level_X_Right_Boundary = 121325;
-        this.level_X_Left_Boundary = 78900;
-        this.level_Y_Lower_Boundary = -2470;
-        this.level_Y_Upper_Boundary = -2470;
-        this.player_start = 79500;
-        this.level = 3;
-        this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
+        // this.level_X_Right_Boundary = 121325;
+        // this.level_X_Left_Boundary = 78900;
+        // this.level_Y_Lower_Boundary = -2470;
+        // this.level_Y_Upper_Boundary = -2470;
+        // this.player_start = 79500;
+        // this.level = 3;
+        // this.player = new Submarine(this.game, "submarine", this.player_start,-2470, 0, 0, 0, 0, false);
 
 
         //Add the initial title screen to the game
@@ -127,7 +127,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", 37000, 400, 10, 20, 40000, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 400, 400, 10, 20, 40000, 0, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.game.addEntity(this.marker);
@@ -203,7 +203,7 @@ class SceneManager {
 
 
     loadSpaceLevel() {
-
+        console.log("load space level");
         this.clearEntities();
         this.clearBackgrounds();
         this.endScreen = false;
@@ -222,7 +222,7 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/ultrawide-01.png'), 0, 0, 8000, 1055,
                 (0 - this.x) /8, 0 - this.y, 8000, 1055), update: () => null})
 
-        console.log((this.endOfLevel + 38000 - this.x)/2)
+        // console.log((this.endOfLevel + 38000 - this.x)/2)
 
         spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, s.x, s.y));});
 
@@ -341,8 +341,8 @@ class SceneManager {
         }
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
-        console.log(this.player.x);
-        console.log(this.player.y);
+        // console.log(this.player.x);
+        // console.log(this.player.y);
         if (this.endScreen === false && (this.player.x < 38000 && this.player.x >= 600)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
