@@ -143,6 +143,8 @@ class Player {
 
         // Key inputs
         // Normal speed on ground
+
+
         if(this.game.left) this.facing = 1;
         if(this.game.right) this.facing = 0;
         if(this.onGround && !this.onCeiling) {

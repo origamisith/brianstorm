@@ -26,7 +26,7 @@ class Rocket extends Player {
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
-        this.scale = 0.3
+        this.scale = 0.4
         this.loadAnimations();
 
         
@@ -67,10 +67,10 @@ class Rocket extends Player {
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
+        if(this.game.up && this.y > this.y_upper_cameraLimit) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit ) {
             this.y += this.y_vel
         }
         
@@ -123,8 +123,8 @@ class Rocket extends Player {
 
         /** SHOOT LASERS */
         if (this.game.shooting) {
-            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x+10, this.y+this.BB.height/2));
-            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1000, this.y+this.BB.height/2));
+            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
+            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
         }
 
         if (this.hp===0) {this.dead = true;}

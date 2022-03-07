@@ -15,7 +15,7 @@ class Squid_ink {
         this.updateBB();
     };
     loadAnimations() {
-        if (this.damage == false) {
+        if (this.damage === false) {
             this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/squid_ink/squid_ink_sheet2.png"), 0, 0, 300, 165, 16, 0.5, false, true); 
         } else {
         this.animator = new Animator(ASSET_MANAGER.getAsset("./assets/characters/squid_ink/squid_ink_sheet.png"), 0, 0, 300, 165, 16, 0.5, false, true);
@@ -44,16 +44,13 @@ class Squid_ink {
 
         const that = this;
         this.game.entities.forEach(function (entity) {
-            if (entity instanceof Torpedo) {
-                if (that.BB.collide(entity.BB)) {
-                    that.damage = true;
-                    that.loadAnimations();         
-                    that.hp -= 10;                                                         
+            if (entity !== that && entity.BB && that.BB.collide(entity.BB)) {
+                if (entity instanceof Torpedo) {
+                        that.damage = true;
+                        that.loadAnimations();
+                        that.hp -= 10;
                 }
-                         
             }
-         
-        
         }); 
         if (this.hp === 0) {
             this.removeFromWorld = true;
