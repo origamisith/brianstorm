@@ -81,7 +81,7 @@ const levelWater = {
   //singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),
   music: "./assets/music/FreedomM.mp3",
   //powerUps: [{x: 90000 + 100, y: 1900 +250}, {x: 90000 + 7500, y: 1900}],
-  signPost: [{x: 18000, y: 850, choice: 1, scale: 0.4}],
+  signPost: [{x: 20000, y: 850, choice: 1, scale: 0.4}],
   
   fish: levelWaterGenerator.fishes(50),
   shark: levelWaterGenerator.sharkGenerate(3),

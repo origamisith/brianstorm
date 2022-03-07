@@ -40,13 +40,13 @@ class Rocket extends Player {
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale, this.y, (900-380)*this.scale, 389*this.scale)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (900-380)*this.scale, 389*this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale - 400, this.y, (900-380)*this.scale, 389*this.scale)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y, (900-380)*this.scale, 389*this.scale)}
     }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x - 400, this.y - this.game.camera.y, this.scale);
         // ctx.strokeStyle = 'red';
         // // uncomment for bb
         // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
