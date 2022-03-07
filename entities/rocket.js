@@ -123,8 +123,8 @@ class Rocket extends Player {
 
         /** SHOOT LASERS */
         if (this.game.shooting) {
-            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x+10, this.y+this.BB.height/2));
-            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1000, this.y+this.BB.height/2));
+            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
+            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
         }
 
         if (this.hp===0) {this.dead = true;}
