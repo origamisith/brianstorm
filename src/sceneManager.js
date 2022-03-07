@@ -235,7 +235,7 @@ class SceneManager {
         this.clearEntities();
 
         this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", 2300, 200, 3, 10, 38000,0,false)
+        this.player = new Player(this.game, "default", 200, 200, 3, 10, 38000,0,false)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
