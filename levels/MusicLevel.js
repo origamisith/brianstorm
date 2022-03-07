@@ -21,6 +21,12 @@ const musicLevel = {
         {beat_offset: 16, note_value: "D4", type: "half", stem_direction: "up", clef: "bass"},
         {beat_offset: 16, note_value: "B3", type: "half", stem_direction: "down", clef: "bass"},
 
+
+        {beat_offset: 24, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
+        {beat_offset: 28, note_value: "D5", type: "quarter", stem_direction: "up", clef: "treble"},
+
+
+
         {beat_offset: 32, note_value: "F5", type: "quarter", stem_direction: "up", clef: "treble"},
         {beat_offset: 32, note_value: "B4", type: "quarter", stem_direction: "down", clef: "treble"},
         {beat_offset: 32, note_value: "B3", type: "quarter", stem_direction: "up", clef: "bass"},
@@ -180,13 +186,13 @@ const musicLevel = {
     sounds: [
 
         {position: 16, sound_path: "./assets/music/song/1.mp3"},
-        {position: 32, sound_path: "./assets/music/song/2.mp3"},
-        {position: 40, sound_path: "./assets/music/song/3.mp3"},
-        {position: 48, sound_path: "./assets/music/song/4.mp3"},
-        {position: 64, sound_path: "./assets/music/song/5.mp3"},
-        {position: 80, sound_path: "./assets/music/song/6.mp3"},
-        {position: 96, sound_path: "./assets/music/song/7.mp3"},
-        {position: 104, sound_path: "./assets/music/song/8.mp3"},
+        {position: 24, sound_path: "./assets/music/song/2.mp3"},
+        {position: 28, sound_path: "./assets/music/song/3.mp3"},
+        {position: 32, sound_path: "./assets/music/song/4.mp3"},
+        {position: 40, sound_path: "./assets/music/song/5.mp3"},
+        {position: 48, sound_path: "./assets/music/song/6.mp3"},
+        {position: 64, sound_path: "./assets/music/song/7.mp3"},
+        {position: 80, sound_path: "./assets/music/song/8.mp3"},
         {position: 112, sound_path: "./assets/music/song/9.mp3"},
         {position: 128, sound_path: "./assets/music/song/10.mp3"},
         {position: 136, sound_path: "./assets/music/song/11.mp3"},

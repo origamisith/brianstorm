@@ -148,7 +148,7 @@ class SceneManager {
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 38000, 0, 3, 100, 100000);
+        this.marker = new LevelMarker(this.game, 16000, 0, 3, 100, 100000);
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -234,15 +234,9 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        this.level_X_Right_Boundary = 32000;
-        this.level_X_Left_Boundary = 0;
-        this.level_Y_Lower_Boundary = 0;
-        this.level_Y_Upper_Boundary = 0;
-
-        this.marker = new LevelMarker(this.game, 9000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", 200, 200, 3, 10, 38000,0,false)
+        this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
+        this.player = new Player(this.game, "default", 2300, 200, 3, 10, 38000,0,false)
         this.player.gravity = 28;
-        this.x = 100;
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
 
