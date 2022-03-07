@@ -8,8 +8,11 @@ const ASSET_MANAGER = new AssetManager();
 // they must also be downloaded by the asset mangager here as well. (afik)
 ASSET_MANAGER.queueDownload("./assets/title.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/characters/storm/sprite_sheet_red.png");
+ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_left_red.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/storm/ceiling_stick/spritesheet_right_red.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/squid_ink/squid_ink_sheet2.png");
@@ -91,9 +94,12 @@ ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.pn
 
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left_red.png");
+ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right_red.png");
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
+ASSET_MANAGER.queueDownload("./assets/scribbles/laser.jpg");
 
 
 //music level

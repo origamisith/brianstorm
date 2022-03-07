@@ -16,13 +16,12 @@ class levelOneGenerator {
       terrainIndex++;
     }
 
-    for (i2 = size/2 + size/4; i<size; i++) {
+    for (i2 = size/2 + size/4; i2<size; i2++) {
       terrain[terrainIndex] = {x: params.blockSize*i2, y: params.floor}
       terrainIndex++;
     }
 
     // Second floor tiles
-    place = 10;
     for (let j=10; j<size/2; j++) {
       terrain[terrainIndex] = {x: params.blockSize*j, y: params.floor - params.blockSize}
       terrainIndex++;
@@ -76,7 +75,7 @@ class levelOneGenerator {
       }
 
       // Generate ceiling hangs
-      wall = Math.round(Math.random() * (size/2 - 10) + 10);
+      wall = Math.round(Math.random() * (size/2 - 30) + 30);
       terrain[terrainIndex] = {x: params.blockSize*wall, y: params.blockSize}
       terrainIndex++;
       terrain[terrainIndex] = {x: params.blockSize*wall, y: params.blockSize * 2}
@@ -134,15 +133,15 @@ class levelOneGenerator {
     let place = 0;
     for (let i=0; i<count; i++) {
       place = Math.floor(Math.random() * 150 + 30);
-      if (!bushes.includes({x: params.blockSize*2*place, y: params.floor - 2*params.blockSize})) {
+      if (!bushes.includes({x: params.blockSize*place, y: params.floor - 2*params.blockSize})) {
         // console.log("adding " + i);
-        bushes[i] = {x: params.blockSize*2*place, y: params.floor - 2*params.blockSize}
+        bushes[i] = {x: params.blockSize*place, y: params.floor - 2*params.blockSize}
       } else {
         i--;
       }
     }
     return bushes;
-  }
+  };
 
   static enemyGenerator(count) {
     const enemies = [];
@@ -157,7 +156,7 @@ class levelOneGenerator {
       enemies[i] = {x: params.blockSize*2*placeX, y: placeY}
     }
     return enemies;
-  }
+  };
 
   static blobGenerator(count) {
     const blobs = [];
@@ -171,14 +170,14 @@ class levelOneGenerator {
     }
     return blobs;
   }
-}
+};
 
 const levelOne = {
   clouds: [{x: 530, y: 100}, {x: 200, y: 80}, {x: 1000, y: 300}, {x: 1200, y: 150}, {x: 1800, y: 200}],
   terrain: levelOneGenerator.generateFloorTerrain(380, 10, 20),
   enemies: levelOneGenerator.enemyGenerator(25),
-  powerUps: [{x: 100, y: 800}, {x: 20*params.blockSize, y: 700}, {x: 50*params.blockSize, y: 700}, {x : 80*params.blockSize, y: 700}],
-  SignPost: [{x: 80500, y: 700, choice: 0, scale: 0.3}],
+  powerUps: [{x: 100, y: 800}, {x: 20*params.blockSize, y: 700}, {x: 50*params.blockSize, y: 700}, {x : 80*params.blockSize, y: 700}, {x: 378*params.blockSize, y: 700}],
+  SignPost: [{x: 37900, y: 700, choice: 0, scale: 0.3}],
   bushes: levelOneGenerator.bushGenerator(40),
   blobs: levelOneGenerator.blobGenerator(10),
   music: "./assets/music/FreedomM.mp3"

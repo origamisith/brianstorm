@@ -51,7 +51,7 @@ class SceneManager {
         this.game.addEntity(new credits(this.game, 400, 675));
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
-    }
+    };
 
     loadTutorialLevel(x, y){
 
@@ -98,7 +98,7 @@ class SceneManager {
         //floor tiles after overhang
         for(let i = 55; i < 100; i++) {this.game.addEntity(new Terrain(this.game, (params.blockSize*i), params.floor));}
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
-    }
+    };
 
 
     loadLevelOne() {
@@ -106,7 +106,7 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", 37000, 400, 10, 20, 40000, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 400, 400, 10, 20, 40000, 0, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.game.addEntity(this.marker);
@@ -119,7 +119,6 @@ class SceneManager {
         ASSET_MANAGER.autoRepeat(levelOne.music);
 
         this.game.addEntity(this.marker);
-        this.game.addEntity(new SpaceErasir(this.game, this.player.x + 100, this.player.y + 100));
         levelOne.enemies.forEach(e => {this.game.addEntity(new Miniraser(this.game, e.x, e.y));});
         levelOne.terrain.forEach(t => {this.game.addEntity(new Terrain(this.game, t.x, t.y));});
         levelOne.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
@@ -131,7 +130,10 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
                 (0) - this.x, (this.y)/8, 40000, 1200), update: () => null})
 
-    }
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/paper-bg.jpg"), 0, 0, 14000 , 1024, 
+                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 1024), update: () => null})
+
+    };
 
     loadWater() {
 
@@ -180,7 +182,7 @@ class SceneManager {
 
 
     loadSpaceLevel() {
-
+        console.log("load space level");
         this.clearEntities();
         this.clearBackgrounds();
         this.endScreen = false;
@@ -199,7 +201,10 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/ultrawide-01.png'), 0, 0, 8000, 1055,
                 (0 - this.x) /8, 0 - this.y, 8000, 1055), update: () => null})
 
-        console.log((this.endOfLevel + 38000 - this.x)/2)
+        // console.log((this.endOfLevel + 38000 - this.x)/2)
+
+        spaceLevel.spacerasirs.forEach(s => {this.game.addEntity(new SpaceErasir(this.game, s.x, s.y));});
+
 
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./assets/music/venemousspaceradish.mp3");
@@ -252,7 +257,7 @@ class SceneManager {
 
         this.game.addEntity(this.marker);
 
-    }
+    };
 
     loadEndScreen(x, y) {
         this.clearEntities();
@@ -274,7 +279,7 @@ class SceneManager {
         this.game.addEntity(this.marker);
         this.game.addEntity(new LevelMarker(this.game, 100, 100, 1));
 
-    }
+    };
 
     //removes all entities from the canvas
     clearEntities() {this.game.entities.forEach(function (entity) {entity.removeFromWorld = true;});};
@@ -297,8 +302,7 @@ class SceneManager {
         }
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
-        console.log(this.player.x);
-        console.log(this.player.y);
+
         if (this.endScreen === false && (this.player.x < 38000 && this.player.x >= 200)){
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
