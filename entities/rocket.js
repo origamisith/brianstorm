@@ -26,7 +26,7 @@ class Rocket extends Player {
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
-        this.scale = 0.3
+        this.scale = 0.4
         this.loadAnimations();
 
         
@@ -67,10 +67,10 @@ class Rocket extends Player {
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
+        if(this.game.up && this.y > this.y_upper_cameraLimit) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit ) {
             this.y += this.y_vel
         }
         

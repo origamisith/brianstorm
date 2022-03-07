@@ -195,7 +195,7 @@ class SceneManager {
 
         this.player.remove(true);
         //initiate the player
-        this.player = new Rocket(this.game, "submarine", 600, 400, 15, 10, 0, 38000, 1024, 0);
+        this.player = new Rocket(this.game, "submarine", 19000, 400, 15, 10, 0, 38000, 850, 0);
         this.endOfLevel = 20000
 
         this.player.gravity = 0;
@@ -235,7 +235,7 @@ class SceneManager {
                 0,
                 1024));}
 
-        this.game.addEntity(new SignPost(this.game, 37000, 850, 2, 0.4));
+        this.game.addEntity(new SignPost(this.game, 20000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
     }
 
