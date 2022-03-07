@@ -20,7 +20,7 @@ class start {
             
             if (mousePoint.x > this.BB.x && mousePoint.x < (this.BB.x + this.BB.width)
                 && mousePoint.y > this.BB.y && mousePoint.y < this.BB.y + this.BB.height) {
-                    this.game.camera.level = 3;
+                    this.game.camera.level = 1;
                     this.game.camera.loadStart = true;
                     this.game.camera.loadLevel();
                     this.game.camera.checkStart();
