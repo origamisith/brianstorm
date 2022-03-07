@@ -134,7 +134,7 @@ class SceneManager {
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
                 (0) - this.x, (this.y)/8, 40000, 1200), update: () => null})
-        
+
     };
 
     loadWater() {
