@@ -23,6 +23,7 @@ class Rocket extends Player {
         this.x = x;
         this.y = y;
 
+        this.canFire = true;
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
@@ -122,9 +123,17 @@ class Rocket extends Player {
         });
 
         /** SHOOT LASERS */
-        if (this.game.shooting) {
-            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
-            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
+        if (this.game.shooting && this.canFire) {
+            if (this.facing === 0) {
+                ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
+                this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
+                this.canFire = false;}
+            else if(this.facing === 1){
+                ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
+                this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
+                this.canFire = false;}
+        } else if (!this.game.shooting) {
+            this.canFire = true;
         }
 
         if (this.hp===0) {this.dead = true;}

@@ -122,6 +122,7 @@ class GameEngine {
                     break;
                 case "Period":
                     that.shooting = true;
+                    that.sfx = false;
                     break;
                 case "Space":
                     that.space = true;
@@ -154,6 +155,7 @@ class GameEngine {
                     break;
                 case "Period":
                     that.shooting = false;
+                    that.sfx = true;
                     break;
                 case "Space":
                     that.space = false;
