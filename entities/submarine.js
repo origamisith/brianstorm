@@ -66,21 +66,21 @@ class Submarine extends Player {
     leftRightMovement() {
         // Left and right movement
         this.velocity.x = 0;
-        if (this.game.left && this.x > this.x_left_cameraLimit - 294) {
+        if (this.game.left && this.x > this.x_left_cameraLimit) {
             this.facing = 1;
             this.velocity.x = this.x_vel;
             this.x -= this.velocity.x;
-        } else if (this.game.right && this.x < this.x_right_cameraLimit + 520) {
+        } else if (this.game.right && this.x < this.x_right_cameraLimit) {
             this.facing = 0;
             this.velocity.x = this.x_vel;
             this.x += this.velocity.x;
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
+        if(this.game.up && this.y > this.y_upper_cameraLimit) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit) {
             this.y += this.y_vel
         }
 

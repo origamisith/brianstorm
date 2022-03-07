@@ -26,7 +26,7 @@ class Rocket extends Player {
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
-        this.scale = 0.6
+        this.scale = 0.3
         this.loadAnimations();
 
         
