@@ -218,7 +218,7 @@ class SceneManager {
 
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/ultrawide-01.png'), 0, 0, 8000, 1055,
-                (0 - this.x), 0 - this.y, 8000, 1055), update: () => null})
+                (0 - this.x) /8, 0 - this.y, 8000, 1055), update: () => null})
 
         console.log((this.endOfLevel + 38000 - this.x)/2)
 
