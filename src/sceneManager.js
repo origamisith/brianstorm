@@ -10,7 +10,7 @@ class SceneManager {
         this.endScreen = true;
         this.loadStart = false;
 
-        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 400,400, 0, 0, 0, 0, false);
 
         this.loadLevel();
     };
@@ -75,10 +75,10 @@ class SceneManager {
         //initiate the player
         this.player = new Player(this.game,
                         "default",
-                        this.player_start,
+                        610,
                         params.floor - params.blockSize * 5,
                         10, 20,
-                        200,
+            200,
                         9000,
                         0,
                         0, false);
@@ -134,10 +134,7 @@ class SceneManager {
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
                 (0) - this.x, (this.y)/8, 40000, 1200), update: () => null})
-
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/paper-bg.jpg"), 0, 0, 14000 , 1024, 
-                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 1024), update: () => null})
-
+        
     };
 
     loadWater() {
@@ -307,7 +304,10 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
 
-        if (this.endScreen === false && (this.player.x < this.endOfLevel && this.player.x >= 200)){
+
+        if (this.endScreen === false &&
+            (this.player.x < this.endOfLevel && this.player.x >= 600)
+            && this.level !== 4) {
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             // let ph = this.player.BB.height;
@@ -324,6 +324,7 @@ class SceneManager {
         //     this.y = this.player.y - ph / 2;
         // }
 
+        if(this.level ===1 && this.player.y > 1100){this.player.dead = true}
         if(this.level === 6 && this.player.y > 1100) {this.player.y = -100}
 
         if(this.endScreen === true || this.level === 4) {
