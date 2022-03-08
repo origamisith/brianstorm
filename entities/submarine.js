@@ -31,7 +31,6 @@ class Submarine extends Player {
         this.elapsedTime = 0;
         this.scale = 0.6
 
-
         this.loadAnimations();
 
     };
@@ -92,23 +91,21 @@ class Submarine extends Player {
             const TICK = this.game.clockTick;
             this.elapsedTime += TICK;
 
-
             /** SPAWN TORPEDO ON FIRE **/
             if (this.game.shooting && this.canFire) {
 
                 if (this.facing === 0) {
-                    ASSET_MANAGER.playAsset("./assets/sfx/torpedo_launch1.mp3");
-                    this.game.addEntity(new Torpedo(this.game, this.x + 100, this.y + 65 + this.BB.height / 2, this.facing, 0));
+                    ASSET_MANAGER.playAsset("./assets/sfx/torpedo.mp3");
+                    this.game.addEntity(new Torpedo(this.game, this.x - 300, this.y + 65 + this.BB.height / 2, this.facing, 0));
                     this.canFire = false;
                 } else if (this.facing === 1) {
-                    ASSET_MANAGER.playAsset("./assets/sfx/torpedo_launch1.mp3");
-                    this.game.addEntity(new Torpedo(this.game, this.x, this.y + 65 + this.BB.height / 2, this.facing, 0));
+                    ASSET_MANAGER.playAsset("./assets/sfx/torpedo.mp3");
+                    this.game.addEntity(new Torpedo(this.game, this.x - 300, this.y + 65 + this.BB.height / 2, this.facing, 0));
                     this.canFire = false;
                 }
             } else if (!this.game.shooting) {
                 this.canFire = true;
             }
-
 
             // Left and right movement
             this.leftRightMovement()

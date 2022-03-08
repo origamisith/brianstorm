@@ -3,27 +3,16 @@ class levelWaterGenerator {
   static seahorsesGenerate(count, endOfLevel, y_offset) {
     const seahorses = [];
       for (let i=0; i < count; i++) {
-        //seahorses[i] = {x: endOfLeve + 500, y: y_offset +50};
         seahorses[i] = {x:  500, y: 220};
       }
       return seahorses;
   } 
 
-/*   static fishes(count, endOfLevel, y_offset) {
-    const fish = [];
-    let place = 0;
-    for (let i = 0; i < count; i++) {
-      fish[i] = {x: endOfLevel + 1000 + place, y: y_offset +50}
-      place += 800;
-    }
-    return fish;
-  } */
-  
   static fishes(count) {
     const fish = [];
     let place = 0;
     for (let i = 0; i < count; i++) {
-      fish[i] = {x: place, y: 200}
+      fish[i] = {x: 1200 + place, y: 100}
       place += 800;
     }
     return fish;
@@ -32,8 +21,7 @@ class levelWaterGenerator {
   static sharkGenerate(count, endOfLevel, y_offset) {
     const shark = [];
     for (let i = 0; i < count; i++) {
-      //shark[i] = {x: endOfLevel + 1250, y: y_offset +100 }
-      shark[i] = {x:  1200, y: 210 }
+      shark[i] = {x:  1200, y: 250 }
     }
     return shark;
   }
@@ -43,7 +31,6 @@ class levelWaterGenerator {
     let place = 0;
     for (let i = 0; i < count; i++) {
       let place_y = Math.floor(Math.random());
-      //squid[i] = {x: endOfLevel + 500 + place, y: y_offset +50 + place_y}
       squid[i] = {x:  200, y: 50}
 
     }
@@ -53,8 +40,7 @@ class levelWaterGenerator {
   static squid_InkGenerate(count, endOfLevel, y_offset) {
     const squid_ink = [];
     for (let i = 0; i < count; i++) {
-      //squid_ink[i] = {x: endOfLevel + 1450, y: y_offset +50}
-      squid_ink[i] = {x:  1300, y: 185}
+      squid_ink[i] = {x:  1700, y: 150}
     }
     return squid_ink;
   }
@@ -74,19 +60,14 @@ const levelWater = {
 
   starfish: levelWaterGenerator.starfishGenerate(5),
   squid: levelWaterGenerator.squidGenerate(5),
-  //squid_ink: levelWaterGenerator.squid_InkGenerate(7, 90000, 1900),
-  //shark: levelWaterGenerator.sharkGenerate(5, 90000, 1900),
-  //fish: levelWaterGenerator.fishes(25, 90000, 1900),
-  //seahorses: levelWaterGenerator.seahorsesGenerate(1, 90000, 1900),
-  //singleSeahorse: levelWaterGenerator.singleSeahorseGenerate(5),
   music: "./assets/music/FreedomM.mp3",
   //powerUps: [{x: 90000 + 100, y: 1900 +250}, {x: 90000 + 7500, y: 1900}],
-  signPost: [{x: 18000, y: 850, choice: 1, scale: 0.4}],
+  signPost: [{x: 20000, y: 850, choice: 1, scale: 0.4}],
   
   fish: levelWaterGenerator.fishes(50),
   shark: levelWaterGenerator.sharkGenerate(3),
   squid_ink: levelWaterGenerator.squid_InkGenerate(2),
   seahorses: levelWaterGenerator.seahorsesGenerate(2),
-  powerUps: [{x:  200, y: 2400}, {x: 60000 , y: 2400}],
+  powerUps: [{x:  1300, y: 500}, {x: 3000 , y: 500}],
 };
   

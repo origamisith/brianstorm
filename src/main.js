@@ -44,6 +44,15 @@ ASSET_MANAGER.queueDownload("./assets/hazard_sign/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/start_menu_assets/credits/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/start_menu_assets/how_to_play/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/start_menu_assets/start/spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/title_cross.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/title_no_cross.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/game_ideas.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/to_do.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/shopping_list.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/game_ideas.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/math.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/title.png");
+ASSET_MANAGER.queueDownload("./assets/start_menu_assets/music.png");
 
 
 //tutorial level
@@ -66,14 +75,14 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
-ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
+
 
 //music
 ASSET_MANAGER.queueDownload("./assets/sfx/torpedo_launch1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/venemousspaceradish.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/water_level.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/water_ambience.mp3");
-
+ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 
 //water level
@@ -87,6 +96,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/sfx/torpedo.mp3");
 
 
 
@@ -98,8 +108,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left_red.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right_red.png");
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
-ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
 ASSET_MANAGER.queueDownload("./assets/scribbles/laser.jpg");
+ASSET_MANAGER.queueDownload("./assets/sfx/pewpew.mp3");
 
 
 //music level
@@ -107,6 +117,8 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_down_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/quarter_notes/quarter_note_stem_up_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_up_sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/eighth_notes/eighth_note_stem_up_sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/music/eighth_notes/eighth_note_stem_down_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/half_notes/half_note_stem_down_sprite_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/barline/barline_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/music/treble_clef/treble_clef_spritesheet.png");
@@ -130,14 +142,19 @@ ASSET_MANAGER.queueDownload("./assets/music/song/13.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/14.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/15.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/16.mp3");
-ASSET_MANAGER.queueDownload("./assets/music/song/17.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/17-1.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/17-2.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/18.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/19.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/19.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/20.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/20-1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/21.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/21-1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/22.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/22-1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/23.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/song/23-1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/24.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/25.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/song/26.mp3");

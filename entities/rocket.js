@@ -23,30 +23,31 @@ class Rocket extends Player {
         this.x = x;
         this.y = y;
 
+        this.canFire = true;
         this.hp = 60;
         this.dead = false;
         this.elapsedTime = 0;
-        this.scale = 0.3
+        this.scale = 0.4
         this.loadAnimations();
 
-        
+
 
     };
 
     loadAnimations() {
-        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 389, 18, 0.1, false, true);
-        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 389, 18, 0.1, false, true);
+        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 385, 18, 0.1, false, true);
+        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 385, 18, 0.1, false, true);
     }
 
     updateBB(facing) {
         //Bounding box for collision
-        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale, this.y, (900-380)*this.scale, 389*this.scale)}
-        else if (facing ==="left") {this.BB = new BoundingBox(this.x, this.y, (900-380)*this.scale, 389*this.scale)}
+        if (facing ==="right") {this.BB = new BoundingBox(this.x+380*this.scale - 400, this.y, (900-380)*this.scale, 389*this.scale)}
+        else if (facing ==="left") {this.BB = new BoundingBox(this.x - 400, this.y, (900-380)*this.scale, 389*this.scale)}
     }
 
     //draw method will render this entity to the canvas
     draw(ctx) {
-        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y - this.game.camera.y, this.scale);
+        this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x - 400, this.y - this.game.camera.y, this.scale);
         // ctx.strokeStyle = 'red';
         // // uncomment for bb
         // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
@@ -67,13 +68,13 @@ class Rocket extends Player {
         }
 
         //submarine movement mechanics
-        if(this.game.up && this.y > this.y_upper_cameraLimit - 600) {
+        if(this.game.up && this.y > this.y_upper_cameraLimit) {
             this.y -= this.y_vel;
         }
-        else if(this.game.down && this.y < this.y_lower_cameraLimit + 275 ) {
+        else if(this.game.down && this.y < this.y_lower_cameraLimit ) {
             this.y += this.y_vel
         }
-        
+
 
     }
 
@@ -122,9 +123,17 @@ class Rocket extends Player {
         });
 
         /** SHOOT LASERS */
-        if (this.game.shooting) {
-            if (this.facing === 0) this.game.addEntity(new Laser(this.game, this.x+10, this.y+this.BB.height/2));
-            else if (this.facing === 1) this.game.addEntity(new Laser(this.game, this.x - 1000, this.y+this.BB.height/2));
+        if (this.game.shooting  ) {
+            if (this.facing === 0) {
+                ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
+                this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
+                }
+            else if(this.facing === 1){
+                ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
+                this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
+                }
+        } else if (!this.game.shooting) {
+            this.canFire = true;
         }
 
         if (this.hp===0) {this.dead = true;}

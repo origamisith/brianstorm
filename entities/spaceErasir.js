@@ -100,7 +100,9 @@ class SpaceErasir {
             this.damage = false;
         }
 
-        if (this.hp <= 0) this.removeFromWorld = true;
+        if (this.hp <= 0) {
+            this.game.addEntity(new Poof(this.game, this.x - 75, this.y - 80, 0.49))
+            this.removeFromWorld = true;}
 
 
 
@@ -113,7 +115,7 @@ class SpaceErasir {
                     collided.push(entity);
                 }
                 else if (entity instanceof Laser) {
-                    that.hp -= 1 * TICK;
+                    that.hp -= TICK;
                     that.damage = true;
                     that.damageCountdown = 10;
                 }

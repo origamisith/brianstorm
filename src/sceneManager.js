@@ -10,7 +10,7 @@ class SceneManager {
         this.endScreen = true;
         this.loadStart = false;
 
-        this.player = new Player(this.game, "default", 600,400, 0, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 400,400, 0, 0, 0, 0, false);
 
         this.loadLevel();
     };
@@ -46,9 +46,17 @@ class SceneManager {
         this.clearEntities();
         this.clearBackgrounds();
         this.title = true;
-        this.game.addEntity(new start(this.game, 400, 300));
-        this.game.addEntity(new how_to_play(this.game, 400, 485));
-        this.game.addEntity(new credits(this.game, 400, 675));
+        this.game.addEntity(new start(this.game, 400, 110 +200));
+        this.game.addEntity(new how_to_play(this.game, 400, 230 +200));
+        this.game.addEntity(new credits(this.game, 400, 355 +200));
+        this.game.addEntity(new shopping_list(this.game, 0, 400));
+        this.game.addEntity(new game_ideas(this.game, 675, 700));
+        this.game.addEntity(new to_do(this.game, 890, 400));
+        this.game.addEntity(new math(this.game, 0, 750));
+        this.game.addEntity(new title(this.game, 0, 50));
+        this.game.addEntity(new music(this.game, 440, 0));
+
+
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
     };
@@ -58,24 +66,21 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
 
-        //start level initiation by setting the camera limits
-        this.level_X_Right_Boundary = 40000;
-        this.level_X_Left_Boundary = 600;
-        this.level_Y_Lower_Boundary = 0;
-        this.level_Y_Upper_Boundary = 0;
-
         //sets player starting location
-        this.player_start = 600;
+        this.player_start = 400;
+        this.marker = new LevelMarker(this.game, 10000, 0, 1, 1000, 1000);
+        this.endOfLevel = 9000;
+        this.game.addEntity(this.marker)
 
         //initiate the player
         this.player = new Player(this.game,
                         "default",
-                        this.player_start,
+                        610,
                         params.floor - params.blockSize * 5,
                         10, 20,
-                        40000,
-                        this.level_Y_Lower_Boundary,
-                        this.level_Y_Upper_Boundary,
+            200,
+                        9000,
+                        0,
                         0, false);
 
 
@@ -106,11 +111,11 @@ class SceneManager {
         this.endScreen = false;
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", 400, 400, 10, 20, 40000, 0, 0, 0, false);
+        this.player = new Player(this.game, "default", 610, 400, 10, 20, 200, 38000, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.game.addEntity(this.marker);
-        this.endOfLevel = 40000;
+        this.endOfLevel = 38000;
 
 
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -130,9 +135,6 @@ class SceneManager {
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/paper-bg.jpg'), 0, 0, 40000, 1024,
                 (0) - this.x, (this.y)/8, 40000, 1200), update: () => null})
 
-        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/paper-bg.jpg"), 0, 0, 14000 , 1024, 
-                (this.endOfLevel + 38000) - this.x, 0 - 1024 - this.y, 2048, 1024), update: () => null})
-
     };
 
     loadWater() {
@@ -145,13 +147,13 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", 600 , 400, 15, 10, 0, 38000, 850, 0);
+        this.player = new Submarine(this.game, "submarine", 610 , 400, 15, 10, 400, 22000, 850, -400);
 
         this.player.gravity = 0;
         this.player.falling = false;
         this.game.addEntity(this.player);
-        this.marker = new LevelMarker(this.game, 16000, 0, 3, 100, 100000);
-
+        this.marker = new LevelMarker(this.game, 20000, -400, 3, 10000, 200);
+        this.endOfLevel = 20000;
 
         ASSET_MANAGER.pauseBackgroundMusic();
 
@@ -162,7 +164,7 @@ class SceneManager {
 
         levelWater.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
         levelWater.signPost.forEach(s => {this.game.addEntity(new SignPost(this.game, s.x, s.y, s.choice, s.scale));});
-        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 10));});
+        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 20));});
         levelWater.seahorses.forEach(f => {this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));});
         levelWater.shark.forEach(sh => {this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));});
         levelWater.squid.forEach(sq => {this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));});
@@ -175,23 +177,20 @@ class SceneManager {
         for(let i = 0; i < 21; i++) {
             this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/water_background/water_backgroundnew.png'), 0, 0, 1024, 1024,
                     (1024 * i) - this.x - params.blockSize * 5, 0-this.y, 1024, 1024), update: () => null})}
-
-
         this.game.addEntity(this.marker);
     }
 
 
     loadSpaceLevel() {
-        console.log("load space level");
         this.clearEntities();
         this.clearBackgrounds();
         this.endScreen = false;
-        this.marker = new LevelMarker(this.game, 38000, 100, 4, 200, 2000);
+        this.marker = new LevelMarker(this.game, 21000, 100, 4, 200, 2000);
 
         this.player.remove(true);
         //initiate the player
-        this.player = new Rocket(this.game, "submarine", 600, 400, 15, 10, 0, 38000, 1024, 0);
-
+        this.player = new Rocket(this.game, "submarine", 610, 400, 15, 10, 0, 38000, 850, 0);
+        this.endOfLevel = 20000
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -199,7 +198,7 @@ class SceneManager {
 
 
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset('./assets/backgrounds/ultrawide-01.png'), 0, 0, 8000, 1055,
-                (0 - this.x) /8, 0 - this.y, 8000, 1055), update: () => null})
+                (100 - this.x) /8, 0 - this.y, 8000, 1055), update: () => null})
 
         // console.log((this.endOfLevel + 38000 - this.x)/2)
 
@@ -225,12 +224,12 @@ class SceneManager {
             gameEngine.addEntity(new Meteor(gameEngine,
                 this.player.x,
                 this.player.y,
-                this.level_X_Left_Boundary,
-                this.level_X_Right_Boundary,
-                this.level_Y_Upper_Boundary,
-                this.level_Y_Lower_Boundary));}
+                0,
+                this.endOfLevel,
+                0,
+                1024));}
 
-        this.game.addEntity(new SignPost(this.game, 37000, 850, 2, 0.4));
+        this.game.addEntity(new SignPost(this.game, 20000, 850, 2, 0.4));
         this.game.addEntity(this.marker);
     }
 
@@ -238,9 +237,10 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+        this.endOfLevel = 38000;
 
         this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", 200, 200, 3, 10, 38000,0,false)
+        this.player = new Player(this.game, "default", -222, 200, 3, 10, 400,38000,false)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -288,6 +288,7 @@ class SceneManager {
 
     update() {
 
+        // console.log(this.player.x)
 
         if(this.player.dead){this.loadEndScreen(0,0)}
         document.getElementById("debug").checked;
@@ -303,7 +304,9 @@ class SceneManager {
         let {width: w, height: h} = this.game.ctx.canvas
         if(this.endScreen){this. x = 0;}
 
-        if (this.endScreen === false && (this.player.x < 38000 && this.player.x >= 200)){
+
+        if (this.endScreen === false &&
+            (this.player.x < this.endOfLevel && this.player.x >= 600) && this.level !== 4) {
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             // let ph = this.player.BB.height;
@@ -320,8 +323,12 @@ class SceneManager {
         //     this.y = this.player.y - ph / 2;
         // }
 
+        if(this.level ===1 && this.player.y > 1100 && this.player.x < 37000){this.player.dead = true}
+        if(this.level === 6 && this.player.y > 1100) {this.player.y = -100}
 
         if(this.endScreen === true || this.level === 4) {
+
+            if (this.player.x < this.endOfLevel && this.player.x >= -250){this.x = (this.player.x - w / 2)}
             if (this.player.y >= params.floor - this.player.BB.height/2) {
                 this.player.y = params.floor - this.player.BB.height/2
                 this.player.onGround = true;
