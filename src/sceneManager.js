@@ -147,7 +147,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine", 18000 , 400, 15, 10, 400, 22000, 850, -400);
+        this.player = new Submarine(this.game, "submarine",400 , 400, 15, 10, 400, 22000, 850, -400);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -164,7 +164,7 @@ class SceneManager {
 
         levelWater.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
         levelWater.signPost.forEach(s => {this.game.addEntity(new SignPost(this.game, s.x, s.y, s.choice, s.scale));});
-        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 10));});
+        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 20));});
         levelWater.seahorses.forEach(f => {this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));});
         levelWater.shark.forEach(sh => {this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));});
         levelWater.squid.forEach(sq => {this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));});
