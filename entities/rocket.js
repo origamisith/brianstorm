@@ -30,13 +30,13 @@ class Rocket extends Player {
         this.scale = 0.4
         this.loadAnimations();
 
-        
+
 
     };
 
     loadAnimations() {
-        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 389, 18, 0.1, false, true);
-        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 389, 18, 0.1, false, true);
+        this.rightFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 0, 900, 385, 18, 0.1, false, true);
+        this.leftFacing = new Animator(ASSET_MANAGER.getAsset("./assets/characters/storm/rocket/rocket.png"), 0, 389, 900, 385, 18, 0.1, false, true);
     }
 
     updateBB(facing) {
@@ -74,7 +74,7 @@ class Rocket extends Player {
         else if(this.game.down && this.y < this.y_lower_cameraLimit ) {
             this.y += this.y_vel
         }
-        
+
 
     }
 

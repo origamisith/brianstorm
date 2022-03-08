@@ -14,9 +14,9 @@ class Torpedo {
         this.spritesheet_right = new Animator(ASSET_MANAGER.getAsset("./assets/torpedo/spritesheet_right.png"), 0, 0, 800, 300, 3, 0.07, false, true);
         this.spritesheet_left = new Animator(ASSET_MANAGER.getAsset("./assets/torpedo/spritesheet_left.png"), 0, 0, 800, 300, 3, 0.07, false, true);
 
-        this.velocity_x = 1000;
+        this.velocity_x = 1000+this.game.camera.player.velocity.x*50;
         this.velocity_y = 10;
-        
+
     };
 
     updateAnimation() {
@@ -56,7 +56,7 @@ class Torpedo {
         /** COLLIDE WITH ENTITY AND BOUNCE BACK */
         const that = this;
         this.game.entities.forEach(function (entity) {
-            
+
             if (entity !== that && entity.BB && that.BB.collide(entity.BB) && that.collideOnce) {
 
                 if (entity instanceof Shark || entity instanceof Squid_ink) {
@@ -70,7 +70,7 @@ class Torpedo {
         /** UNIVERSAL POSITION UPDATE */
         if (this.direction === 0) this.x += this.velocity_x * this.game.clockTick;
         else if (this.direction === 1) this.x -= this.velocity_x * this.game.clockTick;
-        
+
         this.y += this.velocity_y * this.game.clockTick;
 
     };
