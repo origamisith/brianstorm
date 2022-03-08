@@ -288,7 +288,7 @@ class SceneManager {
 
     update() {
 
-        console.log(this.player.x)
+        // console.log(this.player.x)
 
         if(this.player.dead){this.loadEndScreen(0,0)}
         document.getElementById("debug").checked;

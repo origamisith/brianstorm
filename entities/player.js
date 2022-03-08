@@ -110,14 +110,14 @@ class Player {
             else if(this.state === 4 && this.facing === 0) this.animation = this.ceilingStickRightAnimation;
             else if(this.state === 4 && this.facing === 1) this.animation = this.ceilingStickLeftAnimation;
         }
-        
+
     }
     /** Updates state frame by frame */
     update() {
         // console.log(this.game.shift_left_key);
         this.updateAnimations()
         this.updateBB();
-        
+
         // console.log(this.x)
         // a constant TICK to sync with the game's timer
         const TICK = this.game.clockTick;
@@ -150,7 +150,7 @@ class Player {
         if(this.onGround && !this.onCeiling) {
             if(this.game.space && !this.onCeiling) {
                 this.updateState(3);
-                this.velocity.y = -15;
+                this.velocity.y = -13;
                 this.onGround = false;
             }
             // Disable horizontal controls if side collision detected and going same direction as initial collision
@@ -278,7 +278,7 @@ class Player {
                     // console.log(ox + ", " + oy)
                 }
                 else if (entity instanceof Miniraser || entity instanceof Meteor || entity instanceof CeilBlob ) {
-                    
+
                     if (that.BB.topCollide(entity.BB)) {
                         // take no damage.
                     } else {
@@ -289,8 +289,8 @@ class Player {
                                 that.damage = true;
                                 that.damageCountdown = 10;
                                 that.elapsedTime = 0;
-                            } 
-                        } 
+                            }
+                        }
                     }
                 }
                 else if (entity instanceof LevelMarker){
