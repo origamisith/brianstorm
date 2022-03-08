@@ -123,15 +123,15 @@ class Rocket extends Player {
         });
 
         /** SHOOT LASERS */
-        if (this.game.shooting && this.canFire) {
+        if (this.game.shooting  ) {
             if (this.facing === 0) {
                 ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
                 this.game.addEntity(new Laser(this.game, this.x - 300, this.y+this.BB.height/2));
-                this.canFire = false;}
+                }
             else if(this.facing === 1){
                 ASSET_MANAGER.playAsset("./assets/sfx/pewpew.mp3");
                 this.game.addEntity(new Laser(this.game, this.x - 1200, this.y+this.BB.height/2));
-                this.canFire = false;}
+                }
         } else if (!this.game.shooting) {
             this.canFire = true;
         }
