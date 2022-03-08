@@ -3,7 +3,36 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Webgame</title>
+    <title>Brianstorm</title>
+
+ 
+    <style>
+
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 1024px;
+        }
+        #game_inputs {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 1024px;
+        }
+        #logo {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 1024px;
+        }
+    </style>
 
     <script type="text/javascript" src="./src/assetmanager.js" defer></script>
     <script type="text/javascript" src="./src/gameengine.js" defer></script>
@@ -64,42 +93,46 @@
 
 
 </head>
-<body>
-    <canvas id="gameWorld" width="1200" height="1024" style="border: 1px solid black" tabindex ="0" autofocus></canvas>
+<body style="font-size: 28px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" background="./assets/backgrounds/window-bg.jpg" >
+<img id="logo" src="./assets/brianstorm_logo.png">
+    <canvas id="gameWorld" width="1200" height="1024" style="border: 4px solid black" tabindex ="0" autofocus></canvas>
 
-    <div>
+    <br />
+    <div id="game_inputs">
         <br />
         <input type="checkbox" id="debug"> Debug <input type="checkbox" id="mute"> Mute <input type="range" id="volume" min="0" max="1" value="0.3" step="0.05"> Volume
-    </div>
+    <br />
+    
+        <div><h3>Meteor Physics Parameters:</h3></div> <br />
+        <div>
+            <input type="range" id="friction" name="friction"
+                min="0" max="1" value="1" step="0.05">
+            <label for="friction">Friction</label>
+        </div>
+        <div>
+            <input type="checkbox" id="visual" name="visual">
+            <label for="visual">Draw Visual Radius</label>
+        </div>
+        <div>
+            It<br />
+            <input type="range" id="itspeed" name="itspeed"
+                min="10" max="250" value="250" step="10">
+            <label for="itspeed">Maximum Speed</label>
+            <input type="range" id="itradius" name="itradius"
+                min="10" max="500" value="500" step="10">
+            <label for="itradius">Visual Radius</label>
+        </div>
+        <div>
+            Not It<br />
+            <input type="range" id="notspeed" name="notspeed"
+                min="10" max="250" value="200" step="10">
+            <label for="notspeed">Maximum Speed</label>
+            <input type="range" id="notradius" name="notradius"
+                min="10" max="500" value="200" step="10">
+            <label for="notradius">Visual Radius</label>
 
-    <div>
-        <input type="range" id="friction" name="friction"
-               min="0" max="1" value="1" step="0.05">
-        <label for="friction">Friction</label>
+        </div>
     </div>
-    <div>
-        <input type="checkbox" id="visual" name="visual">
-        <label for="visual">Draw Visual Radius</label>
-    </div>
-    <div>
-        It<br />
-        <input type="range" id="itspeed" name="itspeed"
-               min="10" max="250" value="250" step="10">
-        <label for="itspeed">Maximum Speed</label>
-        <input type="range" id="itradius" name="itradius"
-               min="10" max="500" value="500" step="10">
-        <label for="itradius">Visual Radius</label>
-    </div>
-    <div>
-        Not It<br />
-        <input type="range" id="notspeed" name="notspeed"
-               min="10" max="250" value="200" step="10">
-        <label for="notspeed">Maximum Speed</label>
-        <input type="range" id="notradius" name="notradius"
-               min="10" max="500" value="200" step="10">
-        <label for="notradius">Visual Radius</label>
-
-    </div>
-
+</div>
 </body>
 </html>
