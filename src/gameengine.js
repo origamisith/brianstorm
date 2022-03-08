@@ -103,6 +103,7 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("keydown", function (e) {
+            e.preventDefault();
 
             switch (e.code) {
 
@@ -135,6 +136,7 @@ class GameEngine {
         }, false);
 
         this.ctx.canvas.addEventListener("keyup", function (e) {
+            e.preventDefault();
 
             switch (e.code) {
 
