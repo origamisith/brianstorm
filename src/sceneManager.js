@@ -164,7 +164,7 @@ class SceneManager {
 
         levelWater.powerUps.forEach(p => {this.game.addEntity(new powerUp(this.game, p.x, p.y));});
         levelWater.signPost.forEach(s => {this.game.addEntity(new SignPost(this.game, s.x, s.y, s.choice, s.scale));});
-        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 10));});
+        levelWater.fish.forEach(f => {this.game.addEntity(new Fishes(this.game, f.x , f.y - 20));});
         levelWater.seahorses.forEach(f => {this.game.addEntity(new Seahorses(this.game, f.x, f.y + 20));});
         levelWater.shark.forEach(sh => {this.game.addEntity(new Shark(this.game, sh.x, sh.y + 250));});
         levelWater.squid.forEach(sq => {this.game.addEntity(new Squid(this.game, sq.x, sq.y + 750));});
@@ -335,6 +335,8 @@ class SceneManager {
                 this.player.velocity.y = 0;
             }
         }
+
+
     }
 
     updateAudio() {
