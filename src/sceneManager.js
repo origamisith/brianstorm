@@ -147,7 +147,7 @@ class SceneManager {
         // this.player = new Submarine(this.game, "submarine", 79080, -2110, 15, 10, this.level_X_Left_Boundary, this.level_X_Right_Boundary, this.level_Y_Lower_Boundary, this.level_Y_Upper_Boundary);
 
         //use this line to load the submarine when the player jumps into the water
-        this.player = new Submarine(this.game, "submarine",400 , 400, 15, 10, 400, 22000, 850, -400);
+        this.player = new Submarine(this.game, "submarine", 610 , 400, 15, 10, 400, 22000, 850, -400);
 
         this.player.gravity = 0;
         this.player.falling = false;
@@ -240,7 +240,7 @@ class SceneManager {
         this.endOfLevel = 38000;
 
         this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
-        this.player = new Player(this.game, "default", 300, 200, 3, 10, 400,38000,false)
+        this.player = new Player(this.game, "default", -222, 200, 3, 10, 400,38000,false)
         this.player.gravity = 28;
         this.game.addEntity(this.player);
         ASSET_MANAGER.pauseBackgroundMusic();
@@ -306,8 +306,7 @@ class SceneManager {
 
 
         if (this.endScreen === false &&
-            (this.player.x < this.endOfLevel && this.player.x >= 600)
-            && this.level !== 4) {
+            (this.player.x < this.endOfLevel && this.player.x >= 600) && this.level !== 4) {
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             // let ph = this.player.BB.height;
@@ -328,6 +327,8 @@ class SceneManager {
         if(this.level === 6 && this.player.y > 1100) {this.player.y = -100}
 
         if(this.endScreen === true || this.level === 4) {
+
+            if (this.player.x < this.endOfLevel && this.player.x >= -250){this.x = (this.player.x - w / 2)}
             if (this.player.y >= params.floor - this.player.BB.height/2) {
                 this.player.y = params.floor - this.player.BB.height/2
                 this.player.onGround = true;

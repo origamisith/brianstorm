@@ -75,14 +75,14 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/scuba/scuba_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/stun_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/graphics/paper_bg.png");
-ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
+
 
 //music
 ASSET_MANAGER.queueDownload("./assets/sfx/torpedo_launch1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/venemousspaceradish.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/water_level.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/water_ambience.mp3");
-
+ASSET_MANAGER.queueDownload("./assets/music/FreedomM.mp3");
 
 
 //water level
@@ -96,6 +96,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/squid/squid_sheetnew.png");
 ASSET_MANAGER.queueDownload("./assets/characters/starfish/starfish_sheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/shark/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/submarine/sprite_sheet.png");
+ASSET_MANAGER.queueDownload("./assets/sfx/torpedo.mp3");
 
 
 
@@ -107,8 +108,8 @@ ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_left_red.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right_red.png");
 ASSET_MANAGER.queueDownload("./assets/meteor/spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/characters/storm/rocket/rocket.png")
-ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
 ASSET_MANAGER.queueDownload("./assets/scribbles/laser.jpg");
+ASSET_MANAGER.queueDownload("./assets/sfx/pewpew.mp3");
 
 
 //music level
