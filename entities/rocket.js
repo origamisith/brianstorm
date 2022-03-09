@@ -48,6 +48,7 @@ class Rocket extends Player {
     //draw method will render this entity to the canvas
     draw(ctx) {
         this.animation.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x - 400, this.y - this.game.camera.y, this.scale);
+        this.hearts.draw(ctx);
         // ctx.strokeStyle = 'red';
         // // uncomment for bb
         // ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);

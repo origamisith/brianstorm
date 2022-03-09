@@ -290,7 +290,7 @@ class SceneManager {
 
         // console.log(this.player.x)
 
-        if(this.player.dead){this.loadEndScreen(0,0)}
+        if(this.player.dead){this.loadLevel()}
         document.getElementById("debug").checked;
         this.checkStart();
         if(this.game.click) {this.title = false;}
