@@ -284,7 +284,7 @@ class Player {
                     } else {
                         //only take damage if erasir is not stunned
                         if (that.elapsedTime > 0.8) {
-                            if ((entity instanceof Miniraser && entity.state != 1) || entity instanceof Meteor || entity instanceof CeilBlob) {
+                            if ((entity instanceof Miniraser && entity.state !== 1) || entity instanceof Meteor || entity instanceof CeilBlob) {
                                 that.hp -= 5;
                                 that.damage = true;
                                 that.damageCountdown = 10;
