@@ -131,6 +131,10 @@ class Player {
             this.damage = false;
         }
 
+        console.log("LEVEL: " + this.game.camera.level);
+        /** DIE */
+        if (this.hp <= 0 || (this.y >= 1200 && this.game.camera.level == 1)) this.dead = true;
+
 
         if(this.velocity.y > 0) {
             this.falling = true;} //Convenience variable for other classes
