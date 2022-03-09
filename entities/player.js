@@ -150,7 +150,7 @@ class Player {
         if(this.onGround && !this.onCeiling) {
             if(this.game.space && !this.onCeiling) {
                 this.updateState(3);
-                this.velocity.y = -13;
+                this.velocity.y = -15;
                 this.onGround = false;
             }
             // Disable horizontal controls if side collision detected and going same direction as initial collision

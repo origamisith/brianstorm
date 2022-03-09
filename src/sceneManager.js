@@ -272,7 +272,7 @@ class SceneManager {
         this.endScreen = true;
         this.marker = new LevelMarker(this.game, -300, 100, 1, 200, 2000);
 
-        this.player = new Player(this.game, "default", 500, 100, 15, 10, 0);
+        this.player = new Player(this.game, "default", 610, 100, 15, 10, -300);
 
         this.game.addEntity(this.player);
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/end_screen/try_again.jpg"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
