@@ -192,7 +192,7 @@ class credits {
             if (mousePoint.x > this.BB.x && mousePoint.x < (this.BB.x + this.BB.width)
                 && mousePoint.y > this.BB.y && mousePoint.y < this.BB.y + this.BB.height) {
                     // console.log("CLICKED CREDITS");
-                    this.game.camera.level = 0;
+                    this.game.camera.level = 7;
                     this.game.camera.loadStart = true;
                     this.game.camera.loadLevel();
                     this.game.camera.checkStart();

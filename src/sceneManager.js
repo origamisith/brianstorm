@@ -38,6 +38,7 @@ class SceneManager {
         else if (this.level === 4) {this.loadMusicLevel();}
         else if (this.level === 5) {this.loadEndScreen();}
         else if (this.level === 6) {this.loadTutorialLevel();}
+        else if (this.level === 7) {this.loadCreditsScreen();}
 
     };
 
@@ -48,7 +49,7 @@ class SceneManager {
         this.title = true;
         this.game.addEntity(new start(this.game, 400, 110 +200));
         this.game.addEntity(new how_to_play(this.game, 400, 230 +200));
-        this.game.addEntity(new credits(this.game, 400, 355 +200));
+        this.game.addEntity(new credits(this.game, 400, 355 +240));
         this.game.addEntity(new shopping_list(this.game, 0, 400));
         this.game.addEntity(new game_ideas(this.game, 675, 700));
         this.game.addEntity(new to_do(this.game, 890, 400));
@@ -60,6 +61,18 @@ class SceneManager {
         this.game.addEntity({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/graphics/paper_bg.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
         this.checkStart();
     };
+
+
+    loadCreditsScreen() {
+
+        this.clearEntities();
+        this.clearBackgrounds();
+        this.game.addEntity(new Credits_graphics(this.game, 200, 200))
+        this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/black.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
+
+
+    }
+
 
     loadTutorialLevel(x, y){
 
@@ -306,7 +319,7 @@ class SceneManager {
 
 
         if (this.endScreen === false &&
-            (this.player.x < this.endOfLevel && this.player.x >= 600) && this.level !== 4) {
+            (this.player.x < this.endOfLevel && this.player.x >= 600) && this.level !== 4 && this.level !== 5) {
             this.x = (this.player.x - w / 2); // Keep camera centered on storm at all times
             // If storm nears the bottom of the frame, pan the camera to keep him in frame
             // let ph = this.player.BB.height;

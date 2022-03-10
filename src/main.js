@@ -32,6 +32,7 @@ ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/try_again.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/end_screen/end.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/paper-bg.jpg");
 ASSET_MANAGER.queueDownload("./assets/backgrounds/ultrawide-01.png");
+ASSET_MANAGER.queueDownload("./assets/credits/spritesheet.png");
 
 
 
@@ -67,6 +68,7 @@ ASSET_MANAGER.queueDownload("./assets/characters/blobs/blobs.png");
 ASSET_MANAGER.queueDownload("./assets/environment/clouds/cloud.png");
 ASSET_MANAGER.queueDownload("./assets/blocks/spritesheet_pastels.png")
 ASSET_MANAGER.queueDownload("./assets/backgrounds/blank_sheet_music.png");
+ASSET_MANAGER.queueDownload("./assets/backgrounds/black.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_left.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/idle_right.png");
 ASSET_MANAGER.queueDownload("./assets/characters/erasir/space_right.png");
