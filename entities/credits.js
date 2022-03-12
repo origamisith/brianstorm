@@ -12,9 +12,6 @@ class Credits_graphics {
     }
 
     updateBB() {
-
-        
-
     };
 
 
