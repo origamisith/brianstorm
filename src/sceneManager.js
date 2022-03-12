@@ -63,10 +63,15 @@ class SceneManager {
     };
 
 
+
+
+
     loadCreditsScreen() {
 
         this.clearEntities();
         this.clearBackgrounds();
+        this.endScreen = false
+        this.title = false
         this.game.addEntity(new Credits_graphics(this.game, 200, 200))
         this.game.addBackground({draw: ctx => ctx.drawImage(ASSET_MANAGER.getAsset("./assets/backgrounds/black.png"), 0, 0, 1200 , 1024, 0, 0, 1200, 1024), update: () => null})
 
@@ -78,6 +83,9 @@ class SceneManager {
 
         this.endScreen = false;
         this.clearEntities();
+
+        this.endScreen = false
+        this.title = false
 
         //sets player starting location
         this.player_start = 400;
@@ -121,9 +129,11 @@ class SceneManager {
 
     loadLevelOne() {
 
-        this.endScreen = false;
+        this.endScreen = false
+        this.title = false
+
         this.clearEntities();
-        this.marker = new LevelMarker(this.game, 38000, params.floor + params.blockSize * 16, 2, 10000, params.blockSize);
+        this.marker = new LevelMarker(this.game, 38000, 1200, 2, 10000, params.blockSize);
         this.player = new Player(this.game, "default", 610, 400, 10, 20, 200, 38000, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
@@ -152,7 +162,9 @@ class SceneManager {
 
     loadWater() {
 
-        this.endScreen = false;
+        this.endScreen = false
+        this.title = false
+
         this.clearEntities();
         this.clearBackgrounds()
 
@@ -197,7 +209,10 @@ class SceneManager {
     loadSpaceLevel() {
         this.clearEntities();
         this.clearBackgrounds();
-        this.endScreen = false;
+
+        this.endScreen = false
+        this.title = false
+
         this.marker = new LevelMarker(this.game, 21000, 100, 4, 200, 2000);
 
         this.player.remove(true);
@@ -249,7 +264,10 @@ class SceneManager {
     loadMusicLevel(x, y) {
 
         this.endScreen = false;
-        this.clearEntities();
+
+        this.endScreen = false
+        this.title = false
+
         this.endOfLevel = 38000;
 
         this.marker = new LevelMarker(this.game, 18000, 100,1, 200, 2000);
@@ -336,7 +354,7 @@ class SceneManager {
         //     this.y = this.player.y - ph / 2;
         // }
 
-        if(this.level ===1 && this.player.y > 1100 && this.player.x < 37000){this.player.dead = true}
+        if(this.level ===1 && this.player.y > 1100 && this.player.x < 36000){this.player.dead = true}
         if(this.level === 6 && this.player.y > 1100) {this.player.y = -100}
 
         if(this.endScreen === true || this.level === 4) {

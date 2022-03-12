@@ -33,6 +33,7 @@ class start {
     };
 }
 
+
 class shopping_list {
     constructor(game, x_pos, y_pos) {
         this.game = game;

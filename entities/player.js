@@ -131,9 +131,9 @@ class Player {
             this.damage = false;
         }
 
-        console.log("LEVEL: " + this.game.camera.level);
+
         /** DIE */
-        if (this.hp <= 0 || (this.y >= 1200 && this.game.camera.level == 1)) this.dead = true;
+        if (this.hp <= 0 || (this.y >= 1500 && this.game.camera.level === 1)) this.dead = true;
 
 
         if(this.velocity.y > 0) {
@@ -304,7 +304,6 @@ class Player {
                     if (that.BB.collide(entity.BB)) {
                         entity.removeFromWorld = true;
                         that.hp += 20;
-                        console.log("+ 20 HP!!");
                     }
                 }
             }
