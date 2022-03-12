@@ -134,7 +134,7 @@ class SceneManager {
 
         this.clearEntities();
         this.marker = new LevelMarker(this.game, 38000, 1200, 2, 10000, params.blockSize);
-        this.player = new Player(this.game, "default", 36000, 400, 10, 20, 200, 38000, 0, 0, false);
+        this.player = new Player(this.game, "default", 610, 400, 10, 20, 200, 38000, 0, 0, false);
         this.player.gravity = .4;
         this.game.addEntity(this.player);
         this.game.addEntity(this.marker);

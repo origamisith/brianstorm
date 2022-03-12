@@ -274,7 +274,7 @@ const musicLevel = {
         {position: 360, sound_path: "./assets/music/song/21.mp3"},
         {position: 364, sound_path: "./assets/music/song/20-1.mp3"},
         {position: 368, sound_path: "./assets/music/song/20.mp3"},
-
+        {position: 384, sound_path: "./assets/music/song/1.mp3"},
 
 
 
